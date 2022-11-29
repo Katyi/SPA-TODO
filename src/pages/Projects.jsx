@@ -5,13 +5,15 @@ import { db } from '../firebase';
 import MyButton from "../components/UI/button/MyButton";
 import { useNavigate } from 'react-router-dom';
 // import Tasks from "./Tasks";
+// import MyButton from "../components/UI/button/MyButton";
+import MyModal from "../components/UI/modal/MyModal";
+import ProjectUpdForm from "../components/ProjectUpdForm";
 
 
 function Projects() {
   const [projects, setProjects] = useState([]);
-  // let [modal, setModal] = useState(false);
+  let [modal, setModal] = useState(false);
 
-  
   useEffect(() => {
     const q = query(collection(db, 'projects'))
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -20,13 +22,11 @@ function Projects() {
         projectsArr.push({ ...doc.data(), id: doc.id })
       })
       setProjects(projectsArr)
-      console.log(projectsArr);
+      // console.log(projectsArr);
     })
     return () => unsubscribe()
   }, []);
   
-
-
   let navigate = useNavigate();
   return (
     <div className="App">
@@ -46,11 +46,13 @@ function Projects() {
               <div className='projectName'>{project.projectName}</div>
               <div className='description'>{project.description}</div>
               <MyButton onClick={() => navigate(`/projects/${project.id}`)}>Open</MyButton>
+              <MyButton onClick={() => setModal(true)}>UpDate</MyButton>
+              <MyModal visible={modal} setVisible={setModal}>
+                <ProjectUpdForm project={project}/>
+              </MyModal>
             </div>
           ))}
-          
         </div>
-        
       </div>
     </div>
   )

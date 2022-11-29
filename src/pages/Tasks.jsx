@@ -10,7 +10,7 @@ function Tasks() {
   const [queueTasks, setQueueTasks] = useState([]);
   const [developmentTasks, setDevelopmentTasks] = useState([]);
   const [doneTasks, setDoneTasks] = useState([]);
-  // let [modal, setModal] = useState(false);
+  let [modal, setModal] = useState(false);
 
   let {id} = useParams();
 
