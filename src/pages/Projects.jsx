@@ -24,6 +24,8 @@ function Projects() {
     })
     return () => unsubscribe()
   }, []);
+  
+
 
   let navigate = useNavigate();
   return (
@@ -41,7 +43,7 @@ function Projects() {
           {projects.map((project, index) => (
             <div className='project' key={index}>
               <div className='id'>{index + 1}</div>
-              <div className='projectName'>{project.nameProject}</div>
+              <div className='projectName'>{project.projectName}</div>
               <div className='description'>{project.description}</div>
               <MyButton onClick={() => navigate(`/projects/${project.id}`)}>Open</MyButton>
             </div>

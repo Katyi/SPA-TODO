@@ -1,52 +1,90 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router";
 // import Loader from '../components/UI/Loader/Loader';
-import { query, collection, onSnapshot } from 'firebase/firestore';
+import { query, collection, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import MyButton from "../components/UI/button/MyButton";
 
 
 function Tasks() {
-  const [tasks, setTasks] = useState([]);
+  const [queueTasks, setQueueTasks] = useState([]);
+  const [developmentTasks, setDevelopmentTasks] = useState([]);
+  const [doneTasks, setDoneTasks] = useState([]);
   // let [modal, setModal] = useState(false);
 
-  
-  useEffect(() => {
-    const q = query(collection(db, 'tasks'))
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let tasksArr = [];
-      querySnapshot.forEach((doc) => {
-        tasksArr.push({ ...doc.data(), id: doc.id })
-      })
-      setTasks(tasksArr)
-      console.log(tasksArr);
+  let {id} = useParams();
+
+  console.log('ID проекта: ', {id});
+  async function firebaseQuery() {
+    const q1 = query(collection(db, 'tasks'), where("status", "==", "Queue"), where("isSubtask", "==", false), where('projectId','==', id));
+    const q2 = query(collection(db, 'tasks'), where("status", "==", "Development"), where('projectId','==', id));
+    const q3 = query(collection(db, 'tasks'), where("status", "==", "Done"), where('projectId','==', id));
+    let tasksArr1 = [];
+    let tasksArr2 = [];
+    let tasksArr3 = [];
+    const querySnapshot1 = await getDocs(q1);
+    const querySnapshot2 = await getDocs(q2);
+    const querySnapshot3 = await getDocs(q3);
+    querySnapshot1.forEach((doc) => {
+      tasksArr1.push({ ...doc.data(), id: doc.id })
     })
-    return () => unsubscribe()
+    querySnapshot2.forEach((doc) => {
+      tasksArr2.push({ ...doc.data(), id: doc.id })
+    })
+    querySnapshot3.forEach((doc) => {
+      tasksArr3.push({ ...doc.data(), id: doc.id })
+    })
+    setQueueTasks(tasksArr1)
+    setDevelopmentTasks(tasksArr2)
+    setDoneTasks(tasksArr3)
+  }
+  useEffect(() => {
+    firebaseQuery();
   }, []);
 
-  
+
   return (
     <div className="App">
       <div className="header">
         <div className="pageTitle">Задачи</div>
         <div className='header_of_tasks'>
-          <div className="id">№</div>
-          <div className='projectName'>Задачи</div>
-          <div className='description'>Описание</div>
+          <div className="Queue">Задачи в очереди</div>
+          <div className='Development'>Задачи в разработке</div>
+          <div className='Done'>Задачи завершенные</div>
         </div>
       </div>
-      <div className='container'>
-        <div className='projects'>
-          {tasks.map((task, index) => (
-            <div className='project' key={index}>
+      <div className='container1'>
+        <div className='tasks'>
+          {queueTasks.map((task, index) => (
+            <div className='task' key={index}>
               <div className='id'>{index + 1}</div>
-              <div className='projectName'>{task.nameProject}</div>
-              <div className='description'>{task.description}</div>
+              <div className='taskName'>{task.taskName}</div>
               <MyButton onClick={() => console.log(`${task.id}`)}>Open</MyButton>
             </div>
           ))}
-          
         </div>
-        
+      </div>
+      <div className='container2'>
+        <div className='tasks'>
+          {developmentTasks.map((task, index) => (
+            <div className='task' key={index}>
+              <div className='id'>{index + 1}</div>
+              <div className='taskName'>{task.taskName}</div>
+              <MyButton onClick={() => console.log(`${task.id}`)}>Open</MyButton>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className='container3'>
+        <div className='tasks'>
+          {doneTasks.map((task, index) => (
+            <div className='task' key={index}>
+              <div className='id'>{index + 1}</div>
+              <div className='taskName'>{task.taskName}</div>
+              <MyButton onClick={() => console.log(`${task.id}`)}>Open</MyButton>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

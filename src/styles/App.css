@@ -46,7 +46,9 @@
 .header_of_tasks {
   font-size: 24px;
   display: flex;
-  margin: 60px 0px 0px 35px;
+  /* top: 60%;
+  left: 35px; */
+  /* margin: 60px 0px 0px 35px; */
   padding: 0px 0px 0px 0px;
   font-weight: 700;
   font-variant: small-caps;
@@ -54,6 +56,16 @@
 .container {
   margin: 240px 5px;
   position: absolute;
+}
+.project {
+  display: flex;
+  padding: 26px;
+  border: 1px solid #566573;
+  margin-top: 5px;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  font-variant: small-caps;
 }
 .id {
   width: 100px;
@@ -64,25 +76,55 @@
 .description {
   width: 700px;
 }
-
-.project {
+.container1 {
+  width: 25%;
+  top: 22%;
+  left: 1%;
+  /* margin: 240px 10px; */
+  position: absolute;
+}
+.container2 {
+  width: 25%;
+  top: 22%;
+  left: 34.33%;
+  /* margin: 240px 400px; */
+  position: absolute;
+}
+.container3 {
+  width: 25%;
+  top: 22%;
+  left: 67.33%;
+  /* margin: 240px 400px; */
+  position: absolute;
+}
+.Queue {
+width: 33.33%;
+margin-left: 1%;
+margin-top: 4%;
+}
+.Development {
+  width: 33.33%;
+  margin-left: 1%;
+margin-top: 4%;
+}
+.Done {
+  width: 33.33%;
+  margin-left: 1%;
+margin-top: 4%;
+}
+.task {
   display: flex;
   padding: 26px;
   border: 1px solid #566573;
-  /* background-color: darkgray; */
   margin-top: 5px;
   justify-content: space-between;
   align-items: center;
   font-weight: bold;
-  /* font-family: Comic Sans MS, Comic Sans, fantasy; */
   font-variant: small-caps;
 }
-.album__content {
-  /* background-color: transparent; */
-  /* color: red; */
-  
+.taskName {
+  width: 70%;
 }
-
 /* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
