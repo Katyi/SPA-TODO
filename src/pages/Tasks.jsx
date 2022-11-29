@@ -3,47 +3,45 @@ import React, { useState, useEffect } from "react";
 import { query, collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import MyButton from "../components/UI/button/MyButton";
-import { useNavigate } from 'react-router-dom';
-// import Tasks from "./Tasks";
 
 
-function Projects() {
-  const [projects, setProjects] = useState([]);
+function Tasks() {
+  const [tasks, setTasks] = useState([]);
   // let [modal, setModal] = useState(false);
 
   
   useEffect(() => {
-    const q = query(collection(db, 'projects'))
+    const q = query(collection(db, 'tasks'))
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let projectsArr = [];
+      let tasksArr = [];
       querySnapshot.forEach((doc) => {
-        projectsArr.push({ ...doc.data(), id: doc.id })
+        tasksArr.push({ ...doc.data(), id: doc.id })
       })
-      setProjects(projectsArr)
-      console.log(projectsArr);
+      setTasks(tasksArr)
+      console.log(tasksArr);
     })
     return () => unsubscribe()
   }, []);
 
-  let navigate = useNavigate();
+  
   return (
     <div className="App">
       <div className="header">
-        <div className="pageTitle">Проекты</div>
+        <div className="pageTitle">Задачи</div>
         <div className='header_of_tasks'>
           <div className="id">№</div>
-          <div className='projectName'>Проекты</div>
+          <div className='projectName'>Задачи</div>
           <div className='description'>Описание</div>
         </div>
       </div>
       <div className='container'>
         <div className='projects'>
-          {projects.map((project, index) => (
+          {tasks.map((task, index) => (
             <div className='project' key={index}>
               <div className='id'>{index + 1}</div>
-              <div className='projectName'>{project.nameProject}</div>
-              <div className='description'>{project.description}</div>
-              <MyButton onClick={() => navigate(`/projects/${project.id}`)}>Open</MyButton>
+              <div className='projectName'>{task.nameProject}</div>
+              <div className='description'>{task.description}</div>
+              <MyButton onClick={() => console.log(`${task.id}`)}>Open</MyButton>
             </div>
           ))}
           
@@ -54,4 +52,4 @@ function Projects() {
   )
 };
 
-export default Projects;
+export default Tasks;
