@@ -4,23 +4,20 @@ import MyInput from "./UI/input/MyInput";
 import {  updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 
-const ProjectUpdForm = (project) => {
-  console.log(project);
+
+const ProjectUpdForm = ( {project} ) => {
+  // let id = project.id;
   const [UpdItem, setUpdItem] = useState({ projectName: '', description: '' });
-  
-  const updateProject = async (project) => {
-    console.log(project);
-    await updateDoc(doc(db, 'projects', project.id), {
-      projectName: project.projectName,
-      description: project.description
-    })
-    console.log("UDATE работает");
-  }
   
   const updProject = async (e) => {
     e.preventDefault();
-   await  updateProject(project);
+    console.log("Меняем проект ", project.id);
+    await updateDoc(doc(db, 'projects', project.id), {
+      projectName: UpdItem.projectName,
+      description: UpdItem.description,
+    })
     setUpdItem({ projectName: '', description: '' });
+    console.log("UDATE работает");
   }
 
   return (

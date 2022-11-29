@@ -1,35 +1,25 @@
 import React, {useState} from "react";
-// import { useNavigate } from 'react-router-dom';
-// import MyButton from "./UI/button/MyButton";
-// import AlbumUpdForm from "./AlbumUpdForm";
-// import MyModal from "./UI/MyModal/MyModal";
+import { useNavigate } from 'react-router-dom';
+import ProjectUpdForm from "../components/ProjectUpdForm";
+import MyModal from "../components/UI/modal/MyModal";
+import MyButton from "../components/UI/button/MyButton";
 
 const ProjectItem = (props) => {
   let [modal, setModal] = useState(false);
 
-  // let navigate = useNavigate();
+  let navigate = useNavigate();
   return (
-      <div className="project">
-        <div className="album__content">
-        <strong> {props.project.id} {props.project.title}</strong>
-          <div>
-          {props.project.description}
-          </div>
-        </div>
-      <div>
-        {/* <MyButton onClick={() => navigate(`/albums/${props.album.id}`)}>
-          Open
-        </MyButton> */}
-        {/* <MyButton onClick={() => setModal(true)}>
-          UpDate
-        </MyButton> */}
-        {/* <MyModal visible={modal} setVisible={setModal}>
-          <AlbumUpdForm upDate={props.upDate} album={props.album}/>
-        </MyModal> */}
-        {/* <MyButton onClick={() => props.remove(props.album)}>
-          Delete
-        </MyButton> */}
-        </div>
+    <div className='project'>
+      <div className='id'>{props.num}</div>
+      <div className='projectName'>{props.project.projectName}</div>
+      <div className='description'>{props.project.description}</div>
+      <div className="btn1"><MyButton onClick={() => navigate(`/projects/${props.project.id}`)}>Open</MyButton></div>
+      <div className="btn2">
+        <MyButton onClick={() => setModal(true)}>UpDate</MyButton>
+        <MyModal visible={modal} setVisible={setModal}>
+          <ProjectUpdForm project={props.project}/>
+        </MyModal>
+      </div>
     </div>
   );
 };

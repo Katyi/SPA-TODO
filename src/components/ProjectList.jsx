@@ -3,7 +3,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import ProjectItem from "./ProjectItem";
 
 const ProjectList = ({ projects, title }) => {
-  console.log("Переданный проект ", projects.length);
+  // console.log("Переданный проект ", projects.length);
   if (!projects.length) {
     return (
       <div className="aboutPage">

@@ -4,21 +4,21 @@ import { useParams } from "react-router";
 import { query, collection, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import MyButton from "../components/UI/button/MyButton";
-
+import { Link } from 'react-router-dom';
 
 function Tasks() {
   const [queueTasks, setQueueTasks] = useState([]);
   const [developmentTasks, setDevelopmentTasks] = useState([]);
   const [doneTasks, setDoneTasks] = useState([]);
-  let [modal, setModal] = useState(false);
+  // let [modal, setModal] = useState(false);
 
   let {id} = useParams();
 
-  console.log('ID проекта: ', {id});
+  // console.log('ID проекта: ', {id});
   async function firebaseQuery() {
     const q1 = query(collection(db, 'tasks'), where("status", "==", "Queue"), where("isSubtask", "==", false), where('projectId','==', id));
-    const q2 = query(collection(db, 'tasks'), where("status", "==", "Development"), where('projectId','==', id));
-    const q3 = query(collection(db, 'tasks'), where("status", "==", "Done"), where('projectId','==', id));
+    const q2 = query(collection(db, 'tasks'), where("status", "==", "Development"), where("isSubtask", "==", false), where('projectId','==', id));
+    const q3 = query(collection(db, 'tasks'), where("status", "==", "Done"), where("isSubtask", "==", false), where('projectId','==', id));
     let tasksArr1 = [];
     let tasksArr2 = [];
     let tasksArr3 = [];
@@ -46,7 +46,12 @@ function Tasks() {
   return (
     <div className="App">
       <div className="header">
-        <div className="pageTitle">Задачи</div>
+        <div className="header_part1">
+        <div className="header_title">Задачи</div>
+          <div className="header__link">
+            <Link to="/projects">Обратно к проектам</Link>
+          </div>
+        </div>
         <div className='header_of_tasks'>
           <div className="Queue">Задачи в очереди</div>
           <div className='Development'>Задачи в разработке</div>
