@@ -3,8 +3,9 @@ import { useParams } from "react-router";
 // import Loader from '../components/UI/Loader/Loader';
 import { query, collection, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
-import MyButton from "../components/UI/button/MyButton";
+// import MyButton from "../components/UI/button/MyButton";
 import { Link } from 'react-router-dom';
+import TaskItem from "../components/TaskItem";
 
 function Tasks() {
   const [queueTasks, setQueueTasks] = useState([]);
@@ -61,33 +62,36 @@ function Tasks() {
       <div className='container1'>
         <div className='tasks'>
           {queueTasks.map((task, index) => (
-            <div className='task' key={index}>
-              <div className='id'>{index + 1}</div>
-              <div className='taskName'>{task.taskName}</div>
-              <MyButton onClick={() => console.log(`${task.id}`)}>Open</MyButton>
-            </div>
+            <TaskItem task={task} key={index} num={index + 1}/>
+            // <div className='task' key={index}>
+            //   <div className='id'>{index + 1}</div>
+            //   <div className='taskName'>{task.taskName}</div>
+            //   <MyButton onClick={() => console.log(`${task.id}`)}>Open</MyButton>
+            // </div>
           ))}
         </div>
       </div>
       <div className='container2'>
         <div className='tasks'>
           {developmentTasks.map((task, index) => (
-            <div className='task' key={index}>
-              <div className='id'>{index + 1}</div>
-              <div className='taskName'>{task.taskName}</div>
-              <MyButton onClick={() => console.log(`${task.id}`)}>Open</MyButton>
-            </div>
+            <TaskItem task={task} key={index} num={index + 1}/>
+            // <div className='task' key={index}>
+            //   <div className='id'>{index + 1}</div>
+            //   <div className='taskName'>{task.taskName}</div>
+            //   <MyButton onClick={() => console.log(`${task.id}`)}>Open</MyButton>
+            // </div>
           ))}
         </div>
       </div>
       <div className='container3'>
         <div className='tasks'>
           {doneTasks.map((task, index) => (
-            <div className='task' key={index}>
-              <div className='id'>{index + 1}</div>
-              <div className='taskName'>{task.taskName}</div>
-              <MyButton onClick={() => console.log(`${task.id}`)}>Open</MyButton>
-            </div>
+            <TaskItem task={task} key={index} num={index + 1}/>
+            // <div className='task' key={index}>
+            //   <div className='id'>{index + 1}</div>
+            //   <div className='taskName'>{task.taskName}</div>
+            //   <MyButton onClick={() => console.log(`${task.id}`)}>Open</MyButton>
+            // </div>
           ))}
         </div>
       </div>
