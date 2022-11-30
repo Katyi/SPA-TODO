@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import MyButton from "../components/UI/button/MyButton";
 import TaskUpdForm from "./TaskUpdForm";
-import MyModal from "./UI/modal/MymodalForTask";
+import MyModalForTask from "./UI/modal/MymodalForTask";
+// import MyModal from "./UI/modal/MymodalForTask";
 
 const TaskItem = (props) => {
   let [modal, setModal] = useState(false);
@@ -12,9 +13,9 @@ const TaskItem = (props) => {
       <div className='taskName'>{props.task.taskName}</div>
       {/* <div className="btn2"> */}
         <MyButton onClick={() => setModal(true)}>Open/Update</MyButton>
-        <MyModal visible={modal} setVisible={setModal}>
+        <MyModalForTask visible={modal} setVisible={setModal}>
         <TaskUpdForm task={props.task}/>
-        </MyModal>
+        </MyModalForTask>
       {/* </div> */}
       <MyButton onClick={() => props.remove(props.task)}>Delete</MyButton>
     </div>

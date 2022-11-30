@@ -13,6 +13,7 @@ const ProjectForm = () => {
       projectName: project.projectName,
       description: project.description
     })
+    window.location.reload();
 }
 
     return (
@@ -29,7 +30,7 @@ const ProjectForm = () => {
           type={"text"}
           placeholder={"Описание проекта"}
         />
-        <MyButton onClick={addNewProject}>Create Album</MyButton>
+        <MyButton onClick={addNewProject}>Create Project</MyButton>
       </form>
     );
 };

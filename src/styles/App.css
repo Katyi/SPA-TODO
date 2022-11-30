@@ -90,6 +90,12 @@
   /* margin-left: 0.5%; */
   position: absolute;
 }
+.container4 {
+  /* width: 100%; */
+  position: absolute;
+  margin-top: 10%;
+  /* display: flex; */
+}
 .project {
   display: flex;
   border: 1px solid #566573;
@@ -127,22 +133,23 @@
   width: 9%;
 }
 .container1 {
-  width: 25%;
-  top: 22%;
+  width: 22%;
+  top: 24%;
   left: 1%;
   /* margin: 240px 10px; */
   position: absolute;
+  /* display: flex; */
 }
 .container2 {
-  width: 25%;
-  top: 22%;
+  width: 22%;
+  top: 24%;
   left: 34.33%;
   /* margin: 240px 400px; */
   position: absolute;
 }
 .container3 {
-  width: 25%;
-  top: 22%;
+  width: 22%;
+  top: 24%;
   left: 67.33%;
   /* margin: 240px 400px; */
   position: absolute;

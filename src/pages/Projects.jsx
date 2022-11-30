@@ -6,7 +6,6 @@ import MyButton from "../components/UI/button/MyButton";
 import ProjectForm from "../components/ProjectForm";
 import MyModal from "../components/UI/modal/MyModal";
 
-
 function Projects() {
   const [projects, setProjects] = useState([]);
   let [modal, setModal] = useState(false);
@@ -23,25 +22,11 @@ function Projects() {
     return () => unsubscribe()
   }, []);
   
-  // const createProject = async (input) => {
-  //   if (e === undefined) { return }
-  //   e.preventDefault();
-  //   if (input === '') {
-  //     alert('input some input')
-  //     return
-  //   }
-  //   await addDoc(collection(db, 'projects'), {
-  //     description: input,
-  //     completed: false
-  //   })
-  // }
-  
   const removeProject = async (project) => {
     await deleteDoc(doc(db, 'projects', project.id))
     console.log("DELETED project", project);
     window.location.reload();
   }
-
 
   return (
     <div className="App">

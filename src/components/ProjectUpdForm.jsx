@@ -15,7 +15,8 @@ const ProjectUpdForm = ( {project} ) => {
       description: UpdItem.description,
     })
     setUpdItem({ projectName: '', description: '' });
-    console.log("UDATE работает");
+    // console.log("UDATE работает");
+    window.location.reload();
   }
 
   return (

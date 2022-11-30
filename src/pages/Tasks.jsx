@@ -4,11 +4,16 @@ import { query, collection, where, getDocs, doc, deleteDoc} from 'firebase/fires
 import { db } from '../firebase';
 import { Link } from 'react-router-dom';
 import TaskItem from "../components/TaskItem";
+import MyButton from "../components/UI/button/MyButton";
+// import MyModal from "../components/UI/modal/MymodalForTask";
+import TaskForm from "../components/TaskForm";
+import MyModalForTask from "../components/UI/modal/MymodalForTask";
 
 function Tasks() {
   const [queueTasks, setQueueTasks] = useState([]);
   const [developmentTasks, setDevelopmentTasks] = useState([]);
   const [doneTasks, setDoneTasks] = useState([]);
+  let [modal, setModal] = useState(false);
 
   let {id} = useParams();
 
@@ -62,27 +67,35 @@ function Tasks() {
           <div className='Done'>Задачи завершенные</div>
         </div>
       </div>
-      <div className='container1'>
-        <div className='tasks'>
-          {queueTasks.map((task, index) => (
-            <TaskItem remove={removeTask} task={task} key={index} num={index + 1}/>
-            ))}
+      <div className="container4">
+        <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={() => setModal(true)}>
+          Create new task
+        </MyButton>
+        <MyModalForTask visible={modal} setVisible={setModal}>
+          <TaskForm projectId={id} />
+        </MyModalForTask>
         </div>
-      </div>
-      <div className='container2'>
-        <div className='tasks'>
-          {developmentTasks.map((task, index) => (
-            <TaskItem remove={removeTask} task={task} key={index} num={index + 1}/>
+        <div className='container1'>
+          <div className='tasks'>
+            {queueTasks.map((task, index) => (
+              <TaskItem remove={removeTask} task={task} key={index} num={index + 1} />
             ))}
+          </div>
         </div>
-      </div>
-      <div className='container3'>
-        <div className='tasks'>
-          {doneTasks.map((task, index) => (
-            <TaskItem remove={removeTask} task={task} key={index} num={index + 1}/>
+        <div className='container2'>
+          <div className='tasks'>
+            {developmentTasks.map((task, index) => (
+              <TaskItem remove={removeTask} task={task} key={index} num={index + 1}/>
             ))}
+          </div>
         </div>
-      </div>
+        <div className='container3'>
+          <div className='tasks'>
+            {doneTasks.map((task, index) => (
+              <TaskItem remove={removeTask} task={task} key={index} num={index + 1}/>
+            ))}
+          </div>
+        </div>
     </div>
   )
 };
