@@ -98,7 +98,7 @@
 }
 .project {
   display: flex;
-  border: 1px solid #566573;
+  border: 2px solid #93999e;
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
   margin-top: 5px;
@@ -175,7 +175,7 @@
 .task {
   display: flex;
   padding: 26px;
-  border: 1px solid #566573;
+  border: 2px solid #93999e;
   margin-top: 5px;
   justify-content: space-between;
   align-items: center;

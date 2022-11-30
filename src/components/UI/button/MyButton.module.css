@@ -3,7 +3,8 @@
   color: #566573;
   font-size: 14px;
   background: transparent;
-  border: 2px solid #566573;
+  /* border: 2px solid #566573; */
+  border: 2px solid #93999e;
   cursor: pointer;
-  font-family: Comic Sans MS, Comic Sans, fantasy;
+  /* font-family: Comic Sans MS, Comic Sans, fantasy; */
 }
