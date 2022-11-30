@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import { updateDoc, doc } from 'firebase/firestore';
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db } from '../firebase';
-import { storage } from '../firebase';
-
 
 const TaskUpdForm = ({ task }) => {
   const [UpdItem, setUpdItem] = useState({
@@ -18,8 +15,7 @@ const TaskUpdForm = ({ task }) => {
     fileName: task.fileName,
     status: task.status
   });
-  const [progress, setProgress] = useState(0);
-    
+
   const updTask = async (e) => {
     e.preventDefault();
     console.log("Меняем задачу ", task.id);
@@ -45,50 +41,6 @@ const TaskUpdForm = ({ task }) => {
     });
     window.location.reload();
   }
-
-  const handleUpload = (e) => {
-    e.preventDefault();
-    const file = e.target[0].files[0];
-    let arr = [].slice.call(e.target.parentElement.children);
-    let divUuid = arr.find((val) => {
-      if (val.className === 'uuid')
-        return val;
-    }).textContent;
-    console.log(divUuid);
-    uploadFiles(file, divUuid);
-  }
-
-  const uploadFiles = async (file, divUuid) => {
-    if (!file) return;
-    const sotrageRef = ref(storage, `files/${file.name}`);
-    const uploadTask = uploadBytesResumable(sotrageRef, file);
-    let fileName = file.name;
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const prog = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(prog);
-      },
-      (error) => console.log("Error", error),
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
-          // recordUrl(downloadURL, divUuid, fileName);
-        });
-      }
-    );
-  };
-
-  // const recordUrl = (url, divUuid, fileName) => {
-  //   update(ref_database(db, `/${divUuid}`, divUuid), {
-  //     uuid: divUuid,
-  //     fileUrl: url,
-  //     fileName: fileName
-  //   });
-  // }
 
   return (
     <form>
@@ -141,11 +93,6 @@ const TaskUpdForm = ({ task }) => {
         placeholder={"Текущий статус"}
       />
       <MyButton onClick={updTask}>Update task</MyButton>
-      <div><br /></div>
-      <form onSubmit={handleUpload} className='uploadUrl' >
-        <input type="file" className='inputfileUrl' />
-        <button type='submit'> Upload </button>
-      </form>
     </form>
   );
 };
