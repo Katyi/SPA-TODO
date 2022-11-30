@@ -13,12 +13,12 @@ const TaskUpdForm = ({ task }) => {
     endDate: task.endDate,
     priority: task.priority,
     fileName: task.fileName,
+    fileUrl: task.fileUrl,
     status: task.status
   });
 
   const updTask = async (e) => {
     e.preventDefault();
-    console.log("Меняем задачу ", task.id);
     await updateDoc(doc(db, 'tasks', task.id), {
       taskName: UpdItem.taskName,
       description: UpdItem.description,
@@ -26,7 +26,6 @@ const TaskUpdForm = ({ task }) => {
       workTime: UpdItem.workTime,
       endDate: UpdItem.endDate,
       priority: UpdItem.priority,
-      fileName: UpdItem.fileName,
       status: UpdItem.status
     });
     setUpdItem({
@@ -37,6 +36,7 @@ const TaskUpdForm = ({ task }) => {
       endDate: '',
       priority: '',
       fileName: '',
+      fileUrl: '',
       status: ''
     });
     window.location.reload();
@@ -81,13 +81,15 @@ const TaskUpdForm = ({ task }) => {
         placeholder={"Приоритет"}
       />
       <MyInput
-        value ={UpdItem.fileName}
+        value={UpdItem.fileName}
+        disabled="disabled"
         onChange={e => setUpdItem({ ...UpdItem, fileName: e.target.value })}
         type={"text"}
-        placeholder={"Вложенные файлы"}
+        placeholder={"Вложенный файл"}
       />
+      <a href={UpdItem.fileUrl} target='_blank'>Ссылка на файл</a>
       <MyInput
-        value ={UpdItem.status}
+        value={UpdItem.status}
         onChange={e => setUpdItem({ ...UpdItem, status: e.target.value })}
         type={"text"}
         placeholder={"Текущий статус"}

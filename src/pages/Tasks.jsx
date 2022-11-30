@@ -5,7 +5,6 @@ import { db } from '../firebase';
 import { Link } from 'react-router-dom';
 import TaskItem from "../components/TaskItem";
 import MyButton from "../components/UI/button/MyButton";
-// import MyModal from "../components/UI/modal/MymodalForTask";
 import TaskForm from "../components/TaskForm";
 import MyModalForTask from "../components/UI/modal/MymodalForTask";
 
@@ -78,7 +77,7 @@ function Tasks() {
         <div className='container1'>
           <div className='tasks'>
             {queueTasks.map((task, index) => (
-              <TaskItem remove={removeTask} task={task} key={index} num={index + 1} />
+              <TaskItem remove={removeTask} task={task} key={index} num={index + 1}/>
             ))}
           </div>
         </div>

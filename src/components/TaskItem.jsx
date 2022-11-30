@@ -3,7 +3,6 @@ import MyButton from "../components/UI/button/MyButton";
 import TaskUpdForm from "./TaskUpdForm";
 import MyModalForTask from "./UI/modal/MymodalForTask";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-// import { ref as ref_database, update } from 'firebase/database';
 import { updateDoc, doc } from 'firebase/firestore';
 
 
@@ -14,23 +13,17 @@ import MyInput from "./UI/input/MyInput";
 
 const TaskItem = (props) => {
   let [modal, setModal] = useState(false);
-  const [progress, setProgress] = useState(0);
+  // const [progress, setProgress] = useState(0);
 
   const handleUpload = (e) => {
     e.preventDefault();
     const file = e.target[0].files[0];
-    // console.log(JSON.stringify(file));
     let arr = [].slice.call(e.target.parentElement.children);
     console.log(arr);
-    let id = arr.find((val) => {
-      if (val.className === 'id')
-        return val;
-    }).textContent;
-    console.log(id);
-    uploadFiles(file, id);
+    uploadFiles(file);
   }
 
-  const uploadFiles = async (file, id) => {
+  const uploadFiles = async (file) => {
     if (!file) return;
     const sotrageRef = ref(storage, `files/${file.name}`);
     const uploadTask = uploadBytesResumable(sotrageRef, file);
@@ -42,23 +35,24 @@ const TaskItem = (props) => {
         const prog = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
-        setProgress(prog);
+        // setProgress(prog);
       },
       (error) => console.log("Error", error),
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
-          recordUrl(downloadURL, id, fileName);
+          recordUrl(downloadURL, fileName);
         });
       }
     );
   };
 
-  const recordUrl =  async (url, id, fileName) => {
-    await updateDoc(doc(db, 'tasks', id), {
+  const recordUrl =  async (url, fileName) => {
+    await updateDoc(doc(db, 'tasks', props.task.id), {
       fileUrl: url,
       fileName: fileName
     });
+    window.location.reload();
   }
 
   return (
