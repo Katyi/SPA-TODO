@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
-// import Loader from '../components/UI/Loader/Loader';
-import { query, collection, where, getDocs } from 'firebase/firestore';
+import { query, collection, where, getDocs, doc, deleteDoc} from 'firebase/firestore';
 import { db } from '../firebase';
-// import MyButton from "../components/UI/button/MyButton";
 import { Link } from 'react-router-dom';
 import TaskItem from "../components/TaskItem";
 
@@ -11,11 +9,9 @@ function Tasks() {
   const [queueTasks, setQueueTasks] = useState([]);
   const [developmentTasks, setDevelopmentTasks] = useState([]);
   const [doneTasks, setDoneTasks] = useState([]);
-  // let [modal, setModal] = useState(false);
 
   let {id} = useParams();
 
-  // console.log('ID проекта: ', {id});
   async function firebaseQuery() {
     const q1 = query(collection(db, 'tasks'), where("status", "==", "Queue"), where("isSubtask", "==", false), where('projectId','==', id));
     const q2 = query(collection(db, 'tasks'), where("status", "==", "Development"), where("isSubtask", "==", false), where('projectId','==', id));
@@ -39,6 +35,13 @@ function Tasks() {
     setDevelopmentTasks(tasksArr2)
     setDoneTasks(tasksArr3)
   }
+
+  const removeTask = async (task) => {
+    await deleteDoc(doc(db, 'tasks', task.id))
+    console.log("DELETED TASK", task);
+    window.location.reload();
+  }
+
   useEffect(() => {
     firebaseQuery();
   }, []);
@@ -62,37 +65,22 @@ function Tasks() {
       <div className='container1'>
         <div className='tasks'>
           {queueTasks.map((task, index) => (
-            <TaskItem task={task} key={index} num={index + 1}/>
-            // <div className='task' key={index}>
-            //   <div className='id'>{index + 1}</div>
-            //   <div className='taskName'>{task.taskName}</div>
-            //   <MyButton onClick={() => console.log(`${task.id}`)}>Open</MyButton>
-            // </div>
-          ))}
+            <TaskItem remove={removeTask} task={task} key={index} num={index + 1}/>
+            ))}
         </div>
       </div>
       <div className='container2'>
         <div className='tasks'>
           {developmentTasks.map((task, index) => (
-            <TaskItem task={task} key={index} num={index + 1}/>
-            // <div className='task' key={index}>
-            //   <div className='id'>{index + 1}</div>
-            //   <div className='taskName'>{task.taskName}</div>
-            //   <MyButton onClick={() => console.log(`${task.id}`)}>Open</MyButton>
-            // </div>
-          ))}
+            <TaskItem remove={removeTask} task={task} key={index} num={index + 1}/>
+            ))}
         </div>
       </div>
       <div className='container3'>
         <div className='tasks'>
           {doneTasks.map((task, index) => (
-            <TaskItem task={task} key={index} num={index + 1}/>
-            // <div className='task' key={index}>
-            //   <div className='id'>{index + 1}</div>
-            //   <div className='taskName'>{task.taskName}</div>
-            //   <MyButton onClick={() => console.log(`${task.id}`)}>Open</MyButton>
-            // </div>
-          ))}
+            <TaskItem remove={removeTask} task={task} key={index} num={index + 1}/>
+            ))}
         </div>
       </div>
     </div>

@@ -1,12 +1,10 @@
 import React, {useState} from "react";
 import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
-import {  updateDoc, doc } from 'firebase/firestore';
+import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 
-
 const ProjectUpdForm = ( {project} ) => {
-  // let id = project.id;
   const [UpdItem, setUpdItem] = useState({ projectName: '', description: '' });
   
   const updProject = async (e) => {

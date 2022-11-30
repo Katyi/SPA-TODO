@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { query, collection, onSnapshot } from 'firebase/firestore';
+import { query, collection, onSnapshot, doc, deleteDoc, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import ProjectItem from "../components/ProjectItem";
+import MyButton from "../components/UI/button/MyButton";
+import ProjectForm from "../components/ProjectForm";
+import MyModal from "../components/UI/modal/MyModal";
 
 
 function Projects() {
   const [projects, setProjects] = useState([]);
+  let [modal, setModal] = useState(false);
 
   useEffect(() => {
     const q = query(collection(db, 'projects'))
@@ -19,6 +23,26 @@ function Projects() {
     return () => unsubscribe()
   }, []);
   
+  // const createProject = async (input) => {
+  //   if (e === undefined) { return }
+  //   e.preventDefault();
+  //   if (input === '') {
+  //     alert('input some input')
+  //     return
+  //   }
+  //   await addDoc(collection(db, 'projects'), {
+  //     description: input,
+  //     completed: false
+  //   })
+  // }
+  
+  const removeProject = async (project) => {
+    await deleteDoc(doc(db, 'projects', project.id))
+    console.log("DELETED project", project);
+    window.location.reload();
+  }
+
+
   return (
     <div className="App">
       <div className="header">
@@ -32,9 +56,15 @@ function Projects() {
         </div>
       </div>
       <div className='container'>
+        <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={() => setModal(true)}>
+          Create new project
+        </MyButton>
+        <MyModal visible={modal} setVisible={setModal}>
+          <ProjectForm/>
+        </MyModal>
         <div className='projects'>
           {projects.map((project, index) => (
-            <ProjectItem project={project} key={index} num={index + 1} />
+            <ProjectItem remove={removeProject} project={project} key={index} num={index + 1} />
           ))}
         </div>
       </div>

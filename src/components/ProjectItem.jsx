@@ -17,8 +17,11 @@ const ProjectItem = (props) => {
       <div className="btn2">
         <MyButton onClick={() => setModal(true)}>UpDate</MyButton>
         <MyModal visible={modal} setVisible={setModal}>
-          <ProjectUpdForm project={props.project}/>
+          <ProjectUpdForm project={props.project} />
         </MyModal>
+      </div>
+      <div className="btn3">
+      <MyButton onClick={() => props.remove(props.project)}>Delete</MyButton>
       </div>
     </div>
   );
