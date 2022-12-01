@@ -1,18 +1,18 @@
 import React, {useState} from "react";
 import MyButton from "../components/UI/button/MyButton";
 import TaskUpdForm from "./TaskUpdForm";
+import SubtasksList from "./SubTasksList"
 import MyModalForTask from "./UI/modal/MymodalForTask";
+// import MyModal from "./UI/modal/MyModal";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { updateDoc, doc } from 'firebase/firestore';
-
-
 import { db } from '../firebase';
-
 import { storage } from '../firebase';
 import MyInput from "./UI/input/MyInput";
 
 const TaskItem = (props) => {
   let [modal, setModal] = useState(false);
+  let [modal1, setModal1] = useState(false);
   // const [progress, setProgress] = useState(0);
 
   const handleUpload = (e) => {
@@ -31,12 +31,12 @@ const TaskItem = (props) => {
 
     uploadTask.on(
       "state_changed",
-      (snapshot) => {
-        const prog = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
+      // (snapshot) => {
+        // const prog = Math.round(
+        //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        // );
         // setProgress(prog);
-      },
+      // },
       (error) => console.log("Error", error),
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -67,6 +67,10 @@ const TaskItem = (props) => {
         </MyModalForTask>
         {/* </div> */}
         <MyButton onClick={() => props.remove(props.task)}>Delete</MyButton>
+        <MyButton onClick={() => setModal1(true)}>SubTasks</MyButton>
+        <MyModalForTask visible={modal1} setVisible={setModal1}>
+          <SubtasksList task={props.task} />
+        </MyModalForTask>
       {/* </div> */}
       {/* <div className="task_part_2"> */}
         <form onSubmit={handleUpload} className='uploadUrl' >

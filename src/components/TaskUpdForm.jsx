@@ -85,7 +85,7 @@ const TaskUpdForm = ({ task }) => {
         disabled="disabled"
         onChange={e => setUpdItem({ ...UpdItem, fileName: e.target.value })}
         type={"text"}
-        placeholder={"Вложенный файл"}
+        placeholder={"Нет загруженного файла"}
       />
       <a href={UpdItem.fileUrl} target='_blank'>Ссылка на файл</a>
       <MyInput

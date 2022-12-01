@@ -4,8 +4,8 @@ import MyInput from "./UI/input/MyInput";
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
 
-const TaskForm = ({ projectId }) => {
-  const [task, setTask] = useState({
+const SubTaskForm = ({ projectId }) => {
+  const [subTask, setSubTask] = useState({
     taskName: '',
     description: '',
     createDate: '',
@@ -16,20 +16,20 @@ const TaskForm = ({ projectId }) => {
     isSubtask: ''
   });
   
-  const addNewTask = async (e) => {
+  const addNewSubTask = async (e) => {
     e.preventDefault();
     await addDoc(collection(db, 'tasks'), {
-      taskName: task.taskName,
-      description: task.description,
-      createDate: task.createDate,
-      workTime: task.workTime,
-      endDate: task.endDate,
-      priority: task.priority,
-      status: task.status,
-      isSubtask: false,
+      taskName: subTask.taskName,
+      description: subTask.description,
+      createDate: subTask.createDate,
+      workTime: subTask.workTime,
+      endDate: subTask.endDate,
+      priority: subTask.priority,
+      status: subTask.status,
+      isSubtask: true,
       projectId: projectId
     })
-    setTask({
+    setSubTask({
       taskName: '',
       description: '',
       createDate: '',
@@ -46,14 +46,14 @@ const TaskForm = ({ projectId }) => {
     return (
       <form>
         <MyInput
-          value={task.taskName}
-          onChange={e => setTask({ ...task, taskName: e.target.value })}
+          value={SubTask.taskName}
+          onChange={e => setSubTask({ ...SubTask, taskName: e.target.value })}
           type={"text"}
           placeholder={"Название Задачи"}
         />
         <MyInput
-          value={task.description}
-          onChange={e => setTask({ ...task, description: e.target.value })}
+          value={SubTask.description}
+          onChange={e => setSubTask({ ...task, description: e.target.value })}
           type={"text"}
           placeholder={"Описание Задачи"}
         />
@@ -87,9 +87,9 @@ const TaskForm = ({ projectId }) => {
           type={"text"}
           placeholder={"Текущий статус"}
         />
-        <MyButton onClick={addNewTask}>Create New Task</MyButton>
+        <MyButton onClick={addNewSubTask}>Create New Sub Task</MyButton>
       </form>
     );
 };
 
-export default TaskForm;
+export default SubTaskForm;
