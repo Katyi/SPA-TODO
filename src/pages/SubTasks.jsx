@@ -8,9 +8,8 @@ import MyButton from "../components/UI/button/MyButton";
 import TaskForm from "../components/TaskForm";
 import MyModalForTask from "../components/UI/modal/MyModalForTask";
 
-function Tasks() {
+function SubTasks() {
   const [queueTasks, setQueueTasks] = useState([]);
-  const [queueSubTasks, setSubQueueTasks] = useState([]);
   const [developmentTasks, setDevelopmentTasks] = useState([]);
   const [doneTasks, setDoneTasks] = useState([]);
   let [modal, setModal] = useState(false);
@@ -18,9 +17,9 @@ function Tasks() {
   let {id} = useParams();
 
   async function firebaseQuery() {
-    const q1 = query(collection(db, 'tasks'), where("status", "==", "Queue"), where("isSubtask", "==", false), where('projectId','==', id));
-    const q2 = query(collection(db, 'tasks'), where("status", "==", "Development"), where("isSubtask", "==", false), where('projectId','==', id));
-    const q3 = query(collection(db, 'tasks'), where("status", "==", "Done"), where("isSubtask", "==", false), where('projectId','==', id));
+    const q1 = query(collection(db, 'tasks'), where("status", "==", "Queue"), where("isSubtask", "==", true), where('taskId','==', id));
+    const q2 = query(collection(db, 'tasks'), where("status", "==", "Development"), where("isSubtask", "==", true), where('taskId','==', id));
+    const q3 = query(collection(db, 'tasks'), where("status", "==", "Done"), where("isSubtask", "==", true), where('taskId','==', id));
     let tasksArr1 = [];
     let tasksArr2 = [];
     let tasksArr3 = [];
@@ -100,4 +99,4 @@ function Tasks() {
   )
 };
 
-export default Tasks;
+export default SubTasks;

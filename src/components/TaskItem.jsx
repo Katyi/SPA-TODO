@@ -1,18 +1,19 @@
 import React, {useState} from "react";
 import MyButton from "../components/UI/button/MyButton";
+import { useNavigate } from 'react-router-dom';
 import TaskUpdForm from "./TaskUpdForm";
-import SubtasksList from "./SubTasksList"
-import MyModalForTask from "./UI/modal/MymodalForTask";
+// import SubtasksList from "./SubTasksList";
+import MyModalForTask from "./UI/modal/MyModalForTask";
 // import MyModal from "./UI/modal/MyModal";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { storage } from '../firebase';
 import MyInput from "./UI/input/MyInput";
+import Tasks from "../pages/Tasks"
 
 const TaskItem = (props) => {
   let [modal, setModal] = useState(false);
-  let [modal1, setModal1] = useState(false);
   // const [progress, setProgress] = useState(0);
 
   const handleUpload = (e) => {
@@ -55,6 +56,7 @@ const TaskItem = (props) => {
     window.location.reload();
   }
 
+  let navigate = useNavigate();
   return (
     <div className='task'>
       {/* <div className="task_part_1"> */}
@@ -67,10 +69,12 @@ const TaskItem = (props) => {
         </MyModalForTask>
         {/* </div> */}
         <MyButton onClick={() => props.remove(props.task)}>Delete</MyButton>
-        <MyButton onClick={() => setModal1(true)}>SubTasks</MyButton>
+      {/* <MyButton onClick={() => Tasks(1)}>SubTasks</MyButton> */}
+      <MyButton onClick={() => navigate(`/tasks/${props.task.id}`)}>Open</MyButton>
+        {/* <MyButton onClick={() => setModal1(true)}>SubTasks</MyButton>
         <MyModalForTask visible={modal1} setVisible={setModal1}>
           <SubtasksList task={props.task} />
-        </MyModalForTask>
+        </MyModalForTask> */}
       {/* </div> */}
       {/* <div className="task_part_2"> */}
         <form onSubmit={handleUpload} className='uploadUrl' >

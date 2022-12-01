@@ -1,0 +1,53 @@
+createDate
+"01.02.2022"
+endDate
+"01.07.2022"
+fileName
+"Задача 2"
+isSubtask
+false
+priority
+"high"
+projectId
+"YHWxV6TvsJfIgLEVDLel"
+sort
+3
+status
+"Development"
+subtasks
+0
+""
+taskName
+"Задача 2"
+workTime
+""
+taskNumber
+2
+
+description
+"Проект написания программы"
+projectName
+"Проект 1"
+sort
+1
+
+
+Kt6ydOImb3iSc8wbIg7d
+YHWxV6TvsJfIgLEVDLel
+
+1 Номер задачи taskNumber
+2 Заголовок taskName +
+3 Описание description +
+4 Дата создания createDate +
+5 Время в работе workTime +
+6 Дата окончания endDate +
+7 Приоритет priority +
+8 Вложенные файлы fileName +
+9 Ссылка на файл fileUrl
+10 Текущий статус status +
+Возможность добавлять подзадачи subtasks
+комментариев 
+11 isSubtask +
+12 subtasks
+13 projectId
+

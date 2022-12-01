@@ -28,17 +28,17 @@ const TaskUpdForm = ({ task }) => {
       priority: UpdItem.priority,
       status: UpdItem.status
     });
-    setUpdItem({
-      taskName: '',
-      description: '',
-      createDate: '',
-      workTime: '',
-      endDate: '',
-      priority: '',
-      fileName: '',
-      fileUrl: '',
-      status: ''
-    });
+    // setUpdItem({
+    //   taskName: '',
+    //   description: '',
+    //   createDate: '',
+    //   workTime: '',
+    //   endDate: '',
+    //   priority: '',
+    //   fileName: '',
+    //   fileUrl: '',
+    //   status: ''
+    // });
     window.location.reload();
   }
 
