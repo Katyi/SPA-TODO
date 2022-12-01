@@ -48,6 +48,5 @@ YHWxV6TvsJfIgLEVDLel
 Возможность добавлять подзадачи subtasks
 комментариев 
 11 isSubtask +
-12 subtasks
 13 projectId
 

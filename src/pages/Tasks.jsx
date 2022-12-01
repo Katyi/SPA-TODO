@@ -7,6 +7,8 @@ import TaskItem from "../components/TaskItem";
 import MyButton from "../components/UI/button/MyButton";
 import TaskForm from "../components/TaskForm";
 import MyModalForTask from "../components/UI/modal/MyModalForTask";
+import { useDrop } from 'react-dnd';
+import { ItemTypes } from '../ItemTypes';
 
 function Tasks() {
   const [queueTasks, setQueueTasks] = useState([]);
@@ -14,6 +16,24 @@ function Tasks() {
   const [doneTasks, setDoneTasks] = useState([]);
   let [modal, setModal] = useState(false);
   let { id } = useParams();
+  const allowedDropEffect = 'move;'
+  
+  const [{ canDrop, isOver }, drop] = useDrop(
+    () => ({
+      accept: ItemTypes.BOX,
+      drop: () => ({
+        name: `${allowedDropEffect} Dustbin`,
+        allowedDropEffect,
+      }),
+      collect: (monitor) => ({
+        isOver: monitor.isOver(),
+        canDrop: monitor.canDrop(),
+      }),
+    }),
+    [allowedDropEffect],
+  )
+  const isActive = canDrop && isOver
+
   
   // -----Параметры для отображения задач в трех столбцах на странице задач------------------------------------------------------------------
   async function firebaseQuery() {
@@ -73,21 +93,21 @@ function Tasks() {
           <TaskForm projectId={id} />
         </MyModalForTask>
         </div>
-        <div className='container1'>
+        <div className='container1' ref={drop}>
         <div className='tasks'>
           {queueTasks.map((task, index) => (
             <TaskItem remove={removeTask} task={task} key={index} num={index + 1} />
           ))}
           </div>
         </div>
-        <div className='container2'>
+        <div className='container2' ref={drop}>
           <div className='tasks'>
             {developmentTasks.map((task, index) => (
               <TaskItem remove={removeTask} task={task} key={index} num={index + 1}/>
             ))}
           </div>
         </div>
-        <div className='container3'>
+        <div className='container3' ref={drop}>
           <div className='tasks'>
             {doneTasks.map((task, index) => (
               <TaskItem remove={removeTask} task={task} key={index} num={index + 1}/>

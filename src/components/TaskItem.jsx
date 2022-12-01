@@ -8,10 +8,13 @@ import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { storage } from '../firebase';
 import MyInput from "./UI/input/MyInput";
+import { useDrag } from 'react-dnd';
+import { ItemTypes } from '../ItemTypes';
 
 const TaskItem = (props) => {
   let [modal, setModal] = useState(false);
   const [progress, setProgress] = useState(0);
+
   const handleUpload = (e) => {
     e.preventDefault();
     const file = e.target[0].files[0];
@@ -53,9 +56,37 @@ const TaskItem = (props) => {
   }
 
   let navigate = useNavigate();
-  
+  //      drag-n-drop                                                                                                                       
+  const [{ opacity }, drag] = useDrag(() => ({
+    type: ItemTypes.BOX,
+    item:  props.task.taskName ,
+    end(item, monitor) {
+      const dropResult = monitor.getDropResult()
+      if (item && dropResult) {
+        let alertMessage = ''
+        const isDropAllowed =
+          dropResult.allowedDropEffect === 'any' ||
+          dropResult.allowedDropEffect === dropResult.dropEffect
+        if (isDropAllowed) {
+          const isCopyAction = dropResult.dropEffect === 'copy'
+          const actionName = isCopyAction ? 'copied' : 'moved'
+          alertMessage = `You ${actionName} ${item.name} into ${dropResult.name}!`
+        } else {
+          alertMessage = `You cannot ${dropResult.dropEffect} an item into the ${dropResult.name}`
+        }
+        alert(alertMessage)
+      }
+    },
+    collect: (monitor) => ({
+      opacity: monitor.isDragging() ? 0.4 : 1,
+    }),
+  }),
+    [props.task.taskName],
+  )
+
+
   return (
-    <div className='task'>
+    <div className='task' ref={drag}>
       <div className='id'>{props.num}</div>
       <div className='taskName'>{props.task.taskName}</div>
       <MyButton onClick={() => setModal(true)}>Open/Update</MyButton>
