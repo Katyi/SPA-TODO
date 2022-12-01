@@ -4,41 +4,39 @@ import MyInput from "./UI/input/MyInput";
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
 
-const SubTaskForm = ({ projectId }) => {
-  const [subTask, setSubTask] = useState({
+const SubTaskForm = ({ taskId }) => {
+  const [task, setTask] = useState({
+    taskNumber: '',
     taskName: '',
     description: '',
     createDate: '',
     workTime: '',
     endDate: '',
-    priority: '',
-    status: '',
-    isSubtask: ''
+    priority: ''
   });
   
-  const addNewSubTask = async (e) => {
+  const addNewTask = async (e) => {
     e.preventDefault();
     await addDoc(collection(db, 'tasks'), {
-      taskName: subTask.taskName,
-      description: subTask.description,
-      createDate: subTask.createDate,
-      workTime: subTask.workTime,
-      endDate: subTask.endDate,
-      priority: subTask.priority,
-      status: subTask.status,
+      taskNumber: task.taskNumber,
+      taskName: task.taskName,
+      description: task.description,
+      createDate: task.createDate,
+      workTime: task.workTime,
+      endDate: task.endDate,
+      priority: task.priority,
+      status: "Queue",
       isSubtask: true,
-      projectId: projectId
+      taskId: taskId
     })
-    setSubTask({
+    setTask({
+      taskNumber: '',
       taskName: '',
       description: '',
       createDate: '',
       workTime: '',
       endDate: '',
       priority: '',
-      fileName: '',
-      fileUrl: '',
-      status: ''
     });
     window.location.reload();
 }
@@ -46,21 +44,28 @@ const SubTaskForm = ({ projectId }) => {
     return (
       <form>
         <MyInput
-          value={SubTask.taskName}
-          onChange={e => setSubTask({ ...SubTask, taskName: e.target.value })}
-          type={"text"}
-          placeholder={"Название Задачи"}
+          value={task.taskNumber}
+          onChange={e => setTask({ ...task, taskNumber: e.target.value })}
+          type={"number"}
+          placeholder={"Номер Подзадачи"}
+          required
         />
         <MyInput
-          value={SubTask.description}
-          onChange={e => setSubTask({ ...task, description: e.target.value })}
+          value={task.taskName}
+          onChange={e => setTask({ ...task, taskName: e.target.value })}
           type={"text"}
-          placeholder={"Описание Задачи"}
+          placeholder={"Название Подзадачи"}
+        />
+        <MyInput
+          value={task.description}
+          onChange={e => setTask({ ...task, description: e.target.value })}
+          type={"text"}
+          placeholder={"Описание Подзадачи"}
         />
         <MyInput
           value={task.createDate}
           onChange={e => setTask({ ...task, createDate: e.target.value })}
-          type={"text"}
+          type={"date"}
           placeholder={"Дата создания"}
         />
         <MyInput
@@ -72,22 +77,24 @@ const SubTaskForm = ({ projectId }) => {
         <MyInput
           value={task.endDate}
           onChange={e => setTask({ ...task, endDate: e.target.value })}
-          type={"text"}
+          type={"date"}
           placeholder={"Дата окончания"}
         />
-        <MyInput
+        {/* <MyInput
           value={task.priority}
           onChange={e => setTask({ ...task, priority: e.target.value })}
           type={"text"}
           placeholder={"Приоритет"}
-        />
-        <MyInput
+          // required
+        /> */}
+        {/* <MyInput
           value={task.status}
           onChange={e => setTask({ ...task, status: e.target.value })}
           type={"text"}
           placeholder={"Текущий статус"}
-        />
-        <MyButton onClick={addNewSubTask}>Create New Sub Task</MyButton>
+          required
+        /> */}
+        <MyButton onClick={addNewTask}>Create New Task</MyButton>
       </form>
     );
 };

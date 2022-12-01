@@ -4,12 +4,12 @@ import MyInput from "./UI/input/MyInput";
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 
+  // -----Редактирование проекта-------------------------------------------------------------------------------------
 const ProjectUpdForm = ( {project} ) => {
   const [UpdItem, setUpdItem] = useState({ projectName: '', description: '' });
   
   const updProject = async (e) => {
     e.preventDefault();
-    console.log("Меняем проект ", project.id);
     await updateDoc(doc(db, 'projects', project.id), {
       projectName: UpdItem.projectName,
       description: UpdItem.description,

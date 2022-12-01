@@ -4,8 +4,10 @@ import MyInput from "./UI/input/MyInput";
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 
+  // -----Просмотр и редактирование задачи в модальном окне-------------------------------------------------------------------------------------
 const TaskUpdForm = ({ task }) => {
   const [UpdItem, setUpdItem] = useState({
+    taskNumber: task.taskNumber,
     taskName: task.taskName,
     description: task.description,
     createDate: task.createDate,
@@ -20,6 +22,7 @@ const TaskUpdForm = ({ task }) => {
   const updTask = async (e) => {
     e.preventDefault();
     await updateDoc(doc(db, 'tasks', task.id), {
+      taskNumber: UpdItem.taskNumber,
       taskName: UpdItem.taskName,
       description: UpdItem.description,
       createDate: UpdItem.createDate,
@@ -44,6 +47,12 @@ const TaskUpdForm = ({ task }) => {
 
   return (
     <form>
+      <MyInput
+        value={UpdItem.taskNumber}
+        onChange={e => setUpdItem({...UpdItem, taskNumber: e.target.value})}
+        type={"number"}
+        placeholder={"Номер задачи"}
+      />
       <MyInput
         value={UpdItem.taskName}
         onChange={e => setUpdItem({...UpdItem, taskName: e.target.value})}

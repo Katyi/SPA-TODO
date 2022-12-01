@@ -6,6 +6,7 @@ import { db } from '../firebase';
 
 const TaskForm = ({ projectId }) => {
   const [task, setTask] = useState({
+    taskNumber: '',
     taskName: '',
     description: '',
     createDate: '',
@@ -19,6 +20,7 @@ const TaskForm = ({ projectId }) => {
   const addNewTask = async (e) => {
     e.preventDefault();
     await addDoc(collection(db, 'tasks'), {
+      taskNumber: task.taskNumber,
       taskName: task.taskName,
       description: task.description,
       createDate: task.createDate,
@@ -30,6 +32,7 @@ const TaskForm = ({ projectId }) => {
       projectId: projectId
     })
     setTask({
+      taskNumber: '',
       taskName: '',
       description: '',
       createDate: '',
@@ -46,6 +49,13 @@ const TaskForm = ({ projectId }) => {
     return (
       <form>
         <MyInput
+          value={task.taskNumber}
+          onChange={e => setTask({ ...task, taskNumber: e.target.value })}
+          type={"number"}
+          placeholder={"Номер Задачи"}
+          required
+        />
+        <MyInput
           value={task.taskName}
           onChange={e => setTask({ ...task, taskName: e.target.value })}
           type={"text"}
@@ -60,7 +70,7 @@ const TaskForm = ({ projectId }) => {
         <MyInput
           value={task.createDate}
           onChange={e => setTask({ ...task, createDate: e.target.value })}
-          type={"text"}
+          type={"date"}
           placeholder={"Дата создания"}
         />
         <MyInput
@@ -72,7 +82,7 @@ const TaskForm = ({ projectId }) => {
         <MyInput
           value={task.endDate}
           onChange={e => setTask({ ...task, endDate: e.target.value })}
-          type={"text"}
+          type={"date"}
           placeholder={"Дата окончания"}
         />
         <MyInput
@@ -80,12 +90,14 @@ const TaskForm = ({ projectId }) => {
           onChange={e => setTask({ ...task, priority: e.target.value })}
           type={"text"}
           placeholder={"Приоритет"}
+          required
         />
         <MyInput
           value={task.status}
           onChange={e => setTask({ ...task, status: e.target.value })}
           type={"text"}
           placeholder={"Текущий статус"}
+          required
         />
         <MyButton onClick={addNewTask}>Create New Task</MyButton>
       </form>

@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { query, collection, where, getDocs, doc, deleteDoc} from 'firebase/firestore';
 import { db } from '../firebase';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import TaskItem from "../components/TaskItem";
 import MyButton from "../components/UI/button/MyButton";
-import TaskForm from "../components/TaskForm";
+// import TaskForm from "../components/TaskForm";
 import MyModalForTask from "../components/UI/modal/MyModalForTask";
+import SubTaskForm from "../components/SubTaskForm";
 
 function SubTasks() {
   const [queueTasks, setQueueTasks] = useState([]);
@@ -50,53 +51,55 @@ function SubTasks() {
     firebaseQuery();
   }, []);
 
+  let navigate = useNavigate();
 
-  return (
-    <div className="App">
-      <div className="header">
-        <div className="header_part1">
-        <div className="header_title">Задачи</div>
-          <div className="header__link">
-            <Link to="/projects">Обратно к проектам</Link>
+    return (
+      <div className="App">
+        <div className="header">
+          <div className="header_part1">
+            <div className="header_title">Задачи</div>
+            <div className="header__link">
+              <MyButton onClick={() => navigate(-1)}>Обратно к задачам</MyButton>
+            </div>
+          </div>
+          <div className='header_of_tasks'>
+            <div className="Queue">Подзадачи в очереди</div>
+            <div className='Development'>Подзадачи в разработке</div>
+            <div className='Done'>Подзадачи завершенные</div>
           </div>
         </div>
-        <div className='header_of_tasks'>
-          <div className="Queue">Задачи в очереди</div>
-          <div className='Development'>Задачи в разработке</div>
-          <div className='Done'>Задачи завершенные</div>
-        </div>
-      </div>
-      <div className="container4">
-        <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={() => setModal(true)}>
-          Create new task
-        </MyButton>
-        <MyModalForTask visible={modal} setVisible={setModal}>
-          <TaskForm projectId={id} />
-        </MyModalForTask>
+        <div className="container4">
+          <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={() => setModal(true)}>
+            Create new subtask
+          </MyButton>
+          <MyModalForTask visible={modal} setVisible={setModal}>
+            <SubTaskForm taskId={id} />
+          </MyModalForTask>
         </div>
         <div className='container1'>
-        <div className='tasks'>
-          {queueTasks.map((task, index) => (
-            <TaskItem remove={removeTask} task={task} key={index} num={index + 1} />
-          ))}
+          <div className='tasks'>
+            {queueTasks.map((task, index) => (
+              <TaskItem remove={removeTask} task={task} key={index} num={index + 1} />
+            ))}
           </div>
         </div>
         <div className='container2'>
           <div className='tasks'>
             {developmentTasks.map((task, index) => (
-              <TaskItem remove={removeTask} task={task} key={index} num={index + 1}/>
+              <TaskItem remove={removeTask} task={task} key={index} num={index + 1} />
             ))}
           </div>
         </div>
         <div className='container3'>
           <div className='tasks'>
             {doneTasks.map((task, index) => (
-              <TaskItem remove={removeTask} task={task} key={index} num={index + 1}/>
+              <TaskItem remove={removeTask} task={task} key={index} num={index + 1} />
             ))}
           </div>
         </div>
-    </div>
-  )
+      </div>
+    )
+  // }
 };
 
 export default SubTasks;
