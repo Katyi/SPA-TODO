@@ -16,11 +16,12 @@ const SubTasksList = ({ task }) => {
         <div className='subTasksList'>
           <div key={index}>
             <div >{index + 1}</div>
-            <div>{elem}</div>
+            <div>{elem.index}</div>
             <br />
           </div>
         </div >
       })
+    // <div>Тут есть подзадачи</div>  
     )
   }
 }
