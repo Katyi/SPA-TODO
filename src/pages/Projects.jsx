@@ -27,10 +27,10 @@ function Projects() {
   const removeProject = async (project) => {
     await deleteDoc(doc(db, 'projects', project.id));
     console.log("DELETED project", project);
-    let projectId = project.id;
+    // let projectId = project.id;
   
-    await deleteDoc(db, 'tasks', project.id)
-    console.log("DELETED tasks for project", project);
+    // await deleteDoc(db, 'tasks', project.id)
+    // console.log("DELETED tasks for project", project);
     window.location.reload();
   }
 

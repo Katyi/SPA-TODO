@@ -12,9 +12,9 @@ import { ItemTypes } from '../ItemTypes';
 import MyInput from "../components/UI/input/MyInput";
 import { async } from "@firebase/util";
 // import Loader from "../components/UI/Loader/Loader";
-import TaskColumn1 from "../components/TaskColumn1";
-import TaskColumn2 from "../components/TaskColumn2";
-import TaskColumn3 from "../components/TaskColumn3";
+import TaskColumn from "../components/TaskColumn";
+//import TaskColumn2 from "../components/TaskColumn2";
+//import TaskColumn3 from "../components/TaskColumn3";
 
 function Tasks() {
   const [queueTasks, setQueueTasks] = useState([]);
@@ -26,22 +26,7 @@ function Tasks() {
   const allowedDropEffect = 'move;'
   const isAlbumsLoading = false;
   
-  // const [{ canDrop, isOver }, drop] = useDrop(
-  //   () => ({
-  //     accept: ItemTypes.BOX,
-  //     drop: () => ({
-  //       name: `${allowedDropEffect} Dustbin`,
-  //       allowedDropEffect,
-  //     }),
-  //     collect: (monitor) => ({
-  //       isOver: monitor.isOver(),
-  //       canDrop: monitor.canDrop(),
-  //     }),
-  //   }),
-  //   [allowedDropEffect],
-  // )
-  // const isActive = canDrop && isOver
-
+  
   
   // -----Параметры для отображения задач в трех столбцах на странице задач------------------------------------------------------------------
   async function firebaseQuery() {
@@ -126,9 +111,9 @@ function Tasks() {
           </MyButton>
         </div>
       </div>
-      <TaskColumn1 queueTasks={queueTasks} removeTask={removeTask}/>
-      <TaskColumn2 developmentTasks={developmentTasks} removeTask={removeTask}/>
-      <TaskColumn3 doneTasks={doneTasks} removeTask={removeTask}/>
+      <TaskColumn tasks={queueTasks} removeTask={removeTask} class = 'container1'/>
+      <TaskColumn tasks={developmentTasks} removeTask={removeTask} class = 'container2'/>
+      <TaskColumn tasks={doneTasks} removeTask={removeTask} class = 'container3'/>
         {/* <div className='container1' ref={drop}>
         <div className='tasks'>
           {queueTasks.map((task, index) => (
