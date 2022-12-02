@@ -6,20 +6,27 @@ import { db } from '../firebase';
 
   // -----Редактирование проекта-------------------------------------------------------------------------------------
 const ProjectUpdForm = ( {project} ) => {
-  const [UpdItem, setUpdItem] = useState({ projectName: '', description: '' });
+  const [UpdItem, setUpdItem] = useState({ projectNumber: '', projectName: '', description: '' });
   
   const updProject = async (e) => {
     e.preventDefault();
     await updateDoc(doc(db, 'projects', project.id), {
+      projectNumber: UpdItem.projectNumber,
       projectName: UpdItem.projectName,
       description: UpdItem.description,
     })
-    setUpdItem({ projectName: '', description: '' });
+    setUpdItem({ projectNumber: '', projectName: '', description: '' });
     window.location.reload();
   }
 
   return (
     <form>
+      <MyInput
+        value={UpdItem.projectNumber}
+        onChange={e => setUpdItem({...UpdItem, projectNumber: e.target.value})}
+        type={"number"}
+        placeholder={"Номер проекта"}
+      />
       <MyInput
         value={UpdItem.projectName}
         onChange={e => setUpdItem({...UpdItem, projectName: e.target.value})}

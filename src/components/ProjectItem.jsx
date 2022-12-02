@@ -10,7 +10,7 @@ const ProjectItem = (props) => {
   let navigate = useNavigate();
   return (
     <div className='project'>
-      <div className='id'>{props.num}</div>
+      <div className='id'>{props.project.projectNumber}</div>
       <div className='projectName'>{props.project.projectName}</div>
       <div className='description'>{props.project.description}</div>
       <div className="btn1"><MyButton onClick={() => navigate(`/projects/${props.project.id}`)}>Open</MyButton></div>

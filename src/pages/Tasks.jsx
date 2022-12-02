@@ -11,6 +11,7 @@ import { useDrop } from 'react-dnd';
 import { ItemTypes } from '../ItemTypes';
 import MyInput from "../components/UI/input/MyInput";
 import { async } from "@firebase/util";
+import Loader from "../components/UI/Loader/Loader";
 
 function Tasks() {
   const [queueTasks, setQueueTasks] = useState([]);
@@ -20,6 +21,7 @@ function Tasks() {
   let [modal, setModal] = useState(false);
   let { id } = useParams();
   const allowedDropEffect = 'move;'
+  const isAlbumsLoading = false;
   
   const [{ canDrop, isOver }, drop] = useDrop(
     () => ({
@@ -78,6 +80,7 @@ function Tasks() {
     setQueueTasks(searchResult1);
     setDevelopmentTasks(searchResult2);
     setDoneTasks(searchResult3);
+    isAlbumsLoading = true;
   }
 
   useEffect(() => {
@@ -116,25 +119,28 @@ function Tasks() {
             Cancel
           </MyButton>
         </div>
-        </div>
+      </div>
+  
         <div className='container1' ref={drop}>
         <div className='tasks'>
-          {queueTasks.map((task, index) => (
-            <TaskItem remove={removeTask} task={task} key={index} num={index + 1} />
+          {isAlbumsLoading
+          ? <div style={{ display: 'flex', justifyContent: 'center', marginTop: 250 }}><Loader /></div>
+        : queueTasks.map((task, index) => (
+            <TaskItem remove={removeTask} task={task} key={index}/>
           ))}
           </div>
         </div>
         <div className='container2' ref={drop}>
           <div className='tasks'>
             {developmentTasks.map((task, index) => (
-              <TaskItem remove={removeTask} task={task} key={index} num={index + 1}/>
+              <TaskItem remove={removeTask} task={task} key={index}/>
             ))}
           </div>
         </div>
         <div className='container3' ref={drop}>
           <div className='tasks'>
             {doneTasks.map((task, index) => (
-              <TaskItem remove={removeTask} task={task} key={index} num={index + 1}/>
+              <TaskItem remove={removeTask} task={task} key={index}/>
             ))}
           </div>
         </div>

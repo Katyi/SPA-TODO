@@ -5,7 +5,6 @@ import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import TaskItem from "../components/TaskItem";
 import MyButton from "../components/UI/button/MyButton";
-// import TaskForm from "../components/TaskForm";
 import MyModalForTask from "../components/UI/modal/MyModalForTask";
 import SubTaskForm from "../components/SubTaskForm";
 import MyInput from "../components/UI/input/MyInput";
@@ -102,21 +101,21 @@ function SubTasks() {
         <div className='container1'>
           <div className='tasks'>
             {queueTasks.map((task, index) => (
-              <TaskItem remove={removeTask} task={task} key={index} num={index + 1} />
+              <TaskItem remove={removeTask} task={task} key={index}/>
             ))}
           </div>
         </div>
         <div className='container2'>
           <div className='tasks'>
             {developmentTasks.map((task, index) => (
-              <TaskItem remove={removeTask} task={task} key={index} num={index + 1} />
+              <TaskItem remove={removeTask} task={task} key={index}/>
             ))}
           </div>
         </div>
         <div className='container3'>
           <div className='tasks'>
             {doneTasks.map((task, index) => (
-              <TaskItem remove={removeTask} task={task} key={index} num={index + 1} />
+              <TaskItem remove={removeTask} task={task} key={index}/>
             ))}
           </div>
         </div>

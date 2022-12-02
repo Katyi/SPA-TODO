@@ -29,7 +29,7 @@ const TaskUpdForm = ({ task }) => {
       workTime: UpdItem.workTime,
       endDate: UpdItem.endDate,
       priority: UpdItem.priority,
-      status: UpdItem.status
+      status: UpdItem.status,
     });
     // setUpdItem({
     //   taskName: '',

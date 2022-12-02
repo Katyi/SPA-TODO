@@ -80,13 +80,13 @@ const SubTaskForm = ({ taskId }) => {
           type={"date"}
           placeholder={"Дата окончания"}
         />
-        {/* <MyInput
+        <MyInput
           value={task.priority}
           onChange={e => setTask({ ...task, priority: e.target.value })}
           type={"text"}
           placeholder={"Приоритет"}
           // required
-        /> */}
+        />
         {/* <MyInput
           value={task.status}
           onChange={e => setTask({ ...task, status: e.target.value })}

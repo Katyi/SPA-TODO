@@ -5,11 +5,12 @@ import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
 
 const ProjectForm = () => {
-  const [project, setProject] = useState({ projectName: '', description: '' });
+  const [project, setProject] = useState({ projectNumber: '', projectName: '', description: '' });
 
   const addNewProject = async (e) => {
     e.preventDefault();
     await addDoc(collection(db, 'projects'), {
+      projectNumber: project.projectNumber,
       projectName: project.projectName,
       description: project.description
     })
@@ -18,6 +19,12 @@ const ProjectForm = () => {
 
     return (
       <form>
+        <MyInput
+          value={project.projectNumber}
+          onChange={e => setProject({ ...project, projectNumber: e.target.value })}
+          type={"number"}
+          placeholder={"Номер проекта"}
+        />
         <MyInput
           value={project.projectName}
           onChange={e => setProject({ ...project, projectName: e.target.value })}

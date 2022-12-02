@@ -27,7 +27,7 @@ const TaskForm = ({ projectId }) => {
       workTime: task.workTime,
       endDate: task.endDate,
       priority: task.priority,
-      status: task.status,
+      status: 'Queue',
       isSubtask: false,
       projectId: projectId
     })
@@ -90,13 +90,6 @@ const TaskForm = ({ projectId }) => {
           onChange={e => setTask({ ...task, priority: e.target.value })}
           type={"text"}
           placeholder={"Приоритет"}
-          required
-        />
-        <MyInput
-          value={task.status}
-          onChange={e => setTask({ ...task, status: e.target.value })}
-          type={"text"}
-          placeholder={"Текущий статус"}
           required
         />
         <MyButton onClick={addNewTask}>Create New Task</MyButton>

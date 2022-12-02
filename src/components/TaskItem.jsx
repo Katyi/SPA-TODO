@@ -87,14 +87,17 @@ const TaskItem = (props) => {
 
   return (
     <div className='task' ref={drag}>
-      <div className='id'>{props.num}</div>
+      <div className='id'>{props.task.taskNumber}</div>
       <div className='taskName'>{props.task.taskName}</div>
       <MyButton onClick={() => setModal(true)}>Open/Update</MyButton>
       <MyModalForTask visible={modal} setVisible={setModal}>
         <TaskUpdForm task={props.task} />
       </MyModalForTask>
       <MyButton onClick={() => props.remove(props.task)}>Delete</MyButton>
-      <MyButton onClick={() => navigate(`/tasks/${props.task.id}`)}>SubTasks</MyButton>
+      {props.task.isSubtask===false
+        ? <MyButton onClick={() => navigate(`/tasks/${props.task.id}`)}>SubTasks</MyButton>
+        : <></>
+      }
       <form onSubmit={handleUpload} className='uploadUrl' >
         <MyInput type="file" className='uploadFile' />
         <MyButton type='submit'>Upload</MyButton>
