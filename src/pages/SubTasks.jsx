@@ -8,12 +8,14 @@ import MyButton from "../components/UI/button/MyButton";
 // import TaskForm from "../components/TaskForm";
 import MyModalForTask from "../components/UI/modal/MyModalForTask";
 import SubTaskForm from "../components/SubTaskForm";
+import MyInput from "../components/UI/input/MyInput";
 
 function SubTasks() {
   const [queueTasks, setQueueTasks] = useState([]);
   const [developmentTasks, setDevelopmentTasks] = useState([]);
   const [doneTasks, setDoneTasks] = useState([]);
   let [modal, setModal] = useState(false);
+  const [taskForSearch, setTaskForSearch] = useState('');
 
   let {id} = useParams();
 
@@ -46,6 +48,18 @@ function SubTasks() {
     console.log("DELETED TASK", task);
     window.location.reload();
   }
+  const handleChange = (e) => {
+    setTaskForSearch(e.target.value);
+  };
+  const searchTask = async (queueTasks, developmentTasks, doneTasks) => {
+    console.log(queueTasks);
+    let searchResult1 = await queueTasks.filter((elem) => elem.taskName.includes(taskForSearch));
+    let searchResult2 = await developmentTasks.filter((elem) => elem.taskName.includes(taskForSearch));
+    let searchResult3 = await doneTasks.filter((elem) => elem.taskName.includes(taskForSearch));
+    setQueueTasks(searchResult1);
+    setDevelopmentTasks(searchResult2);
+    setDoneTasks(searchResult3);
+  }
 
   useEffect(() => {
     firebaseQuery();
@@ -75,6 +89,15 @@ function SubTasks() {
           <MyModalForTask visible={modal} setVisible={setModal}>
             <SubTaskForm taskId={id} />
           </MyModalForTask>
+          <div action="" className="searchTask">
+          <MyInput type={"text"} placeholder={"Поиск задачи"} onChange={handleChange}/>
+          <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
+            Search
+          </MyButton>
+          <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={()=> {window.location.reload()}} >
+            Cancel
+          </MyButton>
+        </div>
         </div>
         <div className='container1'>
           <div className='tasks'>

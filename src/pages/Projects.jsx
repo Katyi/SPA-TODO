@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { query, collection, onSnapshot, doc, deleteDoc, addDoc } from 'firebase/firestore';
+import { query, collection, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import ProjectItem from "../components/ProjectItem";
 import MyButton from "../components/UI/button/MyButton";
 import ProjectForm from "../components/ProjectForm";
 import MyModal from "../components/UI/modal/MyModal";
+// import { TransitionGroup, CSSTransition } from "react-transition-group";
+// import PostFilter from "../components/ProjectFilter";
 
 function Projects() {
   const [projects, setProjects] = useState([]);
@@ -41,17 +43,26 @@ function Projects() {
         </div>
       </div>
       <div className='container'>
+      
         <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={() => setModal(true)}>
           Create new project
         </MyButton>
         <MyModal visible={modal} setVisible={setModal}>
           <ProjectForm/>
         </MyModal>
+        
+
         <div className='projects'>
-          {projects.map((project, index) => (
-            <ProjectItem remove={removeProject} project={project} key={index} num={index + 1} />
+        {/* <TransitionGroup> */}
+            {projects.map((project, index) =>
+            
+            (
+              // <CSSTransition>
+                <ProjectItem remove={removeProject} project={project} key={index} num={index + 1} />
+                // </CSSTransition>
           ))}
-        </div>
+        {/* </TransitionGroup> */}
+          </div>
       </div>
     </div>
   )

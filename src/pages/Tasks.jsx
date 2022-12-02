@@ -9,11 +9,14 @@ import TaskForm from "../components/TaskForm";
 import MyModalForTask from "../components/UI/modal/MyModalForTask";
 import { useDrop } from 'react-dnd';
 import { ItemTypes } from '../ItemTypes';
+import MyInput from "../components/UI/input/MyInput";
+import { async } from "@firebase/util";
 
 function Tasks() {
   const [queueTasks, setQueueTasks] = useState([]);
   const [developmentTasks, setDevelopmentTasks] = useState([]);
   const [doneTasks, setDoneTasks] = useState([]);
+  const [taskForSearch, setTaskForSearch] = useState('');
   let [modal, setModal] = useState(false);
   let { id } = useParams();
   const allowedDropEffect = 'move;'
@@ -64,6 +67,18 @@ function Tasks() {
     console.log("DELETED TASK", task);
     window.location.reload();
   }
+  const handleChange = (e) => {
+    setTaskForSearch(e.target.value);
+  };
+  const searchTask = async (queueTasks, developmentTasks, doneTasks) => {
+    console.log(queueTasks);
+    let searchResult1 = await queueTasks.filter((elem) => elem.taskName.includes(taskForSearch));
+    let searchResult2 = await developmentTasks.filter((elem) => elem.taskName.includes(taskForSearch));
+    let searchResult3 = await doneTasks.filter((elem) => elem.taskName.includes(taskForSearch));
+    setQueueTasks(searchResult1);
+    setDevelopmentTasks(searchResult2);
+    setDoneTasks(searchResult3);
+  }
 
   useEffect(() => {
     firebaseQuery();
@@ -92,6 +107,15 @@ function Tasks() {
         <MyModalForTask visible={modal} setVisible={setModal}>
           <TaskForm projectId={id} />
         </MyModalForTask>
+        <div action="" className="searchTask">
+          <MyInput type={"text"} placeholder={"Поиск задачи"} onChange={handleChange}/>
+          <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
+            Search
+          </MyButton>
+          <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={()=> {window.location.reload()}} >
+            Cancel
+          </MyButton>
+        </div>
         </div>
         <div className='container1' ref={drop}>
         <div className='tasks'>
