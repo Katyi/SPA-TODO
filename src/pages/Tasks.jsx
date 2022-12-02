@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { query, collection, where, getDocs, doc, deleteDoc} from 'firebase/firestore';
 import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
-import TaskItem from "../components/TaskItem";
+// import TaskItem from "../components/TaskItem";
 import MyButton from "../components/UI/button/MyButton";
 import TaskForm from "../components/TaskForm";
 import MyModalForTask from "../components/UI/modal/MyModalForTask";
@@ -11,7 +11,10 @@ import { useDrop } from 'react-dnd';
 import { ItemTypes } from '../ItemTypes';
 import MyInput from "../components/UI/input/MyInput";
 import { async } from "@firebase/util";
-import Loader from "../components/UI/Loader/Loader";
+// import Loader from "../components/UI/Loader/Loader";
+import TaskColumn1 from "../components/TaskColumn1";
+import TaskColumn2 from "../components/TaskColumn2";
+import TaskColumn3 from "../components/TaskColumn3";
 
 function Tasks() {
   const [queueTasks, setQueueTasks] = useState([]);
@@ -23,21 +26,21 @@ function Tasks() {
   const allowedDropEffect = 'move;'
   const isAlbumsLoading = false;
   
-  const [{ canDrop, isOver }, drop] = useDrop(
-    () => ({
-      accept: ItemTypes.BOX,
-      drop: () => ({
-        name: `${allowedDropEffect} Dustbin`,
-        allowedDropEffect,
-      }),
-      collect: (monitor) => ({
-        isOver: monitor.isOver(),
-        canDrop: monitor.canDrop(),
-      }),
-    }),
-    [allowedDropEffect],
-  )
-  const isActive = canDrop && isOver
+  // const [{ canDrop, isOver }, drop] = useDrop(
+  //   () => ({
+  //     accept: ItemTypes.BOX,
+  //     drop: () => ({
+  //       name: `${allowedDropEffect} Dustbin`,
+  //       allowedDropEffect,
+  //     }),
+  //     collect: (monitor) => ({
+  //       isOver: monitor.isOver(),
+  //       canDrop: monitor.canDrop(),
+  //     }),
+  //   }),
+  //   [allowedDropEffect],
+  // )
+  // const isActive = canDrop && isOver
 
   
   // -----Параметры для отображения задач в трех столбцах на странице задач------------------------------------------------------------------
@@ -73,14 +76,16 @@ function Tasks() {
     setTaskForSearch(e.target.value);
   };
   const searchTask = async (queueTasks, developmentTasks, doneTasks) => {
-    console.log(queueTasks);
+    if (taskForSearch) {
+
+    }
     let searchResult1 = await queueTasks.filter((elem) => elem.taskName.includes(taskForSearch));
     let searchResult2 = await developmentTasks.filter((elem) => elem.taskName.includes(taskForSearch));
     let searchResult3 = await doneTasks.filter((elem) => elem.taskName.includes(taskForSearch));
     setQueueTasks(searchResult1);
     setDevelopmentTasks(searchResult2);
     setDoneTasks(searchResult3);
-    isAlbumsLoading = true;
+    // isAlbumsLoading = true;
   }
 
   useEffect(() => {
@@ -111,7 +116,8 @@ function Tasks() {
           <TaskForm projectId={id} />
         </MyModalForTask>
         <div action="" className="searchTask">
-          <MyInput type={"text"} placeholder={"Поиск задачи"} onChange={handleChange}/>
+          <MyInput type={"text"} placeholder={"Поиск задачи по названию"} onChange={handleChange}/>
+          <MyInput type={"number"} placeholder={"Поиск задачи по номеру"} onChange={handleChange}/>
           <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
             Search
           </MyButton>
@@ -120,12 +126,12 @@ function Tasks() {
           </MyButton>
         </div>
       </div>
-  
-        <div className='container1' ref={drop}>
+      <TaskColumn1 queueTasks={queueTasks} removeTask={removeTask}/>
+      <TaskColumn2 developmentTasks={developmentTasks} removeTask={removeTask}/>
+      <TaskColumn3 doneTasks={doneTasks} removeTask={removeTask}/>
+        {/* <div className='container1' ref={drop}>
         <div className='tasks'>
-          {isAlbumsLoading
-          ? <div style={{ display: 'flex', justifyContent: 'center', marginTop: 250 }}><Loader /></div>
-        : queueTasks.map((task, index) => (
+          {queueTasks.map((task, index) => (
             <TaskItem remove={removeTask} task={task} key={index}/>
           ))}
           </div>
@@ -143,7 +149,7 @@ function Tasks() {
               <TaskItem remove={removeTask} task={task} key={index}/>
             ))}
           </div>
-        </div>
+        </div> */}
     </div>
   )
 };
