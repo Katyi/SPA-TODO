@@ -8,6 +8,7 @@ import MyButton from "../components/UI/button/MyButton";
 import MyModalForTask from "../components/UI/modal/MyModalForTask";
 import SubTaskForm from "../components/SubTaskForm";
 import MyInput from "../components/UI/input/MyInput";
+import TaskColumn from "../components/TaskColumn";
 
 function SubTasks() {
   const [queueTasks, setQueueTasks] = useState([]);
@@ -68,57 +69,41 @@ function SubTasks() {
 
     return (
       <div className="App">
-        <div className="header">
-          <div className="header_part1">
-            <div className="header_title">Задачи</div>
-            <div className="header__link">
-              <MyButton onClick={() => navigate(-1)}>Обратно к задачам</MyButton>
+        <div className="wrapper">
+          <div className="header">
+            <div className="header_container">
+              <div className="header_title">Подзадачи</div>
+              <div className="header__link">
+                <MyButton onClick={() => navigate(-1)} style={{marginRight: 30, width: 200 }}>Обратно к задачам</MyButton>
+              </div>
+            </div>
+            <div className='header_of_tasks'>
+              <div className="header_Queue">Подзадачи в очереди</div>
+              <div className='header_Development'>Подзадачи в разработке</div>
+              <div className='header_Done'>Подзадачи завершенные</div>
             </div>
           </div>
-          <div className='header_of_tasks'>
-            <div className="Queue">Подзадачи в очереди</div>
-            <div className='Development'>Подзадачи в разработке</div>
-            <div className='Done'>Подзадачи завершенные</div>
-          </div>
-        </div>
-        <div className="container4">
-          <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={() => setModal(true)}>
-            Create new subtask
-          </MyButton>
-          <MyModalForTask visible={modal} setVisible={setModal}>
-            <SubTaskForm taskId={id} />
-          </MyModalForTask>
-          <div action="" className="searchTask">
-            <MyInput type={"text"} placeholder={"Поиск подзадачи"} onChange={handleChange} />
-            <MyInput type={"number"} placeholder={"Поиск подзадачи по номеру"} onChange={handleChange}/>
-            <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
-              Search
+            <MyButton style={{ marginTop: 220, marginLeft: 30, width: 200, marginBottom: 5}} onClick={() => setModal(true)}>
+              Create new subtask
             </MyButton>
-            <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={()=> {window.location.reload()}} >
-              Cancel
-            </MyButton>
-          </div>
-        </div>
-        <div className='container1'>
-          <div className='tasks'>
-            {queueTasks.map((task, index) => (
-              <TaskItem remove={removeTask} task={task} key={index}/>
-            ))}
-          </div>
-        </div>
-        <div className='container2'>
-          <div className='tasks'>
-            {developmentTasks.map((task, index) => (
-              <TaskItem remove={removeTask} task={task} key={index}/>
-            ))}
-          </div>
-        </div>
-        <div className='container3'>
-          <div className='tasks'>
-            {doneTasks.map((task, index) => (
-              <TaskItem remove={removeTask} task={task} key={index}/>
-            ))}
-          </div>
+            <MyModalForTask visible={modal} setVisible={setModal}>
+              <SubTaskForm taskId={id} />
+            </MyModalForTask>
+            <div action="" className="searchTask">
+              <MyInput style={{marginLeft: 30, width: 300 }} type={"text"} placeholder={"Поиск подзадачи"} onChange={handleChange} />
+              <MyInput style={{marginLeft: 10, width: 100 }} type={"number"} placeholder={"Поиск подзадачи по номеру"} onChange={handleChange}/>
+              <MyButton style={{marginLeft: 10 }} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
+                Search
+              </MyButton>
+              <MyButton style={{marginLeft: 10, marginRight: 30 }} onClick={()=> {window.location.reload()}} >
+                Cancel
+              </MyButton>
+            </div>
+            <div className="container">
+              <TaskColumn tasks={queueTasks} removeTask={removeTask} class='container_1' />
+              <TaskColumn tasks={developmentTasks} removeTask={removeTask} class='container_1' />
+              <TaskColumn tasks={doneTasks} removeTask={removeTask} class='container_1' />
+            </div>
         </div>
       </div>
     )

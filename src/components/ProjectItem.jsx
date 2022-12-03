@@ -10,19 +10,15 @@ const ProjectItem = (props) => {
   let navigate = useNavigate();
   return (
     <div className='project'>
-      <div className='id'>{props.project.projectNumber}</div>
-      <div className='projectName'>{props.project.projectName}</div>
-      <div className='description'>{props.project.description}</div>
-      <div className="btn1"><MyButton onClick={() => navigate(`/projects/${props.project.id}`)}>Open</MyButton></div>
-      <div className="btn2">
-        <MyButton onClick={() => setModal(true)}>UpDate</MyButton>
+      <div className='project_id'>{props.project.projectNumber}</div>
+      <div className='project_name'>{props.project.projectName}</div>
+      <div className='project_description'>{props.project.description}</div>
+        <MyButton onClick={() => navigate(`/projects/${props.project.id}`)} style={{width: 120, marginLeft: 3}}>Open</MyButton>
+        <MyButton onClick={() => setModal(true)} style={{width: 120, marginLeft: 3}}>UpDate</MyButton>
         <MyModal visible={modal} setVisible={setModal}>
           <ProjectUpdForm project={props.project} />
         </MyModal>
-      </div>
-      <div className="btn3">
-      <MyButton onClick={() => props.remove(props.project)}>Delete</MyButton>
-      </div>
+      <MyButton onClick={() => props.remove(props.project)} style={{width: 120, marginLeft: 3, marginRight: 10}}>Delete</MyButton>
     </div>
   );
 };

@@ -6,7 +6,6 @@ import MyButton from "../components/UI/button/MyButton";
 import ProjectForm from "../components/ProjectForm";
 import MyModal from "../components/UI/modal/MyModal";
 // import { TransitionGroup, CSSTransition } from "react-transition-group";
-// import PostFilter from "../components/ProjectFilter";
 
 function Projects() {
   const [projects, setProjects] = useState([]);
@@ -36,37 +35,34 @@ function Projects() {
 
   return (
     <div className="App">
-      <div className="header">
-        <div className="header_part1">
+      <div className="wrapper">
+        <div className="header">
           <div className="header_title">Проекты</div>
+          <div className='header_of_projects'>
+            <div className="header_project_id">№</div>
+            <div className='header_project_name'>Проекты</div>
+            <div className='header_project_description'>Описание</div>
+          </div>
         </div>
-        <div className='header_of_tasks'>
-          <div className="task_id">№</div>
-          <div className='task_projectName'>Проекты</div>
-          <div className='task_description'>Описание</div>
-        </div>
-      </div>
-      <div className='container'>
-      
-        <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={() => setModal(true)}>
+        <div className='project_container'>
+          <div className="project_container_1">
+          <MyButton
+          // style={{ marginTop: 220, marginBottom: 30, marginTop: 215 }}
+          // style={{ marginTop: 70, marginLeft: 30, width: 200, marginBottom: 20}}
+          onClick={() => setModal(true)}>
           Create new project
         </MyButton>
         <MyModal visible={modal} setVisible={setModal}>
           <ProjectForm/>
         </MyModal>
-        
-
-        <div className='projects'>
-        {/* <TransitionGroup> */}
-            {projects.map((project, index) =>
-            
-            (
-              // <CSSTransition>
-                <ProjectItem remove={removeProject} project={project} key={index}/>
-                // </CSSTransition>
-          ))}
-        {/* </TransitionGroup> */}
           </div>
+        
+          <div className='projects'>
+            {projects.map((project, index) => (
+              <ProjectItem remove={removeProject} project={project} key={index} />
+            ))}
+            </div>
+        </div>
       </div>
     </div>
   )

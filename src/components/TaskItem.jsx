@@ -4,20 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import TaskUpdForm from "./TaskUpdForm";
 import MyModalForTask from "./UI/modal/MyModalForTask";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { updateDoc, doc } from 'firebase/firestore';
+import { updateDoc, doc} from 'firebase/firestore';
 import { db } from '../firebase';
 import { storage } from '../firebase';
 import MyInput from "./UI/input/MyInput";
 import { useDrag } from 'react-dnd';
 import { ItemTypes } from '../ItemTypes';
-import TaskCommentsForm from "./TaskCommentsForm";
-import MyModalForComments from "./UI/modal/MyModalForComments";
 
 const TaskItem = (props) => {
   let [modal, setModal] = useState(false);
-  let [modal1, setModal1] = useState(false);
   const [progress, setProgress] = useState(0);
-
+  
   // -----Загрузка файла для задачи-------------------------------------------------------------------------------------
   const handleUpload = (e) => {
     e.preventDefault();
@@ -28,30 +25,30 @@ const TaskItem = (props) => {
   }
   
   const uploadFiles = async (file) => {
-  if (!file) return;
-  const sotrageRef = ref(storage, `files/${file.name}`);
-  const uploadTask = uploadBytesResumable(sotrageRef, file);
-  let fileName = file.name;
+    if (!file) return;
+    const sotrageRef = ref(storage, `files/${file.name}`);
+    const uploadTask = uploadBytesResumable(sotrageRef, file);
+    let fileName = file.name;
 
-  uploadTask.on(
-    "state_changed",
-    (snapshot) => {
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
         const prog = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
         setProgress(prog);
       },
-    (error) => console.log("Error", error),
-    () => {
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log("File available at", downloadURL);
-        recordUrl(downloadURL, fileName);
-      });
-    }
-  );
+      (error) => console.log("Error", error),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          recordUrl(downloadURL, fileName);
+        });
+      }
+    );
   };
   // -----Выгрузка ссылки загруженного файла для задачи-------------------------------------------------------------------------------------
-  const recordUrl =  async (url, fileName) => {
+  const recordUrl = async (url, fileName) => {
     await updateDoc(doc(db, 'tasks', props.task.id), {
       fileUrl: url,
       fileName: fileName
@@ -60,10 +57,11 @@ const TaskItem = (props) => {
   }
 
   let navigate = useNavigate();
+
   //      drag-n-drop                                                                                                                       
   const [{ opacity }, drag] = useDrag(() => ({
     type: ItemTypes.BOX,
-    item:  props.task.taskName ,
+    item: props.task.taskName,
     end(item, monitor) {
       const dropResult = monitor.getDropResult()
       if (item && dropResult) {
@@ -90,27 +88,19 @@ const TaskItem = (props) => {
 
   return (
     <div className='task' ref={drag}>
-      <div className='id'>{props.task.taskNumber}</div>
+      <div className='taskNumber'>{props.task.taskNumber}</div>
       <div className='taskName'>{props.task.taskName}</div>
-      <MyButton onClick={() => setModal(true)}>Open/Update</MyButton>
+      <MyButton onClick={() => setModal(true)} style={{width: 120, marginBottom: 10}}>Open/Update</MyButton>
       <MyModalForTask visible={modal} setVisible={setModal}>
         <TaskUpdForm task={props.task} />
       </MyModalForTask>
-      <MyButton onClick={() => props.remove(props.task)}>Delete</MyButton>
-      {props.task.isSubtask===false
-        ? <MyButton onClick={() => navigate(`/tasks/${props.task.id}`)}>SubTasks</MyButton>
-        : <></>
-      }
-      <MyButton onClick={() => setModal(true)}>Comments</MyButton>
-      <MyModalForComments visible={modal} setVisible={setModal}>
-        <TaskCommentsForm task={props.task} />
-      </MyModalForComments>
+      <MyButton onClick={() => props.remove(props.task)} style={{width: 120, marginBottom: 10}}>Delete</MyButton>
+      {!props.task.isSubtask && <MyButton onClick={() => navigate(`/tasks/${props.task.id}`)} style={{width: 120, marginBottom: 10}}>SubTasks</MyButton>}
+      {!props.task.isSubtask && <MyButton onClick={() => navigate(`/comments/${props.task.id}`)} style={{width: 120, marginBottom: 10}}>Comments</MyButton>}
       <form onSubmit={handleUpload} className='uploadUrl' >
-        <MyInput type="file" className='uploadFile' />
-        <MyButton type='submit'>Upload</MyButton>
-      </form>
-      
-      
+          <MyInput type="file" className='uploadFile' style={{width: 500, marginBottom: 10}}/>
+          <MyButton type='submit' style={{width: 120}}>Upload</MyButton>
+        </form>
     </div>
   );
 };

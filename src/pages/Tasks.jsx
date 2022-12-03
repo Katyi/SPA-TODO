@@ -3,7 +3,6 @@ import { useParams } from "react-router";
 import { query, collection, where, getDocs, doc, deleteDoc} from 'firebase/firestore';
 import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
-// import TaskItem from "../components/TaskItem";
 import MyButton from "../components/UI/button/MyButton";
 import TaskForm from "../components/TaskForm";
 import MyModalForTask from "../components/UI/modal/MyModalForTask";
@@ -11,10 +10,7 @@ import { useDrop } from 'react-dnd';
 import { ItemTypes } from '../ItemTypes';
 import MyInput from "../components/UI/input/MyInput";
 import { async } from "@firebase/util";
-// import Loader from "../components/UI/Loader/Loader";
 import TaskColumn from "../components/TaskColumn";
-//import TaskColumn2 from "../components/TaskColumn2";
-//import TaskColumn3 from "../components/TaskColumn3";
 
 function Tasks() {
   const [queueTasks, setQueueTasks] = useState([]);
@@ -80,61 +76,43 @@ function Tasks() {
   let navigate = useNavigate();
   return (
     <div className="App">
-      <div className="header">
-        <div className="header_part1">
-        <div className="header_title">Задачи</div>
-          <div className="header__link">
-            <MyButton onClick={() => navigate(-1)}>Обратно к проектам</MyButton>
+      <div className="wrapper">
+        <div className="header">
+          <div className="header_container">
+            <div className="header_title">Задачи</div>
+            <div className="header__link">
+              <MyButton onClick={() => navigate(-1)}>Обратно к проектам</MyButton></div>
+          </div>
+          <div className='header_of_tasks'>
+            <div className="header_Queue">Задачи в очереди</div>
+            <div className='header_Development'>Задачи в разработке</div>
+            <div className='header_Done'>Задачи завершенные</div>
           </div>
         </div>
-        <div className='header_of_tasks'>
-          <div className="Queue">Задачи в очереди</div>
-          <div className='Development'>Задачи в разработке</div>
-          <div className='Done'>Задачи завершенные</div>
-        </div>
-      </div>
-      <div className="container4">
-        <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={() => setModal(true)}>
+        <MyButton
+          style={{ marginTop: 220, marginLeft: 30, width:150, marginBottom: 5}}
+          onClick={() => setModal(true)}>
           Create new task
         </MyButton>
         <MyModalForTask visible={modal} setVisible={setModal}>
           <TaskForm projectId={id} />
         </MyModalForTask>
         <div action="" className="searchTask">
-          <MyInput type={"text"} placeholder={"Поиск задачи по названию"} onChange={handleChange}/>
-          <MyInput type={"number"} placeholder={"Поиск задачи по номеру"} onChange={handleChange}/>
-          <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
+          <MyInput style={{marginLeft: 30, width: 300 }} type={"text"} placeholder={"Поиск задачи по названию"} onChange={handleChange}/>
+          <MyInput style={{marginLeft: 10, width: 100 }} type={"number"} placeholder={"Поиск задачи по номеру"} onChange={handleChange}/>
+          <MyButton style={{marginLeft: 10 }} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
             Search
           </MyButton>
-          <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={()=> {window.location.reload()}} >
+          <MyButton style={{marginLeft: 10, marginRight: 30 }} onClick={()=> {window.location.reload()}} >
             Cancel
           </MyButton>
         </div>
+        <div className="container">
+          <TaskColumn tasks={queueTasks} removeTask={removeTask} class='container_1' />
+          <TaskColumn tasks={developmentTasks} removeTask={removeTask} class='container_1' />
+          <TaskColumn tasks={doneTasks} removeTask={removeTask} class='container_1' />
+        </div>
       </div>
-      <TaskColumn tasks={queueTasks} removeTask={removeTask} class = 'container1'/>
-      <TaskColumn tasks={developmentTasks} removeTask={removeTask} class = 'container2'/>
-      <TaskColumn tasks={doneTasks} removeTask={removeTask} class = 'container3'/>
-        {/* <div className='container1' ref={drop}>
-        <div className='tasks'>
-          {queueTasks.map((task, index) => (
-            <TaskItem remove={removeTask} task={task} key={index}/>
-          ))}
-          </div>
-        </div>
-        <div className='container2' ref={drop}>
-          <div className='tasks'>
-            {developmentTasks.map((task, index) => (
-              <TaskItem remove={removeTask} task={task} key={index}/>
-            ))}
-          </div>
-        </div>
-        <div className='container3' ref={drop}>
-          <div className='tasks'>
-            {doneTasks.map((task, index) => (
-              <TaskItem remove={removeTask} task={task} key={index}/>
-            ))}
-          </div>
-        </div> */}
     </div>
   )
 };
