@@ -10,11 +10,15 @@ import { storage } from '../firebase';
 import MyInput from "./UI/input/MyInput";
 import { useDrag } from 'react-dnd';
 import { ItemTypes } from '../ItemTypes';
+import TaskCommentsForm from "./TaskCommentsForm";
+import MyModalForComments from "./UI/modal/MyModalForComments";
 
 const TaskItem = (props) => {
   let [modal, setModal] = useState(false);
+  let [modal1, setModal1] = useState(false);
   const [progress, setProgress] = useState(0);
 
+  // -----Загрузка файла для задачи-------------------------------------------------------------------------------------
   const handleUpload = (e) => {
     e.preventDefault();
     const file = e.target[0].files[0];
@@ -22,7 +26,7 @@ const TaskItem = (props) => {
     console.log(arr);
     uploadFiles(file);
   }
-  // -----Загрузка файла для задачи-------------------------------------------------------------------------------------
+  
   const uploadFiles = async (file) => {
   if (!file) return;
   const sotrageRef = ref(storage, `files/${file.name}`);
@@ -84,7 +88,6 @@ const TaskItem = (props) => {
     [props.task.taskName],
   )
 
-
   return (
     <div className='task' ref={drag}>
       <div className='id'>{props.task.taskNumber}</div>
@@ -98,10 +101,16 @@ const TaskItem = (props) => {
         ? <MyButton onClick={() => navigate(`/tasks/${props.task.id}`)}>SubTasks</MyButton>
         : <></>
       }
+      <MyButton onClick={() => setModal(true)}>Comments</MyButton>
+      <MyModalForComments visible={modal} setVisible={setModal}>
+        <TaskCommentsForm task={props.task} />
+      </MyModalForComments>
       <form onSubmit={handleUpload} className='uploadUrl' >
         <MyInput type="file" className='uploadFile' />
         <MyButton type='submit'>Upload</MyButton>
       </form>
+      
+      
     </div>
   );
 };

@@ -89,14 +89,15 @@ function SubTasks() {
             <SubTaskForm taskId={id} />
           </MyModalForTask>
           <div action="" className="searchTask">
-          <MyInput type={"text"} placeholder={"Поиск задачи"} onChange={handleChange}/>
-          <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
-            Search
-          </MyButton>
-          <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={()=> {window.location.reload()}} >
-            Cancel
-          </MyButton>
-        </div>
+            <MyInput type={"text"} placeholder={"Поиск подзадачи"} onChange={handleChange} />
+            <MyInput type={"number"} placeholder={"Поиск подзадачи по номеру"} onChange={handleChange}/>
+            <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
+              Search
+            </MyButton>
+            <MyButton style={{ marginTop: 12, marginLeft: 30 }} onClick={()=> {window.location.reload()}} >
+              Cancel
+            </MyButton>
+          </div>
         </div>
         <div className='container1'>
           <div className='tasks'>
