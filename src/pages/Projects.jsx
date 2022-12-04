@@ -36,7 +36,7 @@ function Projects() {
   return (
     <div className="App">
       <div className="wrapper">
-        <div className="header">
+        <div className="header_1">
           <div className="header_title">Проекты</div>
           <div className='header_of_projects'>
             <div className="header_project_id">№</div>
@@ -48,7 +48,7 @@ function Projects() {
           <div className="project_container_1">
           <MyButton
           // style={{ marginTop: 220, marginBottom: 30, marginTop: 215 }}
-          // style={{ marginTop: 70, marginLeft: 30, width: 200, marginBottom: 20}}
+          style={{ marginLeft: 30, width: 200, marginBottom: 5}}
           onClick={() => setModal(true)}>
           Create new project
         </MyButton>

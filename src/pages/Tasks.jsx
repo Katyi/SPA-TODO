@@ -6,10 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
 import TaskForm from "../components/TaskForm";
 import MyModalForTask from "../components/UI/modal/MyModalForTask";
-import { useDrop } from 'react-dnd';
-import { ItemTypes } from '../ItemTypes';
 import MyInput from "../components/UI/input/MyInput";
-import { async } from "@firebase/util";
 import TaskColumn from "../components/TaskColumn";
 
 function Tasks() {
@@ -19,10 +16,6 @@ function Tasks() {
   const [taskForSearch, setTaskForSearch] = useState('');
   let [modal, setModal] = useState(false);
   let { id } = useParams();
-  const allowedDropEffect = 'move;'
-  const isAlbumsLoading = false;
-  
-  
   
   // -----Параметры для отображения задач в трех столбцах на странице задач------------------------------------------------------------------
   async function firebaseQuery() {
@@ -48,25 +41,24 @@ function Tasks() {
     setDevelopmentTasks(tasksArr2)
     setDoneTasks(tasksArr3)
   }
+
   const removeTask = async (task) => {
     await deleteDoc(doc(db, 'tasks', task.id))
     console.log("DELETED TASK", task);
     window.location.reload();
   }
+
   const handleChange = (e) => {
     setTaskForSearch(e.target.value);
   };
-  const searchTask = async (queueTasks, developmentTasks, doneTasks) => {
-    if (taskForSearch) {
 
-    }
+  const searchTask = async (queueTasks, developmentTasks, doneTasks) => {
     let searchResult1 = await queueTasks.filter((elem) => elem.taskName.includes(taskForSearch));
     let searchResult2 = await developmentTasks.filter((elem) => elem.taskName.includes(taskForSearch));
     let searchResult3 = await doneTasks.filter((elem) => elem.taskName.includes(taskForSearch));
     setQueueTasks(searchResult1);
     setDevelopmentTasks(searchResult2);
     setDoneTasks(searchResult3);
-    // isAlbumsLoading = true;
   }
 
   useEffect(() => {
@@ -74,14 +66,16 @@ function Tasks() {
   }, []);
 
   let navigate = useNavigate();
+
   return (
     <div className="App">
       <div className="wrapper">
-        <div className="header">
+        <div className="header_2">
           <div className="header_container">
             <div className="header_title">Задачи</div>
             <div className="header__link">
-              <MyButton onClick={() => navigate(-1)}>Обратно к проектам</MyButton></div>
+              <MyButton onClick={() => navigate(-1)}>Обратно к проектам</MyButton>
+            </div>
           </div>
           <div className='header_of_tasks'>
             <div className="header_Queue">Задачи в очереди</div>
@@ -89,28 +83,32 @@ function Tasks() {
             <div className='header_Done'>Задачи завершенные</div>
           </div>
         </div>
-        <MyButton
-          style={{ marginTop: 220, marginLeft: 30, width:150, marginBottom: 5}}
-          onClick={() => setModal(true)}>
-          Create new task
-        </MyButton>
-        <MyModalForTask visible={modal} setVisible={setModal}>
-          <TaskForm projectId={id} />
-        </MyModalForTask>
-        <div action="" className="searchTask">
-          <MyInput style={{marginLeft: 30, width: 300 }} type={"text"} placeholder={"Поиск задачи по названию"} onChange={handleChange}/>
-          <MyInput style={{marginLeft: 10, width: 100 }} type={"number"} placeholder={"Поиск задачи по номеру"} onChange={handleChange}/>
-          <MyButton style={{marginLeft: 10 }} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
-            Search
+        <div className="container_main">
+          <MyButton
+            style={{ marginLeft: 30, width:150, marginBottom: 5}} onClick={() => setModal(true)}>
+            Create new task
           </MyButton>
-          <MyButton style={{marginLeft: 10, marginRight: 30 }} onClick={()=> {window.location.reload()}} >
-            Cancel
-          </MyButton>
+          <MyModalForTask visible={modal} setVisible={setModal}>
+            <TaskForm projectId={id} />
+          </MyModalForTask>
+          <div action="" className="searchTask">
+            <MyInput style={{marginLeft: 30, width: 300 }} type={"text"} placeholder={"Поиск задачи по названию"} onChange={handleChange}/>
+            <MyInput style={{marginLeft: 30, width: 100 }} type={"number"} placeholder={"Поиск задачи по номеру"} onChange={handleChange}/>
+            <MyButton style={{marginLeft: 30, width: 120}} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
+              Search
+            </MyButton>
+            <MyButton style={{marginLeft: 30, marginRight: 30, width: 120 }} onClick={()=> {window.location.reload()}} >
+              Cancel
+            </MyButton>
+          </div>
         </div>
         <div className="container">
-          <TaskColumn tasks={queueTasks} removeTask={removeTask} class='container_1' />
-          <TaskColumn tasks={developmentTasks} removeTask={removeTask} class='container_1' />
-          <TaskColumn tasks={doneTasks} removeTask={removeTask} class='container_1' />
+          <div className="header_Queue_mobile">Задачи в очереди</div>
+          <TaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} class='container_1' />
+          <div className="header_Development_mobile">Задачи в разработке</div>
+          <TaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} class='container_1' />
+          <div className="header_Done_mobile">Задачи завершенные</div>
+          <TaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} class='container_1' />
         </div>
       </div>
     </div>

@@ -45,11 +45,11 @@ function Comments() {
             </div>
           </div>
         </div>
-        
         <div className="container_2">
-        <MyButton style={{ marginTop: 110, marginLeft: 30, marginBottom: 20 }} onClick={() => setModal(true)}>
+        <MyButton style={{ marginLeft: 30, marginBottom: 5 }} onClick={() => setModal(true)}>
           AddComment
-        </MyButton>
+          </MyButton>
+          <div></div>
         <MyModalForComments visible={modal} setVisible={setModal}>
           <CommentsForm taskId={id}/>
         </MyModalForComments>

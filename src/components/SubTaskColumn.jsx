@@ -1,16 +1,54 @@
 import React from 'react';
 import TaskItem from './TaskItem';
+import { useDrop } from 'react-dnd';
+import { ItemTypes } from '../ItemTypes';
+import { updateDoc, doc } from 'firebase/firestore';
+import { db } from '../firebase';
 
-const TaskColumn2 = (props) => {
+const allowedDropEffect = 'move;'
+
+const SubTaskColumn = (props) => {
+
+  const updTask = async (task) => {
+    await updateDoc(doc(db, 'tasks', task.id), {
+      taskNumber: task.taskNumber,
+      taskName: task.taskName,
+      description: task.description,
+      createDate: task.createDate,
+      workTime: task.workTime,
+      endDate: task.endDate,
+      priority: task.priority,
+      status: props.name,
+    });
+    window.location.reload();
+  }
+
+
+  const [{ isOver }, drop] = useDrop(
+    () => ({
+      accept: ItemTypes.BOX,
+      drop: task =>updTask(task),
+      collect: (monitor) => ({
+        isOver: monitor.isOver(),
+        canDrop: monitor.canDrop(),
+      }),
+    }),
+    [allowedDropEffect],
+  )
+  const divStyle = {
+    minHeight: '50px'
+  }
+  
   return (
-    <div className='container2' ref={props.drop}>
-      <div className='tasks'>
-        {props.developmentTasks.map((task, index) => (
-          <TaskItem remove={props.removeTask} task={task} key={index} />
-        ))}
-      </div>
-    </div>
+    <div className={props.class} ref={drop} style={divStyle}>
+      {isOver && <div>Drop Here!</div>}
+        <div className='tasks'>
+          {props.tasks.map((task, index) => (
+            <TaskItem remove={props.removeTask} task={task} key={index}/>
+          ))}
+          </div>
+          </div>
   )
 }
 
-export default TaskColumn2;
+export default SubTaskColumn;

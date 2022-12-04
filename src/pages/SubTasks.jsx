@@ -3,12 +3,11 @@ import { useParams } from "react-router";
 import { query, collection, where, getDocs, doc, deleteDoc} from 'firebase/firestore';
 import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
-import TaskItem from "../components/TaskItem";
 import MyButton from "../components/UI/button/MyButton";
 import MyModalForTask from "../components/UI/modal/MyModalForTask";
 import SubTaskForm from "../components/SubTaskForm";
 import MyInput from "../components/UI/input/MyInput";
-import TaskColumn from "../components/TaskColumn";
+import SubTaskColumn from "../components/SubTaskColumn";
 
 function SubTasks() {
   const [queueTasks, setQueueTasks] = useState([]);
@@ -16,9 +15,9 @@ function SubTasks() {
   const [doneTasks, setDoneTasks] = useState([]);
   let [modal, setModal] = useState(false);
   const [taskForSearch, setTaskForSearch] = useState('');
-
-  let {id} = useParams();
-
+  let { id } = useParams();
+  
+  // -----Параметры для отображения подзадач в трех столбцах на странице задач------------------------------------------------------------------
   async function firebaseQuery() {
     const q1 = query(collection(db, 'tasks'), where("status", "==", "Queue"), where("isSubtask", "==", true), where('taskId','==', id));
     const q2 = query(collection(db, 'tasks'), where("status", "==", "Development"), where("isSubtask", "==", true), where('taskId','==', id));
@@ -48,11 +47,12 @@ function SubTasks() {
     console.log("DELETED TASK", task);
     window.location.reload();
   }
+
   const handleChange = (e) => {
     setTaskForSearch(e.target.value);
   };
+
   const searchTask = async (queueTasks, developmentTasks, doneTasks) => {
-    console.log(queueTasks);
     let searchResult1 = await queueTasks.filter((elem) => elem.taskName.includes(taskForSearch));
     let searchResult2 = await developmentTasks.filter((elem) => elem.taskName.includes(taskForSearch));
     let searchResult3 = await doneTasks.filter((elem) => elem.taskName.includes(taskForSearch));
@@ -67,47 +67,52 @@ function SubTasks() {
 
   let navigate = useNavigate();
 
-    return (
-      <div className="App">
-        <div className="wrapper">
-          <div className="header">
-            <div className="header_container">
-              <div className="header_title">Подзадачи</div>
-              <div className="header__link">
-                <MyButton onClick={() => navigate(-1)} style={{marginRight: 30, width: 200 }}>Обратно к задачам</MyButton>
-              </div>
-            </div>
-            <div className='header_of_tasks'>
-              <div className="header_Queue">Подзадачи в очереди</div>
-              <div className='header_Development'>Подзадачи в разработке</div>
-              <div className='header_Done'>Подзадачи завершенные</div>
+  return (
+    <div className="App">
+      <div className="wrapper">
+        <div className="header_2">
+          <div className="header_container">
+            <div className="header_title">Подзадачи</div>
+            <div className="header__link">
+              <MyButton onClick={() => navigate(-1)} style={{marginRight: 30, width: 200 }}>Обратно к задачам</MyButton>
             </div>
           </div>
-            <MyButton style={{ marginTop: 220, marginLeft: 30, width: 200, marginBottom: 5}} onClick={() => setModal(true)}>
-              Create new subtask
-            </MyButton>
-            <MyModalForTask visible={modal} setVisible={setModal}>
-              <SubTaskForm taskId={id} />
-            </MyModalForTask>
+          <div className='header_of_tasks'>
+            <div className="header_Queue">Подзадачи в очереди</div>
+            <div className='header_Development'>Подзадачи в разработке</div>
+            <div className='header_Done'>Подзадачи завершенные</div>
+          </div>
+        </div>
+        <div className="container_main">
+          <MyButton
+            style={{ marginLeft: 30, width: 200, marginBottom: 5 }} onClick={() => setModal(true)}>
+            Create new subtask
+          </MyButton>
+          <MyModalForTask visible={modal} setVisible={setModal}>
+            <SubTaskForm taskId={id} />
+          </MyModalForTask>
             <div action="" className="searchTask">
               <MyInput style={{marginLeft: 30, width: 300 }} type={"text"} placeholder={"Поиск подзадачи"} onChange={handleChange} />
-              <MyInput style={{marginLeft: 10, width: 100 }} type={"number"} placeholder={"Поиск подзадачи по номеру"} onChange={handleChange}/>
-              <MyButton style={{marginLeft: 10 }} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
+              <MyInput style={{marginLeft: 30, width: 100 }} type={"number"} placeholder={"Поиск подзадачи по номеру"} onChange={handleChange}/>
+              <MyButton style={{marginLeft: 30, width: 120 }} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
                 Search
               </MyButton>
-              <MyButton style={{marginLeft: 10, marginRight: 30 }} onClick={()=> {window.location.reload()}} >
+              <MyButton style={{marginLeft: 30, marginRight: 30, width: 120 }} onClick={()=> {window.location.reload()}} >
                 Cancel
               </MyButton>
             </div>
-            <div className="container">
-              <TaskColumn tasks={queueTasks} removeTask={removeTask} class='container_1' />
-              <TaskColumn tasks={developmentTasks} removeTask={removeTask} class='container_1' />
-              <TaskColumn tasks={doneTasks} removeTask={removeTask} class='container_1' />
-            </div>
+        </div>
+        <div className="container">
+          <div className="header_Queue_mobile">Подзадачи в очереди</div>
+          <SubTaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} class='container_1' />
+          <div className="header_Development_mobile">Подзадачи в разработке</div>
+          <SubTaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} class='container_1' />
+          <div className="header_Done_mobile">Подзадачи завершенные</div>
+          <SubTaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} class='container_1' />
         </div>
       </div>
-    )
-  // }
+    </div>
+  )
 };
 
 export default SubTasks;

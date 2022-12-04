@@ -10,11 +10,14 @@ const CommentItem = (props) => {
     <div className='comment'>
       <div className='commentNumber'>{props.comment.commentNumber}</div>
       <div className='comment_comment'>{props.comment.comment}</div>
+      <div className="comment_bts">
       <MyButton onClick={() => setModal2(true)} style={{width: 120}}>UpdComments</MyButton>
       <MyModalForComments visible={modal2} setVisible={setModal2}>
         <CommentsUpdForm comment={props.comment}/>
       </MyModalForComments>
       <MyButton onClick={() => props.remove(props.comment)} style={{width: 120, marginLeft: 3}}>Delete</MyButton>
+      </div>
+      
     </div>
   );
 };

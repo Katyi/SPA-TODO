@@ -59,37 +59,20 @@ const TaskItem = (props) => {
   let navigate = useNavigate();
 
   //      drag-n-drop                                                                                                                       
-  const [{ opacity }, drag] = useDrag(() => ({
+  const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.BOX,
-    item: props.task.taskName,
-    end(item, monitor) {
-      const dropResult = monitor.getDropResult()
-      if (item && dropResult) {
-        let alertMessage = ''
-        const isDropAllowed =
-          dropResult.allowedDropEffect === 'any' ||
-          dropResult.allowedDropEffect === dropResult.dropEffect
-        if (isDropAllowed) {
-          const isCopyAction = dropResult.dropEffect === 'copy'
-          const actionName = isCopyAction ? 'copied' : 'moved'
-          alertMessage = `You ${actionName} ${item.name} into ${dropResult.name}!`
-        } else {
-          alertMessage = `You cannot ${dropResult.dropEffect} an item into the ${dropResult.name}`
-        }
-        alert(alertMessage)
-      }
-    },
+    item: props.task,
     collect: (monitor) => ({
-      opacity: monitor.isDragging() ? 0.4 : 1,
+      isDragging: monitor.isDragging(),
     }),
-  }),
-    [props.task.taskName],
+  })
   )
 
   return (
     <div className='task' ref={drag}>
       <div className='taskNumber'>{props.task.taskNumber}</div>
       <div className='taskName'>{props.task.taskName}</div>
+      {isDragging}
       <MyButton onClick={() => setModal(true)} style={{width: 120, marginBottom: 10}}>Open/Update</MyButton>
       <MyModalForTask visible={modal} setVisible={setModal}>
         <TaskUpdForm task={props.task} />
