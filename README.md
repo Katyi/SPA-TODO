@@ -12,4 +12,7 @@ Done
 
 Проект адаптирован под мобильные устройства (также он респонсивный).
 
-Использован firebase.google.com
+Как Back-endИспользован: firebase.google.com
+как хостинг клиенской части также использован firebase.google.com.
+
+DEPLOY: https://spa-todo-2.web.app/
