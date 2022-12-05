@@ -6,7 +6,7 @@ import { db } from '../firebase';
 
   // -----Редактирование проекта-------------------------------------------------------------------------------------
 const ProjectUpdForm = ( {project} ) => {
-  const [UpdItem, setUpdItem] = useState({ projectNumber: '', projectName: '', description: '' });
+  const [UpdItem, setUpdItem] = useState({ projectNumber: project.projectNumber, projectName: project.projectName, description: project.description });
   
   const updProject = async (e) => {
     e.preventDefault();

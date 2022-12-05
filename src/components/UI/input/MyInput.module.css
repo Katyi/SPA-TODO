@@ -1,6 +1,11 @@
 .myInput {
-  width: 100%;
+  width: 95%;
   padding: 5px 15px;
   margin: 5px 0;
   border: 2px solid #566573;
+}
+@media (max-width: 768px) {
+  .myInput {
+    width: 90%;
+  }
 }

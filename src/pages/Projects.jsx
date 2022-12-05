@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { query, collection, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
+import { query, collection, onSnapshot, doc, deleteDoc,getDocs, where  } from 'firebase/firestore';
 import { db } from '../firebase';
 import ProjectItem from "../components/ProjectItem";
 import MyButton from "../components/UI/button/MyButton";
 import ProjectForm from "../components/ProjectForm";
 import MyModal from "../components/UI/modal/MyModal";
-// import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 function Projects() {
   const [projects, setProjects] = useState([]);
@@ -23,14 +22,39 @@ function Projects() {
     return () => unsubscribe()
   }, []);
   
-  const removeProject = async (project) => {
-    await deleteDoc(doc(db, 'projects', project.id));
-    console.log("DELETED project", project);
-    // let projectId = project.id;
-  
-    // await deleteDoc(db, 'tasks', project.id)
-    // console.log("DELETED tasks for project", project);
-    window.location.reload();
+  const removeProject = async (projectId) => {
+    const q = query(collection(db, 'tasks'), where('projectId', '==', projectId));
+    let tasksArr = [];
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      tasksArr.push({ ...doc.data(), id: doc.id })
+    })
+    tasksArr.forEach(async (task) => {
+// --------------------------------------Удаление комментов-проекта------------------------------------------------
+      const q2 = query(collection(db, 'comments'), where('taskId', '==', task.id));
+      let tasksArr2 = [];
+      const querySnapshot2 = await getDocs(q2);
+      querySnapshot2.forEach(async (doc) => {
+        tasksArr2.push({ ...doc.data(), id: doc.id });
+        })
+      tasksArr2.forEach(async(comment) => {
+        await deleteDoc(doc(db, 'comments', comment.id));
+      })
+// ------------------------------------  Удаление подзадач проекта------------------------------------------------
+      const q1 = query(collection(db, 'tasks'), where('taskId', '==', task.id));
+      let tasksArr1 = [];
+      const querySnapshot1 = await getDocs(q1);
+      querySnapshot1.forEach(async(doc) => {
+        tasksArr1.push({ ...doc.data(), id: doc.id })
+      })
+      tasksArr1.forEach(async (task) => {
+        await deleteDoc(doc(db, 'tasks', task.id));
+      })
+// ------------------------------------Удаление задач проекта ----------------------------------------------------
+      await deleteDoc(doc(db, 'tasks', task.id));
+    })
+// ------------------------------------Удаление проекта----------------------------------------------------------
+    await deleteDoc(doc(db, 'projects', projectId));
   }
 
   return (

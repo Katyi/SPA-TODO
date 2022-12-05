@@ -23,3 +23,10 @@
   align-items: center;
   /* opacity: 1; */
 }
+
+/* @media (max-width: 768px) {
+  .myModalContent {
+    padding: 15px;
+    width: 90%;
+  }
+} */

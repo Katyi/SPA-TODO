@@ -89,7 +89,7 @@ function SubTasks() {
             Create new subtask
           </MyButton>
           <MyModalForTask visible={modal} setVisible={setModal}>
-            <SubTaskForm taskId={id} />
+            <SubTaskForm taskId={id}/>
           </MyModalForTask>
             <div action="" className="searchTask">
               <MyInput style={{marginLeft: 30, width: 300 }} type={"text"} placeholder={"Поиск подзадачи"} onChange={handleChange} />

@@ -77,7 +77,7 @@ const TaskItem = (props) => {
       <MyModalForTask visible={modal} setVisible={setModal}>
         <TaskUpdForm task={props.task} />
       </MyModalForTask>
-      <MyButton onClick={() => props.remove(props.task)} style={{width: 120, marginBottom: 10}}>Delete</MyButton>
+      <MyButton onClick={() => props.remove(props.task.id)} style={{width: 120, marginBottom: 10}}>Delete</MyButton>
       {!props.task.isSubtask && <MyButton onClick={() => navigate(`/tasks/${props.task.id}`)} style={{width: 120, marginBottom: 10}}>SubTasks</MyButton>}
       {!props.task.isSubtask && <MyButton onClick={() => navigate(`/comments/${props.task.id}`)} style={{width: 120, marginBottom: 10}}>Comments</MyButton>}
       <form onSubmit={handleUpload} className='uploadUrl' >

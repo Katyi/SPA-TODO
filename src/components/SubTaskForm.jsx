@@ -4,7 +4,7 @@ import MyInput from "./UI/input/MyInput";
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
 
-const SubTaskForm = ({ taskId }) => {
+const SubTaskForm = ({ taskId, projectId }) => {
   const [task, setTask] = useState({
     taskNumber: '',
     taskName: '',
@@ -17,6 +17,7 @@ const SubTaskForm = ({ taskId }) => {
   
   const addNewTask = async (e) => {
     e.preventDefault();
+
     await addDoc(collection(db, 'tasks'), {
       taskNumber: task.taskNumber,
       taskName: task.taskName,
@@ -87,13 +88,6 @@ const SubTaskForm = ({ taskId }) => {
           placeholder={"Приоритет"}
           // required
         />
-        {/* <MyInput
-          value={task.status}
-          onChange={e => setTask({ ...task, status: e.target.value })}
-          type={"text"}
-          placeholder={"Текущий статус"}
-          required
-        /> */}
         <MyButton onClick={addNewTask}>Create New Task</MyButton>
       </form>
     );

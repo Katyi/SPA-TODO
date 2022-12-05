@@ -22,7 +22,7 @@ const ProjectItem = (props) => {
         <MyModal visible={modal} setVisible={setModal}>
           <ProjectUpdForm project={props.project} />
         </MyModal>
-        <MyButton onClick={() => props.remove(props.project)} style={{ width: 120 }}>
+        <MyButton onClick={() => props.remove(props.project.id)} style={{ width: 120 }}>
           Delete
         </MyButton>
       </div>

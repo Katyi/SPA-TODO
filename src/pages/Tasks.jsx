@@ -42,9 +42,28 @@ function Tasks() {
     setDoneTasks(tasksArr3)
   }
 
-  const removeTask = async (task) => {
-    await deleteDoc(doc(db, 'tasks', task.id))
-    console.log("DELETED TASK", task);
+  const removeTask = async (taskId) => {
+    const q = query(collection(db, 'tasks'), where('taskId', '==', taskId));
+    let tasksArr = [];
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      tasksArr.push({ ...doc.data(), id: doc.id })
+    })
+    tasksArr.forEach(async (task) => {
+      await deleteDoc(doc(db, 'tasks', task.id));
+    })
+
+    const q1 = query(collection(db, 'comments'), where('taskId', '==', taskId));
+    let tasksArr1 = [];
+    const querySnapshot1 = await getDocs(q1);
+    querySnapshot1.forEach((doc) => {
+        tasksArr1.push({ ...doc.data(), id: doc.id })
+    })
+    tasksArr1.forEach(async (comment) => {
+      await deleteDoc(doc(db, 'comments', comment.id));
+    })
+
+    await deleteDoc(doc(db, 'tasks', taskId));
     window.location.reload();
   }
 
