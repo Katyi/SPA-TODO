@@ -9,6 +9,23 @@ import MyModal from "../components/UI/modal/MyModal";
 function Projects() {
   const [projects, setProjects] = useState([]);
   let [modal, setModal] = useState(false);
+  const handleClose = () => setModal(false);
+
+  function projectFirebaseQuery() {
+    const q = query(collection(db, 'projects'))
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      let projectsArr = [];
+      querySnapshot.forEach((doc) => {
+        projectsArr.push({ ...doc.data(), id: doc.id })
+      })
+      setProjects(projectsArr)
+    })
+    return () => unsubscribe()
+  }
+
+  // useEffect(() => {
+  //   projectFirebaseQuery();
+  // }, []);
 
   useEffect(() => {
     const q = query(collection(db, 'projects'))
@@ -77,7 +94,7 @@ function Projects() {
           Create new project
         </MyButton>
         <MyModal visible={modal} setVisible={setModal}>
-          <ProjectForm/>
+              <ProjectForm handleClose={handleClose} />
         </MyModal>
           </div>
         

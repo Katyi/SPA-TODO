@@ -4,7 +4,7 @@ import MyInput from "./UI/input/MyInput";
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
 
-const ProjectForm = () => {
+const ProjectForm = ({handleClose}) => {
   const [project, setProject] = useState({ projectNumber: '', projectName: '', description: '' });
 
   const addNewProject = async (e) => {
@@ -14,7 +14,7 @@ const ProjectForm = () => {
       projectName: project.projectName,
       description: project.description
     })
-    window.location.reload();
+    handleClose();
 }
 
     return (

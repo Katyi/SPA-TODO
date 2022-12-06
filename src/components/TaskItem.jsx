@@ -14,6 +14,7 @@ import { ItemTypes } from '../ItemTypes';
 const TaskItem = (props) => {
   let [modal, setModal] = useState(false);
   const [progress, setProgress] = useState(0);
+  const handleClose = () => setModal(false);
   
   // -----Загрузка файла для задачи-------------------------------------------------------------------------------------
   const handleUpload = (e) => {
@@ -22,6 +23,7 @@ const TaskItem = (props) => {
     let arr = [].slice.call(e.target.parentElement.children);
     console.log(arr);
     uploadFiles(file);
+    
   }
   
   const uploadFiles = async (file) => {
@@ -51,7 +53,7 @@ const TaskItem = (props) => {
   const recordUrl = async (url, fileName) => {
     await updateDoc(doc(db, 'tasks', props.task.id), {
       fileUrl: url,
-      fileName: fileName
+      fileName: fileName,
     });
     window.location.reload();
   }
@@ -75,7 +77,7 @@ const TaskItem = (props) => {
       {isDragging}
       <MyButton onClick={() => setModal(true)} style={{width: 120, marginBottom: 10}}>Open/Update</MyButton>
       <MyModalForTask visible={modal} setVisible={setModal}>
-        <TaskUpdForm task={props.task} />
+        <TaskUpdForm task={props.task} firebaseQuery={props.firebaseQuery} handleClose={handleClose}/>
       </MyModalForTask>
       <MyButton onClick={() => props.remove(props.task.id)} style={{width: 120, marginBottom: 10}}>Delete</MyButton>
       {!props.task.isSubtask && <MyButton onClick={() => navigate(`/tasks/${props.task.id}`)} style={{width: 120, marginBottom: 10}}>SubTasks</MyButton>}

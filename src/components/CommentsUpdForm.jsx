@@ -5,7 +5,7 @@ import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 
   // -----Редактирование проекта-------------------------------------------------------------------------------------
-const CommentsUpdForm = ( {comment} ) => {
+const CommentsUpdForm = ( {comment, firebaseQuery, handleClose} ) => {
   const [UpdItem, setUpdItem] = useState({ commentNumber: comment.commentNumber, comment: comment.comment });
   
   const updProject = async (e) => {
@@ -14,7 +14,8 @@ const CommentsUpdForm = ( {comment} ) => {
       commentNumber: UpdItem.commentNumber,
       comment: UpdItem.comment,
     })
-    window.location.reload();
+    handleClose();
+    firebaseQuery();
   }
 
   return (

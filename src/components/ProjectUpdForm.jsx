@@ -5,7 +5,7 @@ import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 
   // -----Редактирование проекта-------------------------------------------------------------------------------------
-const ProjectUpdForm = ( {project} ) => {
+const ProjectUpdForm = ( {project, handleClose} ) => {
   const [UpdItem, setUpdItem] = useState({ projectNumber: project.projectNumber, projectName: project.projectName, description: project.description });
   
   const updProject = async (e) => {
@@ -16,7 +16,7 @@ const ProjectUpdForm = ( {project} ) => {
       description: UpdItem.description,
     })
     setUpdItem({ projectNumber: '', projectName: '', description: '' });
-    window.location.reload();
+    handleClose();
   }
 
   return (

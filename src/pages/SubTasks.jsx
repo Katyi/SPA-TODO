@@ -16,6 +16,7 @@ function SubTasks() {
   let [modal, setModal] = useState(false);
   const [taskForSearch, setTaskForSearch] = useState('');
   let { id } = useParams();
+  const handleClose = () => setModal(false);
   
   // -----Параметры для отображения подзадач в трех столбцах на странице задач------------------------------------------------------------------
   async function firebaseQuery() {
@@ -42,10 +43,9 @@ function SubTasks() {
     setDoneTasks(tasksArr3)
   }
   
-  const removeTask = async (task) => {
-    await deleteDoc(doc(db, 'tasks', task.id))
-    console.log("DELETED TASK", task);
-    window.location.reload();
+  const removeTask = async (taskId) => {
+    await deleteDoc(doc(db, 'tasks', taskId));
+    firebaseQuery();
   }
 
   const handleChange = (e) => {
@@ -89,7 +89,7 @@ function SubTasks() {
             Create new subtask
           </MyButton>
           <MyModalForTask visible={modal} setVisible={setModal}>
-            <SubTaskForm taskId={id}/>
+            <SubTaskForm taskId={id} firebaseQuery={firebaseQuery} handleClose={handleClose}/>
           </MyModalForTask>
             <div action="" className="searchTask">
               <MyInput style={{marginLeft: 30, width: 300 }} type={"text"} placeholder={"Поиск подзадачи"} onChange={handleChange} />
@@ -97,18 +97,18 @@ function SubTasks() {
               <MyButton style={{marginLeft: 30, width: 120 }} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
                 Search
               </MyButton>
-              <MyButton style={{marginLeft: 30, marginRight: 30, width: 120 }} onClick={()=> {window.location.reload()}} >
+              <MyButton style={{marginLeft: 30, marginRight: 30, width: 120 }} onClick={()=> {firebaseQuery()}} >
                 Cancel
               </MyButton>
             </div>
         </div>
         <div className="container">
           <div className="header_Queue_mobile">Подзадачи в очереди</div>
-          <SubTaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} class='container_1' />
+          <SubTaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
           <div className="header_Development_mobile">Подзадачи в разработке</div>
-          <SubTaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} class='container_1' />
+          <SubTaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
           <div className="header_Done_mobile">Подзадачи завершенные</div>
-          <SubTaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} class='container_1' />
+          <SubTaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import { db } from '../firebase';
 
 
   // -----Добавление нового комментария для задачи в модальном окне-------------------------------------------------------------------------------------
-const CommentsForm = ({ taskId }) => {
+const CommentsForm = ({ taskId, firebaseQuery, handleClose }) => {
   const [UpdItem, setUpdItem] = useState({
     taskId: '',
     commentNumber: '',
@@ -25,7 +25,8 @@ const CommentsForm = ({ taskId }) => {
       commentNumber: '',
       comment: ''
     });
-    window.location.reload();
+    handleClose();
+    firebaseQuery();
   }
 
   return (

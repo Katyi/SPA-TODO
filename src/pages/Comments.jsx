@@ -12,7 +12,8 @@ function Comments() {
   const [comments, setComments] = useState([]);
   let [modal, setModal] = useState(false);
   let { id } = useParams();
-  
+  const handleClose = () => setModal(false);
+
   // -----Параметры для отображения комментариев------------------------------------------------------------------
   async function firebaseQuery() {
     const q = query(collection(db, 'comments'), where("taskId", "==", id));
@@ -23,10 +24,10 @@ function Comments() {
     })
     setComments(tasksArr)
   }
+
   const removeComments = async (comment) => {
-    await deleteDoc(doc(db, 'comments', comment.id))
-    console.log("DELETED TASK", comment);
-    window.location.reload();
+    await deleteDoc(doc(db, 'comments', comment.id));
+    firebaseQuery();
   }
 
   useEffect(() => {
@@ -51,11 +52,11 @@ function Comments() {
           </MyButton>
           <div></div>
         <MyModalForComments visible={modal} setVisible={setModal}>
-          <CommentsForm taskId={id}/>
+            <CommentsForm taskId={id} firebaseQuery={firebaseQuery} handleClose={handleClose}/>
         </MyModalForComments>
           <div className='comments'>
             {comments.map((comment, index) => (
-              <CommentItem remove={removeComments} comment={comment} key={index} />
+              <CommentItem remove={removeComments} firebaseQuery={firebaseQuery} comment={comment} key={index} />
             ))}
           </div>
         </div>

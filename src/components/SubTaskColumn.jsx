@@ -20,7 +20,7 @@ const SubTaskColumn = (props) => {
       priority: task.priority,
       status: props.name,
     });
-    window.location.reload();
+    props.firebaseQuery();
   }
 
 
@@ -44,7 +44,7 @@ const SubTaskColumn = (props) => {
       {isOver && <div>Drop Here!</div>}
         <div className='tasks'>
           {props.tasks.map((task, index) => (
-            <TaskItem remove={props.removeTask} task={task} key={index}/>
+            <TaskItem remove={props.removeTask} firebaseQuery={props.firebaseQuery} task={task} key={index}/>
           ))}
           </div>
           </div>

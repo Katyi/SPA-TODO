@@ -4,7 +4,7 @@ import MyInput from "./UI/input/MyInput";
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
 
-const SubTaskForm = ({ taskId, projectId }) => {
+const SubTaskForm = ({ taskId, firebaseQuery, handleClose }) => {
   const [task, setTask] = useState({
     taskNumber: '',
     taskName: '',
@@ -39,7 +39,8 @@ const SubTaskForm = ({ taskId, projectId }) => {
       endDate: '',
       priority: '',
     });
-    window.location.reload();
+    handleClose();
+    firebaseQuery();
 }
 
     return (

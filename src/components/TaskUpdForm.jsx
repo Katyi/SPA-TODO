@@ -5,7 +5,7 @@ import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 
   // -----Просмотр и редактирование задачи в модальном окне-------------------------------------------------------------------------------------
-const TaskUpdForm = ({ task }) => {
+const TaskUpdForm = ({ task, firebaseQuery, handleClose }) => {
   const [UpdItem, setUpdItem] = useState({
     taskNumber: task.taskNumber,
     taskName: task.taskName,
@@ -31,18 +31,8 @@ const TaskUpdForm = ({ task }) => {
       priority: UpdItem.priority,
       status: UpdItem.status,
     });
-    setUpdItem({
-      taskName: '',
-      description: '',
-      createDate: '',
-      workTime: '',
-      endDate: '',
-      priority: '',
-      fileName: '',
-      fileUrl: '',
-      status: ''
-    });
-    window.location.reload();
+    handleClose();
+    firebaseQuery();
   }
 
   return (
