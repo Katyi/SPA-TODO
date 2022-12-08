@@ -25,8 +25,9 @@ const CommentsForm = ({ taskId, firebaseQuery, handleClose }) => {
       commentNumber: '',
       comment: ''
     });
-    handleClose();
-    firebaseQuery();
+    // handleClose();
+    // firebaseQuery();
+    window.location.reload();
   }
 
   return (

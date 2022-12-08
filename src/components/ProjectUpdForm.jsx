@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import { updateDoc, doc } from 'firebase/firestore';
@@ -6,7 +6,11 @@ import { db } from '../firebase';
 
   // -----Редактирование проекта-------------------------------------------------------------------------------------
 const ProjectUpdForm = ( {project, handleClose} ) => {
-  const [UpdItem, setUpdItem] = useState({ projectNumber: project.projectNumber, projectName: project.projectName, description: project.description });
+  const [UpdItem, setUpdItem] = useState({
+    projectNumber: project.projectNumber,
+    projectName: project.projectName,
+    description: project.description
+  });
   
   const updProject = async (e) => {
     e.preventDefault();
@@ -15,15 +19,15 @@ const ProjectUpdForm = ( {project, handleClose} ) => {
       projectName: UpdItem.projectName,
       description: UpdItem.description,
     })
-    setUpdItem({ projectNumber: '', projectName: '', description: '' });
-    handleClose();
+    // handleClose();
+    window.location.reload();
   }
 
   return (
     <form>
       <MyInput
         value={UpdItem.projectNumber}
-        onChange={e => setUpdItem({...UpdItem, projectNumber: e.target.value})}
+        onChange={e => setUpdItem({ ...UpdItem, projectNumber: e.target.value })}
         type={"number"}
         placeholder={"Номер проекта"}
       />

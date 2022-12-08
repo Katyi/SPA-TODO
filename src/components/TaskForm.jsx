@@ -1,11 +1,12 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import { addDoc, collection } from 'firebase/firestore';
+
 import { db } from '../firebase';
 
 const TaskForm = ({ projectId, firebaseQuery, handleClose }) => {
-  const [task, setTask] = useState({
+  const [newItem, setNewItem] = useState({
     taskNumber: '',
     taskName: '',
     description: '',
@@ -13,25 +14,24 @@ const TaskForm = ({ projectId, firebaseQuery, handleClose }) => {
     workTime: '',
     endDate: '',
     priority: '',
-    status: '',
-    isSubtask: ''
+    status: ''
   });
-  
+
   const addNewTask = async (e) => {
     e.preventDefault();
     await addDoc(collection(db, 'tasks'), {
-      taskNumber: task.taskNumber,
-      taskName: task.taskName,
-      description: task.description,
-      createDate: task.createDate,
-      workTime: task.workTime,
-      endDate: task.endDate,
-      priority: task.priority,
+      taskNumber: newItem.taskNumber,
+      taskName: newItem.taskName,
+      description: newItem.description,
+      createDate: newItem.createDate,
+      workTime: newItem.workTime,
+      endDate: newItem.endDate,
+      priority: newItem.priority,
       status: 'Queue',
       isSubtask: false,
-      projectId: projectId
+      projectId: projectId,
     })
-    setTask({
+    setNewItem({
       taskNumber: '',
       taskName: '',
       description: '',
@@ -39,63 +39,61 @@ const TaskForm = ({ projectId, firebaseQuery, handleClose }) => {
       workTime: '',
       endDate: '',
       priority: '',
-      fileName: '',
-      fileUrl: '',
       status: ''
     });
-    handleClose();
-    firebaseQuery();
-}
-
-    return (
-      <form>
-        <MyInput
-          value={task.taskNumber}
-          onChange={e => setTask({ ...task, taskNumber: e.target.value })}
-          type={"number"}
-          placeholder={"Номер Задачи"}
-          required
-        />
-        <MyInput
-          value={task.taskName}
-          onChange={e => setTask({ ...task, taskName: e.target.value })}
-          type={"text"}
-          placeholder={"Название Задачи"}
-        />
-        <MyInput
-          value={task.description}
-          onChange={e => setTask({ ...task, description: e.target.value })}
-          type={"text"}
-          placeholder={"Описание Задачи"}
-        />
-        <MyInput
-          value={task.createDate}
-          onChange={e => setTask({ ...task, createDate: e.target.value })}
-          type={"date"}
-          placeholder={"Дата создания"}
-        />
-        <MyInput
-          value={task.workTime}
-          onChange={e => setTask({ ...task, workTime: e.target.value })}
-          type={"number"}
-          placeholder={"Время в работе"}
-        />
-        <MyInput
-          value={task.endDate}
-          onChange={e => setTask({ ...task, endDate: e.target.value })}
-          type={"date"}
-          placeholder={"Дата окончания"}
-        />
-        <MyInput
-          value={task.priority}
-          onChange={e => setTask({ ...task, priority: e.target.value })}
-          type={"text"}
-          placeholder={"Приоритет"}
-          required
-        />
-        <MyButton onClick={addNewTask}>Create New Task</MyButton>
-      </form>
-    );
+    // firebaseQuery();
+    // handleClose();
+    window.location.reload();
+  }
+  return (
+    <form>
+      <MyInput
+        value={newItem.taskNumber}
+        onChange={e => setNewItem({ ...newItem, taskNumber: e.target.value })}
+        type={"number"}
+        placeholder={"Номер Задачи"}
+        required
+      />
+      <MyInput
+        value={newItem.taskName}
+        onChange={e => setNewItem({ ...newItem, taskName: e.target.value })}
+        type={"text"}
+        placeholder={"Название Задачи"}
+      />
+      <MyInput
+        value={newItem.description}
+        onChange={e => setNewItem({ ...newItem, description: e.target.value })}
+        type={"text"}
+        placeholder={"Описание Задачи"}
+      />
+      <MyInput
+        value={newItem.createDate}
+        onChange={e => setNewItem({ ...newItem, createDate: e.target.value })}
+        type={"date"}
+        placeholder={"Дата создания"}
+      />
+      <MyInput
+        value={newItem.workTime}
+        onChange={e => setNewItem({ ...newItem, workTime: e.target.value })}
+        type={"number"}
+        placeholder={"Время в работе"}
+      />
+      <MyInput
+        value={newItem.endDate}
+        onChange={e => setNewItem({ ...newItem, endDate: e.target.value })}
+        type={"date"}
+        placeholder={"Дата окончания"}
+      />
+      <MyInput
+        value={newItem.priority}
+        onChange={e => setNewItem({ ...newItem, priority: e.target.value })}
+        type={"text"}
+        placeholder={"Приоритет"}
+        required
+      />
+      <MyButton onClick={addNewTask}>Create New Task</MyButton>
+    </form>
+  );
 };
 
 export default TaskForm;

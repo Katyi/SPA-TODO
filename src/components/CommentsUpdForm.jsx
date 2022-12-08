@@ -14,8 +14,9 @@ const CommentsUpdForm = ( {comment, firebaseQuery, handleClose} ) => {
       commentNumber: UpdItem.commentNumber,
       comment: UpdItem.comment,
     })
-    handleClose();
-    firebaseQuery();
+    // handleClose();
+    // firebaseQuery();
+    window.location.reload();
   }
 
   return (

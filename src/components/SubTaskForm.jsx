@@ -39,8 +39,9 @@ const SubTaskForm = ({ taskId, firebaseQuery, handleClose }) => {
       endDate: '',
       priority: '',
     });
-    handleClose();
-    firebaseQuery();
+    // handleClose();
+    // firebaseQuery();
+    window.location.reload();
 }
 
     return (

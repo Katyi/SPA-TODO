@@ -11,22 +11,6 @@ function Projects() {
   let [modal, setModal] = useState(false);
   const handleClose = () => setModal(false);
 
-  function projectFirebaseQuery() {
-    const q = query(collection(db, 'projects'))
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let projectsArr = [];
-      querySnapshot.forEach((doc) => {
-        projectsArr.push({ ...doc.data(), id: doc.id })
-      })
-      setProjects(projectsArr)
-    })
-    return () => unsubscribe()
-  }
-
-  // useEffect(() => {
-  //   projectFirebaseQuery();
-  // }, []);
-
   useEffect(() => {
     const q = query(collection(db, 'projects'))
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -38,7 +22,7 @@ function Projects() {
     })
     return () => unsubscribe()
   }, []);
-  
+
   const removeProject = async (projectId) => {
     const q = query(collection(db, 'tasks'), where('projectId', '==', projectId));
     let tasksArr = [];
@@ -72,6 +56,7 @@ function Projects() {
     })
 // ------------------------------------Удаление проекта----------------------------------------------------------
     await deleteDoc(doc(db, 'projects', projectId));
+    window.location.reload();
   }
 
   return (
@@ -94,10 +79,9 @@ function Projects() {
           Create new project
         </MyButton>
         <MyModal visible={modal} setVisible={setModal}>
-              <ProjectForm handleClose={handleClose} />
+          <ProjectForm handleClose={handleClose}/>
         </MyModal>
           </div>
-        
           <div className='projects'>
             {projects.map((project, index) => (
               <ProjectItem remove={removeProject} project={project} key={index} />

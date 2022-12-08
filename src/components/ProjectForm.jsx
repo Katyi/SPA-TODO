@@ -5,35 +5,36 @@ import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
 
 const ProjectForm = ({handleClose}) => {
-  const [project, setProject] = useState({ projectNumber: '', projectName: '', description: '' });
-
+  const [newProject, setNewProject] = useState({ projectNumber: '', projectName: '', description: '' });
   const addNewProject = async (e) => {
     e.preventDefault();
     await addDoc(collection(db, 'projects'), {
-      projectNumber: project.projectNumber,
-      projectName: project.projectName,
-      description: project.description
+      projectNumber: newProject.projectNumber,
+      projectName: newProject.projectName,
+      description: newProject.description
     })
-    handleClose();
+    setNewProject({ projectNumber: '', projectName: '', description: '' });
+    // handleClose();
+    window.location.reload();
 }
 
     return (
       <form>
         <MyInput
-          value={project.projectNumber}
-          onChange={e => setProject({ ...project, projectNumber: e.target.value })}
+          value={newProject.projectNumber}
+          onChange={e => setNewProject({ ...newProject, projectNumber: e.target.value })}
           type={"number"}
           placeholder={"Номер проекта"}
         />
         <MyInput
-          value={project.projectName}
-          onChange={e => setProject({ ...project, projectName: e.target.value })}
+          value={newProject.projectName}
+          onChange={e => setNewProject({ ...newProject, projectName: e.target.value })}
           type={"text"}
           placeholder={"Название проекта"}
         />
         <MyInput
-          value={project.description}
-          onChange={e => setProject({ ...project, description: e.target.value })}
+          value={newProject.description}
+          onChange={e => setNewProject({ ...newProject, description: e.target.value })}
           type={"text"}
           placeholder={"Описание проекта"}
         />

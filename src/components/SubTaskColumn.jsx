@@ -20,7 +20,8 @@ const SubTaskColumn = (props) => {
       priority: task.priority,
       status: props.name,
     });
-    props.firebaseQuery();
+    // props.firebaseQuery();
+    window.location.reload();
   }
 
 

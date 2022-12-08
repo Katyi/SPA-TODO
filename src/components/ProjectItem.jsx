@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import ProjectUpdForm from "../components/ProjectUpdForm";
-import MyModal from "../components/UI/modal/MyModal";
+import MyModal1 from "../components/UI/modal/MyModal1";
 import MyButton from "../components/UI/button/MyButton";
 
 const ProjectItem = (props) => {
-  let [modal, setModal] = useState(false);
-  const handleClose = () => setModal(false);
+  let [modal1, setModal1] = useState(false);
+  const handleClose = () => setModal1(false);
   let navigate = useNavigate();
   
   return (
@@ -18,11 +18,11 @@ const ProjectItem = (props) => {
         <MyButton onClick={() => navigate(`/projects/${props.project.id}`)} style={{ width: 120 }}>
           Open
         </MyButton>
-        <MyButton onClick={() => setModal(true)} style={{ width: 120}}>
+        <MyButton onClick={() => setModal1(true)} style={{ width: 120}}>
           UpDate</MyButton>
-        <MyModal visible={modal} setVisible={setModal}>
+        <MyModal1 visible={modal1} setVisible={setModal1}>
           <ProjectUpdForm project={props.project} handleClose={handleClose}/>
-        </MyModal>
+        </MyModal1>
         <MyButton onClick={() => props.remove(props.project.id)} style={{ width: 120 }}>
           Delete
         </MyButton>

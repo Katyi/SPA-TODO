@@ -20,7 +20,8 @@ const TaskColumn = (props) => {
       priority: task.priority,
       status: props.name,
     });
-    props.firebaseQuery();
+    // props.firebaseQuery();
+    window.location.reload();
   }
 
 
@@ -46,8 +47,8 @@ const TaskColumn = (props) => {
           {props.tasks.map((task, index) => (
             <TaskItem remove={props.removeTask} firebaseQuery={props.firebaseQuery} task={task} key={index}/>
           ))}
-          </div>
-          </div>
+      </div>
+    </div>
   )
 }
 

@@ -27,7 +27,8 @@ function Comments() {
 
   const removeComments = async (comment) => {
     await deleteDoc(doc(db, 'comments', comment.id));
-    firebaseQuery();
+    // firebaseQuery();
+    window.location.reload();
   }
 
   useEffect(() => {

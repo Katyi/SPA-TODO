@@ -15,8 +15,7 @@ const TaskUpdForm = ({ task, firebaseQuery, handleClose }) => {
     endDate: task.endDate,
     priority: task.priority,
     fileName: task.fileName,
-    fileUrl: task.fileUrl,
-    status: task.status
+    fileUrl: task.fileUrl
   });
 
   const updTask = async (e) => {
@@ -29,10 +28,10 @@ const TaskUpdForm = ({ task, firebaseQuery, handleClose }) => {
       workTime: UpdItem.workTime,
       endDate: UpdItem.endDate,
       priority: UpdItem.priority,
-      status: UpdItem.status,
     });
-    handleClose();
-    firebaseQuery();
+    // firebaseQuery();
+    // handleClose();
+    window.location.reload();
   }
 
   return (
@@ -86,9 +85,9 @@ const TaskUpdForm = ({ task, firebaseQuery, handleClose }) => {
         type={"text"}
         placeholder={"Нет загруженного файла"}
       />
-      <a href={UpdItem.fileUrl} target='_blank'>Ссылка на файл</a>
+      <a href={task.fileUrl} target='_blank'>Ссылка на файл</a>
       <MyInput
-        value={UpdItem.status}
+        value={task.status}
         onChange={e => setUpdItem({ ...UpdItem, status: e.target.value })}
         type={"text"}
         placeholder={"Текущий статус"}

@@ -14,6 +14,7 @@ function Tasks() {
   const [developmentTasks, setDevelopmentTasks] = useState([]);
   const [doneTasks, setDoneTasks] = useState([]);
   const [taskForSearch, setTaskForSearch] = useState('');
+  const [taskForSearch1, setTaskForSearch1] = useState('');
   let [modal, setModal] = useState(false);
   let { id } = useParams();
   const handleClose = () => setModal(false);
@@ -65,20 +66,33 @@ function Tasks() {
     })
 
     await deleteDoc(doc(db, 'tasks', taskId));
-    firebaseQuery();
+    // firebaseQuery();
+    window.location.reload();
   }
 
   const handleChange = (e) => {
     setTaskForSearch(e.target.value);
   };
+  const handleChange1 = (e) => {
+    setTaskForSearch1(e.target.value);
+  };
 
   const searchTask = async (queueTasks, developmentTasks, doneTasks) => {
-    let searchResult1 = await queueTasks.filter((elem) => elem.taskName.includes(taskForSearch));
-    let searchResult2 = await developmentTasks.filter((elem) => elem.taskName.includes(taskForSearch));
-    let searchResult3 = await doneTasks.filter((elem) => elem.taskName.includes(taskForSearch));
-    setQueueTasks(searchResult1);
-    setDevelopmentTasks(searchResult2);
-    setDoneTasks(searchResult3);
+    if (taskForSearch!=='') {
+      let searchResult1 = await queueTasks.filter((elem) => elem.taskName.includes(taskForSearch));
+      let searchResult2 = await developmentTasks.filter((elem) => elem.taskName.includes(taskForSearch));
+      let searchResult3 = await doneTasks.filter((elem) => elem.taskName.includes(taskForSearch));
+      setQueueTasks(searchResult1);
+      setDevelopmentTasks(searchResult2);
+      setDoneTasks(searchResult3);
+    } else {
+      let searchResult1 = await queueTasks.filter((elem) => elem.taskNumber.includes(taskForSearch1));
+      let searchResult2 = await developmentTasks.filter((elem) => elem.taskNumber.includes(taskForSearch1));
+      let searchResult3 = await doneTasks.filter((elem) => elem.taskNumber.includes(taskForSearch1));
+      setQueueTasks(searchResult1);
+      setDevelopmentTasks(searchResult2);
+      setDoneTasks(searchResult3);
+    }
   }
 
   useEffect(() => {
@@ -113,11 +127,11 @@ function Tasks() {
           </MyModalForTask>
           <div action="" className="searchTask">
             <MyInput style={{marginLeft: 30, width: 300 }} type={"text"} placeholder={"Поиск задачи по названию"} onChange={handleChange}/>
-            <MyInput style={{marginLeft: 30, width: 100 }} type={"number"} placeholder={"Поиск задачи по номеру"} onChange={handleChange}/>
+            <MyInput style={{marginLeft: 30, width: 100 }} type={"number"} placeholder={"Поиск задачи по номеру"} onChange={handleChange1}/>
             <MyButton style={{marginLeft: 30, width: 120}} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
               Search
             </MyButton>
-            <MyButton style={{marginLeft: 30, marginRight: 30, width: 120 }} onClick={()=> {firebaseQuery()}} >
+            <MyButton style={{marginLeft: 30, marginRight: 30, width: 120 }} onClick={()=> {window.location.reload()}} >
               Cancel
             </MyButton>
           </div>
