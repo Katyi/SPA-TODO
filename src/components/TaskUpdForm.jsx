@@ -9,7 +9,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 const TaskUpdForm = () => {
   const location = useLocation();
   const { task } = location.state;
-  console.log(task.projectId);
+  // console.log(task.projectId);
   const navigate = useNavigate();
   const [UpdItem, setUpdItem] = useState({
     taskNumber: task.taskNumber,

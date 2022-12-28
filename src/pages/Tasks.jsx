@@ -126,8 +126,8 @@ function Tasks() {
             <MyButton style={{marginLeft: 30, width: 120}} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
               Search
             </MyButton>
-            <MyButton style={{marginLeft: 30, marginRight: 30, width: 120 }} onClick={()=> {window.location.reload()}} >
-              Cancel
+            <MyButton onClick={() => {firebaseQuery()}}>
+              <Link className="createUpdDelBtn" to={`/Projects/${id}`} state={{projectId: id}}>Cancel</Link>
             </MyButton>
           </div>
         </div>

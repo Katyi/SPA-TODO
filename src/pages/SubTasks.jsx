@@ -105,10 +105,10 @@ function SubTasks() {
               <MyButton style={{marginLeft: 30, width: 120 }} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
                 Search
               </MyButton>
-              <MyButton style={{marginLeft: 30, marginRight: 30, width: 120 }} onClick={()=> {window.location.reload()}} >
-                Cancel
-              </MyButton>
-            </div>
+            <MyButton onClick={() => {firebaseQuery()}}>
+              <Link className="createUpdDelBtn" to={`/Tasks/${id}`} state={{taskId: id, projectId: projectId}}>Cancel</Link>
+            </MyButton>
+          </div>
         </div>
         <div className="container">
           <div className="header_Queue_mobile">Подзадачи в очереди</div>
