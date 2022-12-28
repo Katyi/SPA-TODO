@@ -104,6 +104,19 @@ body {
   margin-top: 2%;
   margin-bottom: 2%;
 }
+form {
+  margin: 100px 20px 0px 20px;
+  max-width: 70%;
+  /* margin-left: 5px; */
+  /* display: flex; */
+  padding: 10px 15px;
+  border: 2px solid #566573;
+  align-items: center;
+}
+.createUpdDelBtn {
+  text-decoration: none;
+  color: #566573;
+}
 /* monitors and laptops */
 @media (min-width: 1240px)  {}
 
@@ -362,6 +375,7 @@ body {
   align-items: center;
   font-weight: bold;
   font-variant: small-caps;
+  cursor: pointer;
 }
 .taskNumber {
   width: 10%;

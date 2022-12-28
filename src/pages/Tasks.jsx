@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { query, collection, where, getDocs, doc, deleteDoc} from 'firebase/firestore';
 import { db } from '../firebase';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
-import TaskForm from "../components/TaskForm";
-import MyModalForTask from "../components/UI/modal/MyModalForTask";
 import MyInput from "../components/UI/input/MyInput";
 import TaskColumn from "../components/TaskColumn";
+
+// export const mainContext = React.createContext("");
 
 function Tasks() {
   const [queueTasks, setQueueTasks] = useState([]);
@@ -15,9 +15,7 @@ function Tasks() {
   const [doneTasks, setDoneTasks] = useState([]);
   const [taskForSearch, setTaskForSearch] = useState('');
   const [taskForSearch1, setTaskForSearch1] = useState('');
-  let [modal, setModal] = useState(false);
   let { id } = useParams();
-  const handleClose = () => setModal(false);
   
   // -----Параметры для отображения задач в трех столбцах на странице задач------------------------------------------------------------------
   async function firebaseQuery() {
@@ -66,8 +64,7 @@ function Tasks() {
     })
 
     await deleteDoc(doc(db, 'tasks', taskId));
-    // firebaseQuery();
-    window.location.reload();
+    firebaseQuery();
   }
 
   const handleChange = (e) => {
@@ -89,9 +86,10 @@ function Tasks() {
       let searchResult1 = await queueTasks.filter((elem) => elem.taskNumber.includes(taskForSearch1));
       let searchResult2 = await developmentTasks.filter((elem) => elem.taskNumber.includes(taskForSearch1));
       let searchResult3 = await doneTasks.filter((elem) => elem.taskNumber.includes(taskForSearch1));
-      setQueueTasks(searchResult1);
-      setDevelopmentTasks(searchResult2);
-      setDoneTasks(searchResult3);
+
+      setQueueTasks(()=>[...searchResult1]);
+      setDevelopmentTasks(()=>[...searchResult2]);
+      setDoneTasks(()=>[...searchResult3]);
     }
   }
 
@@ -99,16 +97,17 @@ function Tasks() {
     firebaseQuery();
   }, []);
 
-  let navigate = useNavigate();
-
   return (
+    
     <div className="App">
       <div className="wrapper">
         <div className="header_2">
           <div className="header_container">
             <div className="header_title">Задачи</div>
             <div className="header__link">
-              <MyButton onClick={() => navigate(-1)}>Обратно к проектам</MyButton>
+              <MyButton>
+                <Link className="createUpdDelBtn" to="/Projects">Back To Projects</Link>
+              </MyButton>
             </div>
           </div>
           <div className='header_of_tasks'>
@@ -118,13 +117,9 @@ function Tasks() {
           </div>
         </div>
         <div className="container_main">
-          <MyButton
-            style={{ marginLeft: 30, width:150, marginBottom: 5}} onClick={() => setModal(true)}>
-            Create new task
+          <MyButton>
+            <Link className="createUpdDelBtn" to="/CreateTask" state={{ projectId: id}}> Create Task </Link>
           </MyButton>
-          <MyModalForTask visible={modal} setVisible={setModal}>
-            <TaskForm projectId={id} firebaseQuery={firebaseQuery} handleClose={handleClose} />
-          </MyModalForTask>
           <div action="" className="searchTask">
             <MyInput style={{marginLeft: 30, width: 300 }} type={"text"} placeholder={"Поиск задачи по названию"} onChange={handleChange}/>
             <MyInput style={{marginLeft: 30, width: 100 }} type={"number"} placeholder={"Поиск задачи по номеру"} onChange={handleChange1}/>
@@ -138,11 +133,11 @@ function Tasks() {
         </div>
         <div className="container">
           <div className="header_Queue_mobile">Задачи в очереди</div>
-          <TaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} handleClose={handleClose} class='container_1' />
+          <TaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
           <div className="header_Development_mobile">Задачи в разработке</div>
-          <TaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} handleClose={handleClose} class='container_1' />
+          <TaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
           <div className="header_Done_mobile">Задачи завершенные</div>
-          <TaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
+          <TaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} queueTasks={queueTasks} class='container_1' />
         </div>
       </div>
     </div>

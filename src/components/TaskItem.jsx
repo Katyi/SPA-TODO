@@ -1,8 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import MyButton from "../components/UI/button/MyButton";
-import { useNavigate } from 'react-router-dom';
-import TaskUpdForm from "./TaskUpdForm";
-import MyModalForTask from "./UI/modal/MyModalForTask";
+import { Link, useNavigate } from 'react-router-dom';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { updateDoc, doc} from 'firebase/firestore';
 import { db } from '../firebase';
@@ -12,10 +10,13 @@ import { useDrag } from 'react-dnd';
 import { ItemTypes } from '../ItemTypes';
 
 const TaskItem = (props) => {
-  let [modal, setModal] = useState(false);
   const [progress, setProgress] = useState(0);
-  const handleClose = () => setModal(false);
-  
+  const [inDrag, setInDrag] = useState(false);
+
+  const handleDrag = () => {
+    setInDrag(!inDrag);
+  }
+
   // -----Загрузка файла для задачи-------------------------------------------------------------------------------------
   const handleUpload = (e) => {
     e.preventDefault();
@@ -75,18 +76,19 @@ const TaskItem = (props) => {
       <div className='taskNumber'>{props.task.taskNumber}</div>
       <div className='taskName'>{props.task.taskName}</div>
       {isDragging}
-      <MyButton onClick={() => setModal(true)} style={{width: 120, marginBottom: 10}}>Open/Update</MyButton>
-      <MyModalForTask visible={modal} setVisible={setModal}>
-        <TaskUpdForm task={props.task} firebaseQuery={props.firebaseQuery} handleClose={handleClose}/>
-      </MyModalForTask>
+      <MyButton>  
+        <Link className="createUpdDelBtn" to="/UpdateTask" state={{ task: props.task }}> Open/Update </Link>
+      </MyButton>
       <MyButton onClick={() => props.remove(props.task.id)} style={{width: 120, marginBottom: 10}}>Delete</MyButton>
-      {!props.task.isSubtask && <MyButton onClick={() => navigate(`/tasks/${props.task.id}`)} style={{width: 120, marginBottom: 10}}>SubTasks</MyButton>}
+      {!props.task.isSubtask && <MyButton>
+        <Link className="createUpdDelBtn" to={`/tasks/${props.task.id}`} state={{projectId: props.task.projectId}}>SubTasks</Link>
+      </MyButton>}
       {!props.task.isSubtask && <MyButton onClick={() => navigate(`/comments/${props.task.id}`)} style={{width: 120, marginBottom: 10}}>Comments</MyButton>}
       <form onSubmit={handleUpload} className='uploadUrl' >
           <MyInput type="file" className='uploadFile' style={{width: 500, marginBottom: 10}}/>
           <MyButton type='submit' style={{width: 120}}>Upload</MyButton>
         </form>
-    </div>
+      </div>
   );
 };
 

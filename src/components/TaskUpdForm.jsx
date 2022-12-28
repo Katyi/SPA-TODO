@@ -3,9 +3,14 @@ import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
   // -----Просмотр и редактирование задачи в модальном окне-------------------------------------------------------------------------------------
-const TaskUpdForm = ({ task, firebaseQuery, handleClose }) => {
+const TaskUpdForm = () => {
+  const location = useLocation();
+  const { task } = location.state;
+  console.log(task.projectId);
+  const navigate = useNavigate();
   const [UpdItem, setUpdItem] = useState({
     taskNumber: task.taskNumber,
     taskName: task.taskName,
@@ -17,7 +22,7 @@ const TaskUpdForm = ({ task, firebaseQuery, handleClose }) => {
     fileName: task.fileName,
     fileUrl: task.fileUrl
   });
-
+  
   const updTask = async (e) => {
     e.preventDefault();
     await updateDoc(doc(db, 'tasks', task.id), {
@@ -29,9 +34,7 @@ const TaskUpdForm = ({ task, firebaseQuery, handleClose }) => {
       endDate: UpdItem.endDate,
       priority: UpdItem.priority,
     });
-    // firebaseQuery();
-    // handleClose();
-    window.location.reload();
+    // task.projectId ? navigate(`/Projects/${task.projectId}`) : navigate(`/Tasks/${task.taskId}`);
   }
 
   return (
@@ -92,7 +95,17 @@ const TaskUpdForm = ({ task, firebaseQuery, handleClose }) => {
         type={"text"}
         placeholder={"Текущий статус"}
       />
-      <MyButton onClick={updTask}>Update task</MyButton>
+      <MyButton onClick={updTask}>
+        {/* Update task */}
+        {task.taskId && <Link className="createUpdDelBtn" to={`/Tasks/${task.taskId}`} state={{ projectId: task.projectId }}>Update task</Link>}
+        {!task.taskId && <Link className="createUpdDelBtn" to={`/Projects/${task.projectId}`}>Update task</Link>}
+      </MyButton>
+      <MyButton>
+      {task.taskId && <Link className="createUpdDelBtn" to={`/Tasks/${task.taskId}`} state={{ projectId: task.projectId }}>Cancel</Link>}
+        {!task.taskId && <Link className="createUpdDelBtn" to={`/Projects/${task.projectId}`}>Cancel</Link>}
+        </MyButton>
+      {/* {task.taskId && <MyButton onClick={() => navigate(`/Tasks/${task.taskId}`)}>Cancel</MyButton>}
+      {!task.taskId && <MyButton onClick={() => navigate(`/Projects/${task.projectId}`)}>Cancel</MyButton>} */}
     </form>
   );
 };

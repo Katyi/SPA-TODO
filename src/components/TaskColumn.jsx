@@ -44,7 +44,8 @@ const TaskColumn = (props) => {
     <div className={props.class} ref={drop} style={divStyle}>
       {isOver && <div>Drop Here!</div>}
         <div className='tasks'>
-          {props.tasks.map((task, index) => (
+        {props.tasks.sort((a,b)=>a.taskNumber > b.taskNumber ? 1 : -1)
+          .map((task, index) => (
             <TaskItem remove={props.removeTask} firebaseQuery={props.firebaseQuery} task={task} key={index}/>
           ))}
       </div>

@@ -3,8 +3,12 @@ import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
+import { useLocation, useNavigate } from "react-router-dom";
 
-const SubTaskForm = ({ taskId, firebaseQuery, handleClose }) => {
+const SubTaskForm = () => {
+  const location = useLocation();
+  const { taskId, projectId } = location.state;
+  const navigate = useNavigate();
   const [task, setTask] = useState({
     taskNumber: '',
     taskName: '',
@@ -12,12 +16,11 @@ const SubTaskForm = ({ taskId, firebaseQuery, handleClose }) => {
     createDate: '',
     workTime: '',
     endDate: '',
-    priority: ''
+    priority: '',
   });
   
   const addNewTask = async (e) => {
     e.preventDefault();
-
     await addDoc(collection(db, 'tasks'), {
       taskNumber: task.taskNumber,
       taskName: task.taskName,
@@ -28,7 +31,8 @@ const SubTaskForm = ({ taskId, firebaseQuery, handleClose }) => {
       priority: task.priority,
       status: "Queue",
       isSubtask: true,
-      taskId: taskId
+      taskId: taskId,
+      projectId: projectId,
     })
     setTask({
       taskNumber: '',
@@ -39,9 +43,7 @@ const SubTaskForm = ({ taskId, firebaseQuery, handleClose }) => {
       endDate: '',
       priority: '',
     });
-    // handleClose();
-    // firebaseQuery();
-    window.location.reload();
+    navigate(-1);
 }
 
     return (
@@ -88,9 +90,9 @@ const SubTaskForm = ({ taskId, firebaseQuery, handleClose }) => {
           onChange={e => setTask({ ...task, priority: e.target.value })}
           type={"text"}
           placeholder={"Приоритет"}
-          // required
         />
         <MyButton onClick={addNewTask}>Create New Task</MyButton>
+        <MyButton onClick={()=> navigate(-1)}>Cancel</MyButton>
       </form>
     );
 };

@@ -3,9 +3,13 @@ import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
+import { useLocation, useNavigate } from "react-router-dom";
 
   // -----Редактирование проекта-------------------------------------------------------------------------------------
-const ProjectUpdForm = ( {project, handleClose} ) => {
+const ProjectUpdForm = () => {
+  const location = useLocation();
+  const { project } = location.state;
+  const navigate = useNavigate();
   const [UpdItem, setUpdItem] = useState({
     projectNumber: project.projectNumber,
     projectName: project.projectName,
@@ -19,8 +23,7 @@ const ProjectUpdForm = ( {project, handleClose} ) => {
       projectName: UpdItem.projectName,
       description: UpdItem.description,
     })
-    // handleClose();
-    window.location.reload();
+    navigate("/Projects");
   }
 
   return (
@@ -44,6 +47,7 @@ const ProjectUpdForm = ( {project, handleClose} ) => {
         placeholder={"Описание проекта"}
       />
       <MyButton onClick={updProject}>Update Project</MyButton>
+      <MyButton onClick={()=> navigate("/Projects")}>Cancel</MyButton>
     </form>
   );
 };

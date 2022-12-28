@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router";
-import { query, collection, where, getDocs, doc, deleteDoc} from 'firebase/firestore';
+import { useLocation, useParams } from "react-router";
+import { query, collection, where, getDocs, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
-import MyModalForTask from "../components/UI/modal/MyModalForTask";
-import SubTaskForm from "../components/SubTaskForm";
 import MyInput from "../components/UI/input/MyInput";
 import SubTaskColumn from "../components/SubTaskColumn";
 
 function SubTasks() {
+  const location = useLocation();
+  const { projectId } = location.state;
   const [queueTasks, setQueueTasks] = useState([]);
   const [developmentTasks, setDevelopmentTasks] = useState([]);
   const [doneTasks, setDoneTasks] = useState([]);
-  let [modal, setModal] = useState(false);
+  // const [tasks, setTasks] = useState([]);
   const [taskForSearch, setTaskForSearch] = useState('');
   const [taskForSearch1, setTaskForSearch1] = useState('');
   let { id } = useParams();
-  const handleClose = () => setModal(false);
-  
+
   // -----Параметры для отображения подзадач в трех столбцах на странице задач------------------------------------------------------------------
   async function firebaseQuery() {
     const q1 = query(collection(db, 'tasks'), where("status", "==", "Queue"), where("isSubtask", "==", true), where('taskId','==', id));
@@ -46,8 +45,7 @@ function SubTasks() {
   
   const removeTask = async (taskId) => {
     await deleteDoc(doc(db, 'tasks', taskId));
-    // firebaseQuery();
-    window.location.reload();
+    firebaseQuery();
   }
 
   const handleChange = (e) => {
@@ -88,7 +86,7 @@ function SubTasks() {
           <div className="header_container">
             <div className="header_title">Подзадачи</div>
             <div className="header__link">
-              <MyButton onClick={() => navigate(-1)} style={{marginRight: 30, width: 200 }}>Обратно к задачам</MyButton>
+                <MyButton onClick={() => navigate(`/projects/${projectId}`)} style={{ marginRight: 30, width: 200 }}>Обратно к задачам</MyButton>
             </div>
           </div>
           <div className='header_of_tasks'>
@@ -98,13 +96,9 @@ function SubTasks() {
           </div>
         </div>
         <div className="container_main">
-          <MyButton
-            style={{ marginLeft: 30, width: 200, marginBottom: 5 }} onClick={() => setModal(true)}>
-            Create new subtask
+          <MyButton>
+            <Link className="createUpdDelBtn" to="/CreateSubTask" state={{taskId: id, projectId: projectId}}> Create SubTask </Link>
           </MyButton>
-          <MyModalForTask visible={modal} setVisible={setModal}>
-            <SubTaskForm taskId={id} firebaseQuery={firebaseQuery} handleClose={handleClose}/>
-          </MyModalForTask>
             <div action="" className="searchTask">
               <MyInput style={{marginLeft: 30, width: 300 }} type={"text"} placeholder={"Поиск подзадачи"} onChange={handleChange} />
               <MyInput style={{marginLeft: 30, width: 100 }} type={"number"} placeholder={"Поиск подзадачи по номеру"} onChange={handleChange1}/>

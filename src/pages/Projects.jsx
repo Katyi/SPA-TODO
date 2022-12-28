@@ -3,13 +3,10 @@ import { query, collection, onSnapshot, doc, deleteDoc,getDocs, where  } from 'f
 import { db } from '../firebase';
 import ProjectItem from "../components/ProjectItem";
 import MyButton from "../components/UI/button/MyButton";
-import ProjectForm from "../components/ProjectForm";
-import MyModal from "../components/UI/modal/MyModal";
+import { Link } from "react-router-dom";
 
 function Projects() {
   const [projects, setProjects] = useState([]);
-  let [modal, setModal] = useState(false);
-  const handleClose = () => setModal(false);
 
   useEffect(() => {
     const q = query(collection(db, 'projects'))
@@ -56,7 +53,6 @@ function Projects() {
     })
 // ------------------------------------Удаление проекта----------------------------------------------------------
     await deleteDoc(doc(db, 'projects', projectId));
-    window.location.reload();
   }
 
   return (
@@ -72,21 +68,16 @@ function Projects() {
         </div>
         <div className='project_container'>
           <div className="project_container_1">
-          <MyButton
-          // style={{ marginTop: 220, marginBottom: 30, marginTop: 215 }}
-          style={{ marginLeft: 30, width: 200, marginBottom: 5}}
-          onClick={() => setModal(true)}>
-          Create new project
-        </MyButton>
-        <MyModal visible={modal} setVisible={setModal}>
-          <ProjectForm handleClose={handleClose}/>
-        </MyModal>
+            <MyButton>
+              <Link className="createUpdDelBtn" to="/CreateProject"> Create Project </Link>
+            </MyButton>
           </div>
           <div className='projects'>
-            {projects.map((project, index) => (
-              <ProjectItem remove={removeProject} project={project} key={index} />
+            {projects.sort((a,b)=>a.projectNumber > b.projectNumber ? 1 : -1)
+              .map((project) => (
+              <ProjectItem remove={removeProject} project={project} key={project.projectNumber} />
             ))}
-            </div>
+          </div>
         </div>
       </div>
     </div>
