@@ -3,14 +3,12 @@ import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-  // -----Просмотр и редактирование задачи в модальном окне-------------------------------------------------------------------------------------
+// -----Просмотр и редактирование задачи в модальном окне-------------------------------------------------------------------------------------
 const TaskUpdForm = () => {
   const location = useLocation();
-  const { task } = location.state;
-  // console.log(task.projectId);
-  const navigate = useNavigate();
+  const { projectId, task } = location.state;
   const [UpdItem, setUpdItem] = useState({
     taskNumber: task.taskNumber,
     taskName: task.taskName,
@@ -34,7 +32,6 @@ const TaskUpdForm = () => {
       endDate: UpdItem.endDate,
       priority: UpdItem.priority,
     });
-    // task.projectId ? navigate(`/Projects/${task.projectId}`) : navigate(`/Tasks/${task.taskId}`);
   }
 
   return (
@@ -43,69 +40,66 @@ const TaskUpdForm = () => {
         value={UpdItem.taskNumber}
         onChange={e => setUpdItem({...UpdItem, taskNumber: e.target.value})}
         type={"number"}
-        placeholder={"Номер задачи"}
+        placeholder={"Task Number"}
       />
       <MyInput
         value={UpdItem.taskName}
         onChange={e => setUpdItem({...UpdItem, taskName: e.target.value})}
         type={"text"}
-        placeholder={"Название задачи"}
+        placeholder={"Task Name"}
       />
       <MyInput
         value ={UpdItem.description}
         onChange={e => setUpdItem({ ...UpdItem, description: e.target.value })}
         type={"text"}
-        placeholder={"Описание задачи"}
+        placeholder={"Task Description"}
       />
       <MyInput
         value ={UpdItem.createDate}
         onChange={e => setUpdItem({ ...UpdItem, createDate: e.target.value })}
         type={"date"}
-        placeholder={"Дата создания задачи"}
+        placeholder={"Create Date"}
       />
       <MyInput
         value ={UpdItem.workTime}
         onChange={e => setUpdItem({ ...UpdItem, workTime: e.target.value })}
         type={"number"}
-        placeholder={"Время в работе"}
+        placeholder={"Task Time"}
       />
       <MyInput
         value ={UpdItem.endDate}
         onChange={e => setUpdItem({ ...UpdItem, endDate: e.target.value })}
         type={"date"}
-        placeholder={"Дата окончания"}
+        placeholder={"End Date"}
       />
       <MyInput
         value={UpdItem.priority}
         onChange={e => setUpdItem({ ...UpdItem, priority: e.target.value })}
         type={"text"}
-        placeholder={"Приоритет"}
+        placeholder={"Priority"}
       />
       <MyInput
         value={UpdItem.fileName}
         disabled="disabled"
         onChange={e => setUpdItem({ ...UpdItem, fileName: e.target.value })}
         type={"text"}
-        placeholder={"Нет загруженного файла"}
+        placeholder={"No file uploaded"}
       />
-      <a href={task.fileUrl} target='_blank'>Ссылка на файл</a>
+      <a href={task.fileUrl} target='_blank'>File Link</a>
       <MyInput
         value={task.status}
         onChange={e => setUpdItem({ ...UpdItem, status: e.target.value })}
         type={"text"}
-        placeholder={"Текущий статус"}
+        placeholder={"Status"}
       />
       <MyButton onClick={updTask}>
-        {/* Update task */}
-        {task.taskId && <Link className="createUpdDelBtn" to={`/Tasks/${task.taskId}`} state={{ projectId: task.projectId }}>Update task</Link>}
-        {!task.taskId && <Link className="createUpdDelBtn" to={`/Projects/${task.projectId}`}>Update task</Link>}
+        {task.taskId && <Link className="createUpdDelBtn" to={`/Tasks/${task.taskId}`} state={{ projectId: task.projectId, task: task }}>Update/Cancel</Link>}
+        {!task.taskId && <Link className="createUpdDelBtn" to={`/Projects/${task.projectId}`}>Update/Cancel</Link>}
       </MyButton>
-      <MyButton>
-      {task.taskId && <Link className="createUpdDelBtn" to={`/Tasks/${task.taskId}`} state={{ projectId: task.projectId }}>Cancel</Link>}
+      {/* <MyButton>
+        {task.taskId && <Link className="createUpdDelBtn" to={`/Tasks/${task.taskId}`} state={{ projectId: task.projectId, task: task }}>Cancel</Link>}
         {!task.taskId && <Link className="createUpdDelBtn" to={`/Projects/${task.projectId}`}>Cancel</Link>}
-        </MyButton>
-      {/* {task.taskId && <MyButton onClick={() => navigate(`/Tasks/${task.taskId}`)}>Cancel</MyButton>}
-      {!task.taskId && <MyButton onClick={() => navigate(`/Projects/${task.projectId}`)}>Cancel</MyButton>} */}
+      </MyButton> */}
     </form>
   );
 };

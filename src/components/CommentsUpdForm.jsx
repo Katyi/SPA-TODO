@@ -3,9 +3,12 @@ import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
+import { Link, useLocation } from "react-router-dom";
 
   // -----Редактирование проекта-------------------------------------------------------------------------------------
-const CommentsUpdForm = ( {comment, firebaseQuery, handleClose} ) => {
+const CommentsUpdForm = () => {
+  const location = useLocation();
+  const {comment, projectId} = location.state;
   const [UpdItem, setUpdItem] = useState({ commentNumber: comment.commentNumber, comment: comment.comment });
   
   const updProject = async (e) => {
@@ -14,9 +17,6 @@ const CommentsUpdForm = ( {comment, firebaseQuery, handleClose} ) => {
       commentNumber: UpdItem.commentNumber,
       comment: UpdItem.comment,
     })
-    // handleClose();
-    // firebaseQuery();
-    window.location.reload();
   }
 
   return (
@@ -33,7 +33,12 @@ const CommentsUpdForm = ( {comment, firebaseQuery, handleClose} ) => {
         type={"text"}
         placeholder={"Комментарий"}
       />
-      <MyButton onClick={updProject}>Update Commnet</MyButton>
+      <MyButton onClick={updProject}>
+        <Link className="createUpdDelBtn" to={`/Comments/${comment.taskId}`} state={{projectId: projectId}}>Update/Cancel</Link>
+      </MyButton>
+      {/* <MyButton>
+        <Link className="createUpdDelBtn" to={`/Comments/${comment.taskId}`} state={{projectId: projectId}}>Cancel</Link>
+      </MyButton> */}
     </form>
   );
 };

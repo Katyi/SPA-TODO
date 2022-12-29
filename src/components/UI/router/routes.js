@@ -8,6 +8,8 @@ import ProjectUpdForm from "../../ProjectUpdForm";
 import TaskForm from "../../TaskForm";
 import TaskUpdForm from "../../TaskUpdForm";
 import SubTaskForm from "../../SubTaskForm";
+import CommentsForm from "../../CommentsForm";
+import CommentsUpdForm from "../../CommentsUpdForm";
 
 export const routes =[
   // {path: '/about', component: About, exact: true},
@@ -20,5 +22,7 @@ export const routes =[
   { path: '/CreateTask', component: TaskForm, exact: true},
   { path: '/UpdateTask', component: TaskUpdForm, exact: true },
   { path: '/CreateSubTask', component: SubTaskForm, exact: true},
+  { path: '/CreateComment', component: CommentsForm, exact: true},
+  { path: '/UpdateComment', component: CommentsUpdForm, exact: true},
 ]
 

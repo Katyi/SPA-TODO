@@ -59,11 +59,11 @@ function Projects() {
     <div className="App">
       <div className="wrapper">
         <div className="header_1">
-          <div className="header_title">Проекты</div>
+          <div className="header_title">Projects</div>
           <div className='header_of_projects'>
             <div className="header_project_id">№</div>
-            <div className='header_project_name'>Проекты</div>
-            <div className='header_project_description'>Описание</div>
+            <div className='header_project_name'>projects</div>
+            <div className='header_project_description'>Description</div>
           </div>
         </div>
         <div className='project_container'>

@@ -84,15 +84,15 @@ function SubTasks() {
       <div className="wrapper">
         <div className="header_2">
           <div className="header_container">
-            <div className="header_title">Подзадачи</div>
+            <div className="header_title">SubTasks</div>
             <div className="header__link">
-                <MyButton onClick={() => navigate(`/projects/${projectId}`)} style={{ marginRight: 30, width: 200 }}>Обратно к задачам</MyButton>
+                <MyButton onClick={() => navigate(`/projects/${projectId}`)} style={{ marginRight: 30, width: 200 }}>Back To Tasks</MyButton>
             </div>
           </div>
           <div className='header_of_tasks'>
-            <div className="header_Queue">Подзадачи в очереди</div>
-            <div className='header_Development'>Подзадачи в разработке</div>
-            <div className='header_Done'>Подзадачи завершенные</div>
+            <div className="header_Queue">SubTasks In Queue</div>
+            <div className='header_Development'>SubTasks In Development</div>
+            <div className='header_Done'>SubTasks Completed</div>
           </div>
         </div>
         <div className="container_main">
@@ -100,8 +100,8 @@ function SubTasks() {
             <Link className="createUpdDelBtn" to="/CreateSubTask" state={{taskId: id, projectId: projectId}}> Create SubTask </Link>
           </MyButton>
             <div action="" className="searchTask">
-              <MyInput style={{marginLeft: 30, width: 300 }} type={"text"} placeholder={"Поиск подзадачи"} onChange={handleChange} />
-              <MyInput style={{marginLeft: 30, width: 100 }} type={"number"} placeholder={"Поиск подзадачи по номеру"} onChange={handleChange1}/>
+              <MyInput style={{marginLeft: 30, width: 300 }} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
+              <MyInput style={{marginLeft: 30, width: 100 }} type={"number"} placeholder={"Search by number"} onChange={handleChange1}/>
               <MyButton style={{marginLeft: 30, width: 120 }} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
                 Search
               </MyButton>

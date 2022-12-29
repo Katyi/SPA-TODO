@@ -56,7 +56,8 @@ const TaskItem = (props) => {
       fileUrl: url,
       fileName: fileName,
     });
-    window.location.reload();
+    // window.location.reload();
+    // props.firebaseQuery();
   }
 
   let navigate = useNavigate();
@@ -83,7 +84,10 @@ const TaskItem = (props) => {
       {!props.task.isSubtask && <MyButton>
         <Link className="createUpdDelBtn" to={`/tasks/${props.task.id}`} state={{projectId: props.task.projectId}}>SubTasks</Link>
       </MyButton>}
-      {!props.task.isSubtask && <MyButton onClick={() => navigate(`/comments/${props.task.id}`)} style={{width: 120, marginBottom: 10}}>Comments</MyButton>}
+      {!props.task.isSubtask &&
+        <MyButton>
+          <Link className="createUpdDelBtn" to={`/Comments/${props.task.id}`} state={{projectId: props.task.projectId}}>Comments</Link>
+        </MyButton>}
       <form onSubmit={handleUpload} className='uploadUrl' >
           <MyInput type="file" className='uploadFile' style={{width: 500, marginBottom: 10}}/>
           <MyButton type='submit' style={{width: 120}}>Upload</MyButton>

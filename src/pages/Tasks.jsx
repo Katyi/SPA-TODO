@@ -103,7 +103,7 @@ function Tasks() {
       <div className="wrapper">
         <div className="header_2">
           <div className="header_container">
-            <div className="header_title">Задачи</div>
+            <div className="header_title">Tasks</div>
             <div className="header__link">
               <MyButton>
                 <Link className="createUpdDelBtn" to="/Projects">Back To Projects</Link>
@@ -111,9 +111,9 @@ function Tasks() {
             </div>
           </div>
           <div className='header_of_tasks'>
-            <div className="header_Queue">Задачи в очереди</div>
-            <div className='header_Development'>Задачи в разработке</div>
-            <div className='header_Done'>Задачи завершенные</div>
+            <div className="header_Queue">Tasks In Queue</div>
+            <div className='header_Development'>Tasks In Development</div>
+            <div className='header_Done'>Tasks Completed</div>
           </div>
         </div>
         <div className="container_main">
@@ -121,8 +121,8 @@ function Tasks() {
             <Link className="createUpdDelBtn" to="/CreateTask" state={{ projectId: id}}> Create Task </Link>
           </MyButton>
           <div action="" className="searchTask">
-            <MyInput style={{marginLeft: 30, width: 300 }} type={"text"} placeholder={"Поиск задачи по названию"} onChange={handleChange}/>
-            <MyInput style={{marginLeft: 30, width: 100 }} type={"number"} placeholder={"Поиск задачи по номеру"} onChange={handleChange1}/>
+            <MyInput style={{marginLeft: 30, width: 300 }} type={"text"} placeholder={"Search by name"} onChange={handleChange}/>
+            <MyInput style={{marginLeft: 30, width: 100 }} type={"number"} placeholder={"Search by number"} onChange={handleChange1}/>
             <MyButton style={{marginLeft: 30, width: 120}} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
               Search
             </MyButton>
@@ -132,11 +132,11 @@ function Tasks() {
           </div>
         </div>
         <div className="container">
-          <div className="header_Queue_mobile">Задачи в очереди</div>
+          <div className="header_Queue_mobile">Tasks In Queue</div>
           <TaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
-          <div className="header_Development_mobile">Задачи в разработке</div>
+          <div className="header_Development_mobile">Tasks In Development</div>
           <TaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
-          <div className="header_Done_mobile">Задачи завершенные</div>
+          <div className="header_Done_mobile">Tasks Completed</div>
           <TaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} queueTasks={queueTasks} class='container_1' />
         </div>
       </div>

@@ -32,22 +32,22 @@ const ProjectUpdForm = () => {
         value={UpdItem.projectNumber}
         onChange={e => setUpdItem({ ...UpdItem, projectNumber: e.target.value })}
         type={"number"}
-        placeholder={"Номер проекта"}
+        placeholder={"Project Number"}
       />
       <MyInput
         value={UpdItem.projectName}
         onChange={e => setUpdItem({...UpdItem, projectName: e.target.value})}
         type={"text"}
-        placeholder={"Название проекта"}
+        placeholder={"Project title"}
       />
       <MyInput
         value={UpdItem.description}
         onChange={e => setUpdItem({ ...UpdItem, description: e.target.value })}
         type={"text"}
-        placeholder={"Описание проекта"}
+        placeholder={"Project description"}
       />
-      <MyButton onClick={updProject}>Update Project</MyButton>
-      <MyButton onClick={()=> navigate("/Projects")}>Cancel</MyButton>
+      <MyButton onClick={updProject}>Update/Cancel</MyButton>
+      {/* <MyButton onClick={()=> navigate("/Projects")}>Cancel</MyButton> */}
     </form>
   );
 };

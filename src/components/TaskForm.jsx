@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -9,6 +9,14 @@ const TaskForm = () => {
   const location = useLocation();
   const { projectId } = location.state;
   const navigate = useNavigate();
+  const [taskNums, setTaskNums] = useState ();
+  const taskRef = query(collection(db, 'tasks'), where("projectId", "==", projectId), where('isSubtask', '==', false));
+  const getTasks = async () => {
+    const data = await getDocs(taskRef);
+    setTaskNums(data.docs.map((doc)=> (doc.data().taskNumber)));
+  };
+  getTasks();
+
   const [newItem, setNewItem] = useState({
     taskNumber: '',
     taskName: '',
@@ -23,7 +31,7 @@ const TaskForm = () => {
   const addNewTask = async (e) => {
     e.preventDefault();
     await addDoc(collection(db, 'tasks'), {
-      taskNumber: newItem.taskNumber,
+      taskNumber: taskNums.length + 1,
       taskName: newItem.taskName, 
       description: newItem.description,
       createDate: newItem.createDate,
@@ -51,50 +59,43 @@ const TaskForm = () => {
   return (
     <form>
       <MyInput
-        value={newItem.taskNumber}
-        onChange={e => setNewItem({ ...newItem, taskNumber: e.target.value })}
-        type={"number"}
-        placeholder={"Номер Задачи"}
-        required
-      />
-      <MyInput
         value={newItem.taskName}
         onChange={e => setNewItem({ ...newItem, taskName: e.target.value })}
         type={"text"}
-        placeholder={"Название Задачи"}
+        placeholder={"Task Name"}
       />
       <MyInput
         value={newItem.description}
         onChange={e => setNewItem({ ...newItem, description: e.target.value })}
         type={"text"}
-        placeholder={"Описание Задачи"}
+        placeholder={"Task Description"}
       />
       <MyInput
         value={newItem.createDate}
         onChange={e => setNewItem({ ...newItem, createDate: e.target.value })}
         type={"date"}
-        placeholder={"Дата создания"}
+        placeholder={"Create Date"}
       />
       <MyInput
         value={newItem.workTime}
         onChange={e => setNewItem({ ...newItem, workTime: e.target.value })}
         type={"number"}
-        placeholder={"Время в работе"}
+        placeholder={"Task Time"}
       />
       <MyInput
         value={newItem.endDate}
         onChange={e => setNewItem({ ...newItem, endDate: e.target.value })}
         type={"date"}
-        placeholder={"Дата окончания"}
+        placeholder={"End Date"}
       />
       <MyInput
         value={newItem.priority}
         onChange={e => setNewItem({ ...newItem, priority: e.target.value })}
         type={"text"}
-        placeholder={"Приоритет"}
+        placeholder={"Priority"}
         required
       />
-      <MyButton onClick={addNewTask}>Create New Task</MyButton>
+      <MyButton onClick={addNewTask}>Create Task</MyButton>
       <MyButton onClick={()=> navigate(`/Projects/${projectId}`)}>Cancel</MyButton>
     </form>
   );
