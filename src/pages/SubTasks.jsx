@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
 import MyInput from "../components/UI/input/MyInput";
 import SubTaskColumn from "../components/SubTaskColumn";
+import { Navbar } from "../components/Navbar";
 
 function SubTasks() {
   const location = useLocation();
@@ -82,19 +83,7 @@ function SubTasks() {
   return (
     <div className="App">
       <div className="wrapper">
-        <div className="header_2">
-          <div className="header_container">
-            <div className="header_title">SubTasks</div>
-            <div className="header__link">
-                <MyButton onClick={() => navigate(`/projects/${projectId}`)} style={{ marginRight: 30, width: 200 }}>Back To Tasks</MyButton>
-            </div>
-          </div>
-          <div className='header_of_tasks'>
-            <div className="header_Queue">SubTasks In Queue</div>
-            <div className='header_Development'>SubTasks In Development</div>
-            <div className='header_Done'>SubTasks Completed</div>
-          </div>
-        </div>
+        <Navbar projectId={projectId}/>
         <div className="container_main">
           <MyButton>
             <Link className="createUpdDelBtn" to="/CreateSubTask" state={{taskId: id, projectId: projectId}}> Create SubTask </Link>

@@ -4,6 +4,7 @@ import { db } from '../firebase';
 import ProjectItem from "../components/ProjectItem";
 import MyButton from "../components/UI/button/MyButton";
 import { Link } from "react-router-dom";
+import { Navbar } from "../components/Navbar";
 
 function Projects() {
   const [projects, setProjects] = useState([]);
@@ -58,14 +59,7 @@ function Projects() {
   return (
     <div className="App">
       <div className="wrapper">
-        <div className="header_1">
-          <div className="header_title">Projects</div>
-          <div className='header_of_projects'>
-            <div className="header_project_id">№</div>
-            <div className='header_project_name'>projects</div>
-            <div className='header_project_description'>Description</div>
-          </div>
-        </div>
+        <Navbar/>
         <div className='project_container'>
           <div className="project_container_1">
             <MyButton>

@@ -247,6 +247,16 @@ form {
   }
 }
 /*                    HEADER OF COMMENTS ------------------------------------------------------------------------------- */
+.header_3 {
+  position: fixed;
+  background-color: #f5f3f1;
+  height: 13vh;
+  width: 100%;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.1);
+  z-index: 20;
+}
 .header_of_comments {
   font-size: 24px;
   display: flex;
@@ -412,7 +422,7 @@ form {
   justify-content: space-between;
   width: 100%;
   position: relative;
-  margin-top: 5%;
+  margin-top: 10%;
 }
 .comment {
   width: 96%;

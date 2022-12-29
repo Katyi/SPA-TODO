@@ -10,7 +10,7 @@ const ProjectItem = (props) => {
       <div className='project_name'>{props.project.projectName}</div>
       <div className='project_description'>{props.project.description}</div>
       <div className="project_bts">
-        <MyButton onClick={() => navigate(`/projects/${props.project.id}`)} style={{ width: 120 }}>
+        <MyButton onClick={() => navigate(`/Projects/${props.project.id}`)} style={{ width: 120 }}>
           Open
         </MyButton>
         <MyButton>

@@ -5,6 +5,7 @@ import { db } from '../firebase';
 import { Link, useNavigate } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
 import CommentItem from "../components/CommentItem";
+import { Navbar } from "../components/Navbar";
 // import CommentsForm from "../components/CommentsForm";
 // import MyModalForComments from "../components/UI/modal/MyModalForComments";
 
@@ -40,16 +41,7 @@ function Comments() {
   return (
     <div className="App">
       <div className="wrapper">
-        <div className="header">
-          <div className="header_container">
-            <div className="header_title">Task Comments</div>
-            <div className="header__link">
-              <MyButton>
-                <Link className="createUpdDelBtn" to={`/Projects/${projectId}`}>Back To Tasks</Link>
-              </MyButton>
-            </div>
-          </div>
-        </div>
+        <Navbar projectId={projectId}/>
         <div className="container_2">
           <MyButton>
             <Link className="createUpdDelBtn" to='/CreateComment' state={{taskId: id, projectId: projectId}}>Add Comment</Link>

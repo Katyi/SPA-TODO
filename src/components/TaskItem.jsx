@@ -82,7 +82,7 @@ const TaskItem = (props) => {
       </MyButton>
       <MyButton onClick={() => props.remove(props.task.id)} style={{width: 120, marginBottom: 10}}>Delete</MyButton>
       {!props.task.isSubtask && <MyButton>
-        <Link className="createUpdDelBtn" to={`/tasks/${props.task.id}`} state={{projectId: props.task.projectId}}>SubTasks</Link>
+        <Link className="createUpdDelBtn" to={`/Tasks/${props.task.id}`} state={{projectId: props.task.projectId}}>SubTasks</Link>
       </MyButton>}
       {!props.task.isSubtask &&
         <MyButton>

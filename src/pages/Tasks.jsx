@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
 import MyInput from "../components/UI/input/MyInput";
 import TaskColumn from "../components/TaskColumn";
+import { Navbar } from "../components/Navbar";
 
 // export const mainContext = React.createContext("");
 
@@ -101,21 +102,7 @@ function Tasks() {
     
     <div className="App">
       <div className="wrapper">
-        <div className="header_2">
-          <div className="header_container">
-            <div className="header_title">Tasks</div>
-            <div className="header__link">
-              <MyButton>
-                <Link className="createUpdDelBtn" to="/Projects">Back To Projects</Link>
-              </MyButton>
-            </div>
-          </div>
-          <div className='header_of_tasks'>
-            <div className="header_Queue">Tasks In Queue</div>
-            <div className='header_Development'>Tasks In Development</div>
-            <div className='header_Done'>Tasks Completed</div>
-          </div>
-        </div>
+        <Navbar/>
         <div className="container_main">
           <MyButton>
             <Link className="createUpdDelBtn" to="/CreateTask" state={{ projectId: id}}> Create Task </Link>
