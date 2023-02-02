@@ -86,25 +86,33 @@ function SubTasks() {
         <Navbar projectId={projectId}/>
         <div className="container_main">
           <MyButton>
-            <Link className="createUpdDelBtn" to="/CreateSubTask" state={{taskId: id, projectId: projectId}}> Create SubTask </Link>
+            <Link className="createUpdDelBtn" to="/CreateSubTask" state={{ taskId: id, projectId: projectId }} style={{marginLeft: 0, width: 120 }}>
+              Create SubTask
+            </Link>
           </MyButton>
-            <div action="" className="searchTask">
-              <MyInput style={{marginLeft: 30, width: 300 }} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
-              <MyInput style={{marginLeft: 30, width: 100 }} type={"number"} placeholder={"Search by number"} onChange={handleChange1}/>
-              <MyButton style={{marginLeft: 30, width: 120 }} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
+          <div action="" className="searchTask">
+            <MyInput style={{ marginLeft: 0, width: 300, marginTop: 0}} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
+            <div className="MyInput1">
+              <MyInput style={{ marginLeft: 0, width: 100, marginTop: 0}} type={"number"} placeholder={"Search by number"} onChange={handleChange1} />
+            </div>
+            <div className="MyInput2">
+              <MyButton style={{marginLeft: 0, width: 120, marginBottom: 5}} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
                 Search
               </MyButton>
-            <MyButton onClick={() => {firebaseQuery()}}>
-              <Link className="createUpdDelBtn" to={`/Tasks/${id}`} state={{taskId: id, projectId: projectId}}>Cancel</Link>
-            </MyButton>
+            </div>
+            <div className="MyInput2">
+              <MyButton onClick={() => {firebaseQuery()}} style={{marginLeft: 0, width: 120 }}>
+                <Link className="createUpdDelBtn" to={`/Tasks/${id}`} state={{taskId: id, projectId: projectId}}>Cancel</Link>
+              </MyButton>
+            </div>
           </div>
         </div>
         <div className="container">
-          <div className="header_Queue_mobile">Подзадачи в очереди</div>
+          <div className="header_Queue_mobile">SubTasks In Queue</div>
           <SubTaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
-          <div className="header_Development_mobile">Подзадачи в разработке</div>
+          <div className="header_Development_mobile">SubTasks In Development</div>
           <SubTaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
-          <div className="header_Done_mobile">Подзадачи завершенные</div>
+          <div className="header_Done_mobile">SubTasks Completed</div>
           <SubTaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
         </div>
       </div>

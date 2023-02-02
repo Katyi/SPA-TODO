@@ -43,8 +43,9 @@ function Comments() {
       <div className="wrapper">
         <Navbar projectId={projectId}/>
         <div className="container_2">
-          <MyButton>
-            <Link className="createUpdDelBtn" to='/CreateComment' state={{taskId: id, projectId: projectId}}>Add Comment</Link>
+          <MyButton style={{marginLeft: '2%'}}>
+            <Link className="createUpdDelBtn" to='/CreateComment' state={{ taskId: id, projectId: projectId }}>
+              Add Comment</Link>
           </MyButton>
           <div className='comments'>
             {comments.sort((a,b)=>a.commentNumber > b.commentNumber ? 1 : -1)

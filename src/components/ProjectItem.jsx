@@ -13,8 +13,10 @@ const ProjectItem = (props) => {
         <MyButton onClick={() => navigate(`/Projects/${props.project.id}`)} style={{ width: 120 }}>
           Open
         </MyButton>
-        <MyButton>
-          <Link className="createUpdDelBtn" to="/UpdateProject" state={{ project: props.project }}> UpDate </Link>
+        <MyButton style={{ width: 120 }}>
+          <Link className="createUpdDelBtn" to="/UpdateProject" state={{ project: props.project }}>
+            UpDate
+          </Link>
         </MyButton>
         <MyButton onClick={() => props.remove(props.project.id)} style={{ width: 120 }}>
           Delete

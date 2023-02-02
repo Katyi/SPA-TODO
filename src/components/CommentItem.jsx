@@ -8,9 +8,9 @@ const CommentItem = (props) => {
       <div className='commentNumber'>{props.comment.commentNumber}</div>
       <div className='comment_comment'>{props.comment.comment}</div>
       <div className="comment_bts">
-        <MyButton>
+        <MyButton style={{width: 120, marginLeft: 3}}>
           <Link className="createUpdDelBtn" to="/UpdateComment" state={{ comment: props.comment, projectId: props.projectId }}> Update </Link>
-        </MyButton>
+        </MyButton >
       <MyButton onClick={() => props.remove(props.comment)} style={{width: 120, marginLeft: 3}}>Delete</MyButton>
       </div>
     </div>

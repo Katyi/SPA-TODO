@@ -108,14 +108,20 @@ function Tasks() {
             <Link className="createUpdDelBtn" to="/CreateTask" state={{ projectId: id}}> Create Task </Link>
           </MyButton>
           <div action="" className="searchTask">
-            <MyInput style={{marginLeft: 30, width: 300 }} type={"text"} placeholder={"Search by name"} onChange={handleChange}/>
-            <MyInput style={{marginLeft: 30, width: 100 }} type={"number"} placeholder={"Search by number"} onChange={handleChange1}/>
-            <MyButton style={{marginLeft: 30, width: 120}} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
-              Search
-            </MyButton>
-            <MyButton onClick={() => {firebaseQuery()}}>
-              <Link className="createUpdDelBtn" to={`/Projects/${id}`} state={{projectId: id}}>Cancel</Link>
-            </MyButton>
+            <MyInput style={{ marginLeft: 0, width: 300, marginTop: 0}} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
+            <div className="MyInput1">
+              <MyInput style={{ marginLeft: 0, width: 100, marginTop: 0}} type={"number"} placeholder={"Search by number"} onChange={handleChange1} />
+            </div>
+            <div className="MyInput2">
+              <MyButton style={{marginLeft: 0, width: 120, marginBottom: 5}} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
+                Search
+              </MyButton>
+            </div>
+            <div className="MyInput3">
+              <MyButton style={{marginLeft: 0, width: 120}} onClick={() => {firebaseQuery()}}>
+                <Link className="createUpdDelBtn" to={`/Projects/${id}`} state={{projectId: id}}>Cancel</Link>
+              </MyButton>
+            </div>
           </div>
         </div>
         <div className="container">

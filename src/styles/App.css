@@ -58,37 +58,37 @@ body {
   width: 100%;
   display: flex;
   align-items: center;
+  margin-bottom: 3vh;
 }
 .header_title {
   width: 70%;
   height: fit-content;
   font-size: 35px;
-  margin-left: 5vw;
+  margin-left: 2%;
   margin-top: 3vh;
   font-weight: 700;
   font-variant: small-caps;
 }
 .header__link {
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
   font-size: 35px;
   font-weight: 700;
   font-variant: small-caps;
-  margin-top: 1%;
-  margin-bottom: 2%;
+  margin-top: 3vh;
+  margin-left: auto;
+  margin-right: 3vh;
 }
 .header_of_projects {
   width: 70%;
   font-size: 2vw;
   display: flex;
-  margin-left: 1%;
+  margin-left: 0%;
   padding: 0px 0px 0px 0px;
   font-weight: 700;
   font-variant: small-caps;
 }
 .header_project_id {
   width: 7%;
-  margin-left: 2%;
+  margin-left: 3%;
   margin-top: 2%;
   margin-bottom: 2%;
 }
@@ -136,7 +136,8 @@ form {
     margin-left: 0;
   }
   .header__link {
-    margin-left: 5%;
+    margin-left: 2%;
+    margin-top: 0%;
   }
   .header_of_projects {
     display: none;
@@ -220,6 +221,7 @@ form {
     font-variant: small-caps;
     width: 100%;
     margin-left: 5%;
+    margin-top: 2%;
    }
   .header_Development {
     display: none;
@@ -231,6 +233,7 @@ form {
     font-variant: small-caps;
     width: 100%;
     margin-left: 5%;
+    margin-top: 2%;
   }
   .header_Done {
     display: none;
@@ -244,6 +247,7 @@ form {
     font-variant: small-caps;
     width: 100%;
     margin-left: 5%;
+    margin-top: 2%;
   }
 }
 /*                    HEADER OF COMMENTS ------------------------------------------------------------------------------- */
@@ -273,13 +277,13 @@ form {
   padding-top: 17vh;
 }
 .project_container_1 {
-  height: 30hv;
+  /* height: 5vh; */
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
   font-weight: 700;
   font-variant: small-caps;
   margin-bottom: 1%;
-  margin-left: 1vw;
+  margin-left: 2vw;
 }
 .project {
   width: 80%;
@@ -288,7 +292,7 @@ form {
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
   margin-top: 1%;
-  margin-left: 2%;
+  margin-left: 2vw;
   margin-right: 2%;
   align-items: center;
   font-weight: bold;
@@ -359,6 +363,7 @@ form {
 /*                    MAIN-TASKS------------------------------------------------------------------------------- */
 .container_main {
   padding-top: 22vh;
+  margin-left: 1%;
 }
 .container {
   width: 100%;
@@ -374,6 +379,17 @@ form {
 }
 .searchTask {
   display: flex;
+  margin-top: 1%;
+  /* margin-left: 1%; */
+}
+.MyInput1 {
+  margin-left: 1%;
+}
+.MyInput2 {
+  margin-left: 1%;
+}
+.MyInput3 {
+  margin-left: 1%;
 }
 .task {
   display: flex;
@@ -398,6 +414,16 @@ form {
   margin-bottom: 3%;
   padding: 0px 0px 0px 0px;
 }
+.blockInTask {
+  width: 100%;
+  margin-bottom: 2%;
+}
+.uploadUrl {
+  max-width: 67%;
+  margin-top: 0;
+  margin-left: 10%;
+  border: 2px solid #93999e;
+}
 /*                    MAIN-TASKS-FOR MOBILE------------------------------------------------------------------------------ */
 @media (max-width: 768px) {
   .container_main {
@@ -405,15 +431,26 @@ form {
   }
   .container {
     flex-direction: column;
+    margin-top: 5%;
   }
   .container_1 {
     width: 96%;
     margin-left: 2%;
     margin-right: 2%;
+    /* margin-top: 0%; */
     /* border: 2px solid red; */
   }
   .searchTask {
     flex-direction: column;
+  }
+  .MyInput1 {
+    margin-left: 0%;
+  }
+  .MyInput2 {
+    margin-left: 0%;
+  }
+  .MyInput3 {
+    margin-left: 0%;
   }
 }
 /*                    MAIN-COMMENTS------------------------------------------------------------------------------- */
@@ -422,7 +459,8 @@ form {
   justify-content: space-between;
   width: 100%;
   position: relative;
-  margin-top: 10%;
+  /* margin-top: 10%; */
+  padding-top: 16vh;
 }
 .comment {
   width: 96%;
