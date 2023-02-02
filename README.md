@@ -5,6 +5,7 @@ In Tasks and Subtasks you can change the status of them using drag-n-drop:
 - Queue 
 - Development 
 - Done
+
 In Tasks and Subtasks there is a search by title and number.
 The project is adapted for mobile devices (it is also responsive).
 Back-endUsed: firebase.google.com.
@@ -18,6 +19,7 @@ SPA TODO-приложение сделано с использованием Rea
 - Queue
 - Development
 - Done
+
 В Задачах и Подзадачах есть поиск по заголовкун и омеру.
 Проект адаптирован под мобильные устройства (также он респонсивный).
 Back-end: firebase.google.com.
