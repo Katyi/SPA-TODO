@@ -43,7 +43,7 @@ function Comments() {
       <div className="wrapper">
         <Navbar projectId={projectId}/>
         <div className="container_2">
-          <MyButton style={{marginLeft: '2%'}}>
+          <MyButton style={{marginLeft: '2%', marginTop: '2%'}}>
             <Link className="createUpdDelBtn" to='/CreateComment' state={{ taskId: id, projectId: projectId }}>
               Add Comment</Link>
           </MyButton>
