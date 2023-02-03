@@ -4,7 +4,7 @@ import MyButton from "../components/UI/button/MyButton";
 export const Navbar = ({projectId}) => {
   const pathName = window.location.pathname;
   let navigate = useNavigate();
-  if (pathName === '/Projects') {
+  if (pathName === '/Projects' || pathName === '/') {
     return (
       <div className="header_1">
         <div className="header_title">Projects</div>

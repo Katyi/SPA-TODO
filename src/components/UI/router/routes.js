@@ -13,6 +13,7 @@ import CommentsUpdForm from "../../CommentsUpdForm";
 
 export const routes =[
   // {path: '/about', component: About, exact: true},
+  {path: '/', component: Projects, exact: true},
   {path: '/Projects', component: Projects, exact: true},
   {path: '/Projects/:id', component: Tasks, exact: true},
   {path: '/Tasks/:id', component: SubTasks, exact: true},
