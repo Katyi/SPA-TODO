@@ -10,15 +10,15 @@ const ProjectItem = (props) => {
       <div className='project_name'>{props.project.projectName}</div>
       <div className='project_description'>{props.project.description}</div>
       <div className="project_bts">
-        <MyButton onClick={() => navigate(`/Projects/${props.project.id}`)} style={{ width: 120 }}>
+        <MyButton onClick={() => navigate(`/Projects/${props.project.id}`)} style={{width: 100}} >
           Open
         </MyButton>
-        <MyButton style={{ width: 120 }}>
-          <Link className="createUpdDelBtn" to="/UpdateProject" state={{ project: props.project }}>
+        <MyButton style={{ width: 100 }}>
+          <Link className="createUpdDelBtn" to="/UpdateProject" state={{ project: props.project }} >
             UpDate
           </Link>
         </MyButton>
-        <MyButton onClick={() => props.remove(props.project.id)} style={{ width: 120 }}>
+        <MyButton onClick={() => props.remove(props.project.id)} style={{ width: 100 }}>
           Delete
         </MyButton>
       </div>

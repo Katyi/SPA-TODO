@@ -23,7 +23,7 @@ export const Navbar = ({projectId}) => {
           <div className="header_title">Tasks</div>
           <div className="header__link">
             <MyButton>
-              <Link className="createUpdDelBtn" to="/Projects">Back To Projects</Link>
+              <Link className="backToProjects" to="/Projects">Back To Projects</Link>
             </MyButton>
           </div>
         </div>

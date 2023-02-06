@@ -132,7 +132,7 @@ form {
   }
 }
 /*                    HEADER OF PROJECTS FOR MOBILE------------------------------------------------------------------------------- */
-@media (max-width: 768px) and (orientation: portrait) {
+@media (max-width: 768px) {
   .header_container {
     display: block;
     margin-left: 0;
@@ -212,7 +212,7 @@ form {
 /*                    HEADER OF TASKS FOR MOBILE------------------------------------------------------------------------------- */
 @media (max-width: 768px) {
   .header_2 {
-    height: 15vh;
+    height: auto;
   }
   .header_of_tasks {
     display: none;
