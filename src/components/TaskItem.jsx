@@ -89,7 +89,7 @@ const TaskItem = (props) => {
       </div>
       <div className="blockInTask">
         {!props.task.isSubtask && <MyButton style={{ width: 120, marginLeft: '10%', marginBottom: '2%'}}>
-          <Link className="createUpdDelBtn" to={`/Tasks/${props.task.id}`} state={{ projectId: props.task.projectId }}>
+          <Link className="createUpdDelBtn" to={`/Tasks/${props.task.id}`} state={{ projectId: props.task.projectId, taskName: props.task.taskName }}>
             SubTasks
           </Link>
         </MyButton>}

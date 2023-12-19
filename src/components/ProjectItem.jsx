@@ -1,28 +1,39 @@
-import React from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
 
 const ProjectItem = (props) => {
-  let navigate = useNavigate();
+
   return (
-    <div className='project'>
-      <div className='project_id'>{props.project.projectNumber}</div>
-      <div className='project_name'>{props.project.projectName}</div>
-      <div className='project_description'>{props.project.description}</div>
-      <div className="project_bts">
-        <MyButton onClick={() => navigate(`/Projects/${props.project.id}`)} style={{width: 100}} >
-          Open
-        </MyButton>
-        <MyButton style={{ width: 100 }}>
-          <Link className="createUpdDelBtn" to="/UpdateProject" state={{ project: props.project }} >
-            UpDate
+    <tr className='project'>
+      <td className='project_id'>{props.idx}</td>
+      <td className='project_name'>{props.project.projectName}</td>
+      <td className='project_description'>{props.project.description}</td>
+      <td className="project_bts">
+        {/* OPEN PROJECT TASKS */}
+        <MyButton
+          style={{width: 100}} >
+          <Link className="createUpdDelBtn" to={`/Projects/${props.project.id}`} state={{ projectName: props.project.projectName }}>
+            Open
           </Link>
         </MyButton>
-        <MyButton onClick={() => props.remove(props.project.id)} style={{ width: 100 }}>
+        {/* UPDATE PROJECT */}
+        <MyButton className="createUpdDelBtn"
+          type="button"
+          onClick={() => {
+            props.setModal(true);
+            props.getProject(props.project);
+          }}
+        >
+          UpDate
+        </MyButton>
+        {/* DELETE PROJECT */}
+        <MyButton onClick={() => {
+          props.remove(props.project.id);
+          }} style={{ width: 100 }}>
           Delete
         </MyButton>
-      </div>
-    </div>
+      </td>
+    </tr>
   );
 };
 

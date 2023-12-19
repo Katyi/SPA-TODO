@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { query, collection, where, getDocs, doc, deleteDoc} from 'firebase/firestore';
+import { query, collection, where, getDocs, doc, deleteDoc, getDoc} from 'firebase/firestore';
 import { db } from '../firebase';
 import { Link } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
 import MyInput from "../components/UI/input/MyInput";
 import TaskColumn from "../components/TaskColumn";
-import { Navbar } from "../components/Navbar";
+import MyNavbar from "../components/UI/Navbar/MyNavbar";
 
 // export const mainContext = React.createContext("");
 
@@ -16,13 +16,22 @@ function Tasks() {
   const [doneTasks, setDoneTasks] = useState([]);
   const [taskForSearch, setTaskForSearch] = useState('');
   const [taskForSearch1, setTaskForSearch1] = useState('');
+  const [project, setProject] = useState([]);
   let { id } = useParams();
   
-  // -----Параметры для отображения задач в трех столбцах на странице задач------------------------------------------------------------------
+  // ------ Get Project Data --------------------------------------------
+  const getProject = async(id) => {
+    const docRef = doc(db, 'projects', id);
+    let docSnap = await getDoc(docRef);
+    setProject(docSnap.data());
+  }
+
+  // ----- Get Tasks Data For 3 columns on the page ---------------------
   async function firebaseQuery() {
     const q1 = query(collection(db, 'tasks'), where("status", "==", "Queue"), where("isSubtask", "==", false), where('projectId','==', id));
     const q2 = query(collection(db, 'tasks'), where("status", "==", "Development"), where("isSubtask", "==", false), where('projectId','==', id));
     const q3 = query(collection(db, 'tasks'), where("status", "==", "Done"), where("isSubtask", "==", false), where('projectId','==', id));
+    
     let tasksArr1 = [];
     let tasksArr2 = [];
     let tasksArr3 = [];
@@ -96,14 +105,19 @@ function Tasks() {
 
   useEffect(() => {
     firebaseQuery();
+    
   }, []);
+
+  useEffect(() => {
+    getProject(id);
+  },[])
 
   return (
     
     <div className="App">
       <div className="wrapper">
-        <Navbar/>
-        <div className="container_main">
+        <MyNavbar title={'Tasks'} linkPath={'/Projects'} linkLabel={'Back To Projects'} projectName={project.projectName}/>
+          <div className="container_main">
           <MyButton>
             <Link className="createUpdDelBtn" to="/CreateTask" state={{ projectId: id}}> Create Task </Link>
           </MyButton>

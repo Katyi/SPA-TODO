@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router";
-import { query, collection, where, getDocs, doc, deleteDoc } from 'firebase/firestore';
+import { query, collection, where, getDocs, doc, deleteDoc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Link, useNavigate } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
 import MyInput from "../components/UI/input/MyInput";
 import SubTaskColumn from "../components/SubTaskColumn";
-import { Navbar } from "../components/Navbar";
+import MyNavbar from "../components/UI/Navbar/MyNavbar";
 
 function SubTasks() {
   const location = useLocation();
@@ -14,10 +14,17 @@ function SubTasks() {
   const [queueTasks, setQueueTasks] = useState([]);
   const [developmentTasks, setDevelopmentTasks] = useState([]);
   const [doneTasks, setDoneTasks] = useState([]);
-  // const [tasks, setTasks] = useState([]);
+  const [task, setTask] = useState([]);
   const [taskForSearch, setTaskForSearch] = useState('');
   const [taskForSearch1, setTaskForSearch1] = useState('');
   let { id } = useParams();
+
+  // ------ Get Task Data --------------------------------------------
+  const getTask = async(id) => {
+    const docRef = doc(db, 'tasks', id);
+    let docSnap = await getDoc(docRef);
+    setTask(docSnap.data());
+  }
 
   // -----Параметры для отображения подзадач в трех столбцах на странице задач------------------------------------------------------------------
   async function firebaseQuery() {
@@ -78,12 +85,16 @@ function SubTasks() {
     firebaseQuery();
   }, []);
 
+  useEffect(() => {
+    getTask(id);
+  }, []);
+
   let navigate = useNavigate();
 
   return (
     <div className="App">
       <div className="wrapper">
-        <Navbar projectId={projectId}/>
+        <MyNavbar title={'SubTasks'} linkPath={`/Projects/${projectId}`} linkLabel={'Back To Tasks'} taskName={task.taskName}/>
         <div className="container_main">
           <MyButton>
             <Link className="createUpdDelBtn" to="/CreateSubTask" state={{ taskId: id, projectId: projectId }} style={{marginLeft: 0, width: 120 }}>

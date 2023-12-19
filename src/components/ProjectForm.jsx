@@ -1,30 +1,25 @@
 import React, { useState } from "react";
 import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
-import { addDoc, collection, getDocs } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
-import { useNavigate } from "react-router-dom";
 
-const ProjectForm = () => {
-  const [projectNums, setProjectNums] = useState ();
-  const projectRef = collection(db, 'projects');
-  const getProjects = async () => {
-    const data = await getDocs(projectRef);
-    setProjectNums(data.docs.map((doc)=> (doc.data().projectNumber)));
-  };
-  getProjects();
-  const navigate = useNavigate();
+const ProjectForm = ({modal, setModal, projects, setProjects, getAllProjects}) => {
   const [newProject, setNewProject] = useState({ projectNumber: '', projectName: '', description: '' });
 
   const addNewProject = async (e) => {
     e.preventDefault();
+    let lastNumber = projects?.sort((a, b) => a.projectNumber > b.projectNumber ? 1 : -1).slice(-1)[0].projectNumber;
+
     await addDoc(collection(db, 'projects'), {
-      projectNumber: projectNums.length + 1,
+      projectNumber: lastNumber + 1,
       projectName: newProject.projectName,
       description: newProject.description
     })
     setNewProject({ projectNumber: '', projectName: '', description: '' });
-    navigate("/Projects");
+    getAllProjects();
+    setProjects(projects);
+    setModal(false)
 }
 
   return (
@@ -41,8 +36,11 @@ const ProjectForm = () => {
         type={"text"}
         placeholder={"Project description"}
       />
+      <div style={{width:"90%", display:"flex", alignItems:"center", gap: "10px"}}>
       <MyButton onClick={addNewProject}>Create Project</MyButton>
-      <MyButton onClick={()=> navigate("/Projects")}>Cancel</MyButton>
+
+      <MyButton type="button" onClick={()=>setModal(false)}>Cancel</MyButton>
+      </div>
     </form>
   );
 };

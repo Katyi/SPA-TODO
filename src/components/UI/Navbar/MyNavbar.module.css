@@ -1,0 +1,24 @@
+.header {
+  position: fixed;
+  background-color: #f5f3f1;
+  height: 10vh;
+  width: calc(100vw - 4%);
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.1);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+.title {
+  font-size: 35px;
+  font-weight: 700;
+  font-variant: small-caps;
+}
+.link {
+  text-decoration: none;
+  color: #566573;
+}

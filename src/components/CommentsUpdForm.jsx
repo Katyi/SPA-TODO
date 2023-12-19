@@ -34,11 +34,11 @@ const CommentsUpdForm = () => {
         placeholder={"Комментарий"}
       />
       <MyButton onClick={updProject}>
-        <Link className="createUpdDelBtn" to={`/Comments/${comment.taskId}`} state={{projectId: projectId}}>Update/Cancel</Link>
+        <Link className="createUpdDelBtn" to={`/Comments/${comment.taskId}`} state={{projectId: projectId}}>Update</Link>
       </MyButton>
-      {/* <MyButton>
+      <MyButton>
         <Link className="createUpdDelBtn" to={`/Comments/${comment.taskId}`} state={{projectId: projectId}}>Cancel</Link>
-      </MyButton> */}
+      </MyButton>
     </form>
   );
 };
