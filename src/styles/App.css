@@ -40,7 +40,7 @@ body {
   margin-top: 270px;
   font-variant: small-caps;
 }
-/*                    HEADER OF PROJECTS------------------------------------------------------------------------------- */
+/* ---------------------- HEADER OF PROJECTS ------------------------------------------------------------------------------- */
 .header_1 {
   position: fixed;
   background-color: #f5f3f1;
@@ -124,7 +124,7 @@ form {
     display: none;
   }
 }
-/*                    HEADER OF PROJECTS FOR MOBILE------------------------------------------------------------------------------- */
+/* ---------------------- HEADER OF PROJECTS FOR MOBILE------------------------------------------------------------------------------- */
 @media (max-width: 768px) {
   .header_container {
     display: block;
@@ -148,7 +148,7 @@ form {
     width: auto;
   }
 }
-/*                    HEADER OF TASKS------------------------------------------------------------------------------- */
+/* ---------------------- HEADER OF TASKS------------------------------------------------------------------------------- */
 .header_2 {
   position: fixed;
   background-color: #f5f3f1;
@@ -161,14 +161,7 @@ form {
   /* transform: translateZ(0);
   -webkit-transform: translateZ(0); */
 }
-.header_of_tasks {
-  font-size: 24px;
-  display: flex;
-  margin-left: 1%;
-  padding: 0px 0px 0px 0px;
-  font-weight: 700;
-  font-variant: small-caps;
-}
+
 .header_Queue {
   width: 33.33%;
   margin-left: 1%;
@@ -199,7 +192,7 @@ form {
 /* tablet */
 @media (min-width: 768px) and (max-width: 1024px) {
   .header_of_tasks {
-    display: none;
+    font-size: 18px;
   }
 }
 /*                    HEADER OF TASKS FOR MOBILE------------------------------------------------------------------------------- */
@@ -215,7 +208,7 @@ form {
   }
   .header_Queue_mobile {
     display: flex;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 700;
     font-variant: small-caps;
     width: 100%;
@@ -249,7 +242,7 @@ form {
     margin-top: 2%;
   }
 }
-/*                    HEADER OF COMMENTS ------------------------------------------------------------------------------- */
+/* ------------------------------ HEADER OF COMMENTS ------------------------------------------------------------------------------- */
 .header_3 {
   position: fixed;
   background-color: #f5f3f1;
@@ -361,69 +354,104 @@ table {
 }
 /*                    MAIN-TASKS------------------------------------------------------------------------------- */
 .container_main {
-  padding-top: 15vh;
+  padding-top: 12vh;
   margin-left: 1%;
 }
 .container {
-  width: 100%;
-  height: 100%;
   display: flex;
-}
-.container_1 {
-  width: 31%;
   margin-left: 1%;
   margin-right: 1%;
-  margin-top: 1%;
-  /* border: 2px solid red; */
+  gap: 2%;
+}
+.container_1, .header_of_tasks {
+  width: 32%;
+  padding: 10px;
+  margin-bottom: 40px;
+  background: rgb(241, 238, 237);
+  box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.1);
+  border-radius: 5px;
+  border: 0.5px solid rgb(241, 237, 237);
+}
+
+.header_of_tasks {
+  margin-bottom: 10px;
+  background: transparent;
+  font-size: 20px;
+  display: flex;
+  padding: 0px 0px 0px 0px;
+  font-weight: 700;
+  font-variant: small-caps;
+  box-shadow: none;
 }
 .searchTask {
   display: flex;
-  margin-top: 1%;
+  align-items: center;
+  margin-top: 2%;
+  margin-bottom: 30px;
+  padding: 0;
   /* margin-left: 1%; */
 }
 .MyInput1 {
   margin-left: 1%;
+  padding: 0;
 }
 .MyInput2 {
   margin-left: 1%;
+  padding: 0;
 }
 .MyInput3 {
   margin-left: 1%;
+  padding: 0;
 }
 .task {
+  width: calc(100% - 36px);
+  margin-top: 5px;
   display: flex;
   flex-wrap: wrap;
-  padding: 16px;
-  border: 2px solid #93999e;
-  margin-top: 5px;
   justify-content: space-between;
   align-items: center;
+  padding: 16px;
+  border: 2px solid #93999e;
+  border-radius: 5px;
   font-weight: bold;
   font-variant: small-caps;
   cursor: pointer;
+  float: left;
+}
+.task:first-child {
+  margin-top: 0;
 }
 .taskNumber {
-  width: 10%;
-  margin-bottom: 3%;
-  margin-left: 3%;
+  width: 5%;
+  margin-bottom: 2%;
   padding: 0px 0px 0px 0px;
 }
 .taskName {
-  width: 85%;
-  margin-bottom: 3%;
+  width: 90%;
+  margin-bottom: 2%;
   padding: 0px 0px 0px 0px;
 }
 .blockInTask {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 2%;
 }
 .uploadUrl {
-  max-width: 67%;
-  margin-top: 0;
-  margin-left: 10%;
-  border: 2px solid #93999e;
+  width: 100%;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 /*                    MAIN-TASKS-FOR MOBILE------------------------------------------------------------------------------ */
+@media (min-width: 769px) and (max-width: 1240px)  {
+  .task {
+    width: calc(100% - 5px);
+    padding: 5px;
+  }
+}
 @media (max-width: 768px) {
   .container_main {
     padding-top: 17vh;

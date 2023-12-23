@@ -9,3 +9,8 @@
   /* width: auto; */
   /* font-family: Comic Sans MS, Comic Sans, fantasy; */
 }
+@media (min-width: 769px) and (max-width: 1240px)  {
+  .myBtn {
+    padding: 5px;
+  }
+}

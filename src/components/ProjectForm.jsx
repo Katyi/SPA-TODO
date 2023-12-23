@@ -23,7 +23,7 @@ const ProjectForm = ({modal, setModal, projects, setProjects, getAllProjects}) =
 }
 
   return (
-    <form>
+    <form style={{display:"flex", flexDirection:"column", gap:"40px", paddingTop:"20px"}}>
       <MyInput
         value={newProject.projectName}
         onChange={e => setNewProject({...newProject, projectName: e.target.value })}

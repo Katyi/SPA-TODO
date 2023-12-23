@@ -19,7 +19,7 @@ const ProjectUpdForm = ({modal, setModal, project, setProject, getAllProjects}) 
   }
 
   return (
-    <form onSubmit={updProject}>
+    <form onSubmit={updProject} style={{display:"flex", flexDirection:"column", gap:"40px", paddingTop:"20px"}}>
       <MyInput
         value={project.projectNumber}
         onChange={e => setProject({ ...project, projectNumber: e.target.value })}
@@ -38,8 +38,10 @@ const ProjectUpdForm = ({modal, setModal, project, setProject, getAllProjects}) 
         type={"text"}
         placeholder={"Project description"}
       />
-      <MyButton type="submit" >Update</MyButton>
-      <MyButton type="button">Cancel</MyButton>
+      <div style={{width:"90%", display:"flex", alignItems:"center", gap: "10px"}}>
+        <MyButton type="submit" >Update</MyButton>
+        <MyButton type="button">Cancel</MyButton>
+      </div>
     </form>
   );
 };

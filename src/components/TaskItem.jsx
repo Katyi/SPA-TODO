@@ -73,35 +73,35 @@ const TaskItem = (props) => {
   )
 
   return (
-    <div className='task' ref={drag}>
+    <div className='task' ref={drag} style={{opacity: isDragging ? 0.5 : 1}}>
       <div className='taskNumber'>{props.task.taskNumber}</div>
       <div className='taskName'>{props.task.taskName}</div>
       {isDragging}
       <div className="blockInTask">
-        <MyButton style={{width: 120, marginLeft: '10%', marginBottom: '2%'}}>
+        <MyButton style={{width: "47%", backGround: "red"}}>
           <Link className="createUpdDelBtn" to="/UpdateTask" state={{ task: props.task }}>
             Open/Update
           </Link>
         </MyButton>
-        <MyButton onClick={() => props.remove(props.task.id)} style={{ width: 120, marginLeft: '10%'}}>
+        <MyButton onClick={() => props.remove(props.task.id)} style={{ width: "47%"}}>
           Delete
         </MyButton>
       </div>
       <div className="blockInTask">
-        {!props.task.isSubtask && <MyButton style={{ width: 120, marginLeft: '10%', marginBottom: '2%'}}>
+        {!props.task.isSubtask && <MyButton style={{ width: '47%'}}>
           <Link className="createUpdDelBtn" to={`/Tasks/${props.task.id}`} state={{ projectId: props.task.projectId, taskName: props.task.taskName }}>
             SubTasks
           </Link>
         </MyButton>}
-        {!props.task.isSubtask && <MyButton style={{ width: 120, marginLeft: '10%'}}>
+        {!props.task.isSubtask && <MyButton style={{ width: "47%"}}>
           <Link className="createUpdDelBtn" to={`/Comments/${props.task.id}`} state={{ projectId: props.task.projectId }}>
             Comments
           </Link>
         </MyButton>}
       </div>
       <form onSubmit={handleUpload} className='uploadUrl' >
-          <MyInput type="file" className='uploadFile' style={{width: 500, marginBottom: 10}}/>
-          <MyButton type='submit' style={{width: 100}}>Upload</MyButton>
+          <MyInput type="file" className='uploadFile' style={{width: "47%"}}/>
+          <MyButton type='submit' style={{width: "47%"}}>Upload</MyButton>
         </form>
       </div>
   );

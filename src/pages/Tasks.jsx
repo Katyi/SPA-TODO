@@ -18,7 +18,7 @@ function Tasks() {
   const [taskForSearch1, setTaskForSearch1] = useState('');
   const [project, setProject] = useState([]);
   let { id } = useParams();
-  
+
   // ------ Get Project Data --------------------------------------------
   const getProject = async(id) => {
     const docRef = doc(db, 'projects', id);
@@ -92,10 +92,10 @@ function Tasks() {
       setQueueTasks(searchResult1);
       setDevelopmentTasks(searchResult2);
       setDoneTasks(searchResult3);
-    } else {
-      let searchResult1 = await queueTasks.filter((elem) => elem.taskNumber.includes(taskForSearch1));
-      let searchResult2 = await developmentTasks.filter((elem) => elem.taskNumber.includes(taskForSearch1));
-      let searchResult3 = await doneTasks.filter((elem) => elem.taskNumber.includes(taskForSearch1));
+    } else if (taskForSearch1 !== '') {
+      let searchResult1 = await queueTasks.filter((elem) => elem.taskNumber === +taskForSearch1);
+      let searchResult2 = await developmentTasks.filter((elem) => elem.taskNumber === +taskForSearch1);
+      let searchResult3 = await doneTasks.filter((elem) => elem.taskNumber === +taskForSearch1);
 
       setQueueTasks(()=>[...searchResult1]);
       setDevelopmentTasks(()=>[...searchResult2]);
@@ -105,7 +105,6 @@ function Tasks() {
 
   useEffect(() => {
     firebaseQuery();
-    
   }, []);
 
   useEffect(() => {
@@ -122,12 +121,12 @@ function Tasks() {
             <Link className="createUpdDelBtn" to="/CreateTask" state={{ projectId: id}}> Create Task </Link>
           </MyButton>
           <div action="" className="searchTask">
-            <MyInput style={{ marginLeft: 0, width: 300, marginTop: 0}} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
+            <MyInput style={{ marginLeft: 0, width: 300}} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
             <div className="MyInput1">
-              <MyInput style={{ marginLeft: 0, width: 100, marginTop: 0}} type={"number"} placeholder={"Search by number"} onChange={handleChange1} />
+              <MyInput style={{ marginLeft: 0, width: 200}} type={"number"} placeholder={"Search by number"} onChange={handleChange1} />
             </div>
             <div className="MyInput2">
-              <MyButton style={{marginLeft: 0, width: 120, marginBottom: 5}} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
+              <MyButton style={{marginLeft: 0, width: 120}} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
                 Search
               </MyButton>
             </div>
@@ -137,6 +136,12 @@ function Tasks() {
               </MyButton>
             </div>
           </div>
+        </div>
+        <div></div>
+        <div className="container">
+          <div className="header_of_tasks">Tasks In Queue</div>
+          <div className="header_of_tasks">Tasks In Development</div>
+          <div className="header_of_tasks">Tasks Completed</div>
         </div>
         <div className="container">
           <div className="header_Queue_mobile">Tasks In Queue</div>
