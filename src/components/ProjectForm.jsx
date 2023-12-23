@@ -37,9 +37,8 @@ const ProjectForm = ({modal, setModal, projects, setProjects, getAllProjects}) =
         placeholder={"Project description"}
       />
       <div style={{width:"90%", display:"flex", alignItems:"center", gap: "10px"}}>
-      <MyButton onClick={addNewProject}>Create Project</MyButton>
-
-      <MyButton type="button" onClick={()=>setModal(false)}>Cancel</MyButton>
+        <MyButton onClick={addNewProject}>Create Project</MyButton>
+        <MyButton type="button" onClick={()=>setModal(false)}>Cancel</MyButton>
       </div>
     </form>
   );

@@ -60,9 +60,7 @@ const TaskItem = (props) => {
     // props.firebaseQuery();
   }
 
-  let navigate = useNavigate();
-
-  //      drag-n-drop                                                                                                                       
+  // drag-n-drop                                                                                                                       
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.BOX,
     item: props.task,

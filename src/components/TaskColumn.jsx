@@ -36,7 +36,8 @@ const TaskColumn = (props) => {
     [allowedDropEffect],
   )
   const divStyle = {
-    minHeight: '50px'
+    // minHeight: '50px'
+    padding: 0
   }
   
   return (
