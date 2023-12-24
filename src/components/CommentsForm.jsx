@@ -3,20 +3,27 @@ import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 
   // -----Добавление нового комментария для задачи в модальном окне-------------------------------------------------------------------------------------
-const CommentsForm = () => {
+const CommentsForm = ({modal, setModal, comments, firebaseQuery}) => {
   const location = useLocation();
-  const { taskId, projectId } = location.state;
-  const [commentNums, setCommentNums] = useState ();
-  const taskRef = query(collection(db, 'comments'), where("taskId", "==", taskId));
-  const getComments = async () => {
-    const data = await getDocs(taskRef);
-    setCommentNums(data.docs.map((doc)=> (doc.data().commentNumber)));
-  };
-  getComments();
+  const { projectId } = location.state;
+  console.log(projectId)
+  let { id } = useParams();
+  console.log(id)
+  // const [commentNums, setCommentNums] = useState ();
+  // const taskRef = query(collection(db, 'comments'), where("taskId", "==", id));
+
+  // const getComments = async () => {
+  //   const data = await getDocs(taskRef);
+  //   setCommentNums(data.docs.map((doc)=> (doc.data().commentNumber)));
+  // };
+
+  // getComments();
+
+  
 
   const [UpdItem, setUpdItem] = useState({
     taskId: '',
@@ -26,9 +33,11 @@ const CommentsForm = () => {
 
   const addNewComment = async (e) => {
     e.preventDefault();
+    let lastNumber =  comments?.length > 0 ? comments.sort((a, b) => a?.commentNumber > b?.commentNumber ? 1 : -1).slice(-1)[0]?.commentNumber : 0;
+
     await addDoc(collection(db, 'comments'), {
-      taskId: taskId,
-      commentNumber: commentNums.length + 1,
+      taskId: id,
+      commentNumber: lastNumber + 1,
       comment: UpdItem.comment,
     })
     setUpdItem({
@@ -36,22 +45,29 @@ const CommentsForm = () => {
       commentNumber: '',
       comment: ''
     });
+    firebaseQuery();
+    setModal(false);
   }
 
   return (
-    <form>
+    <form 
+      style={{display:"flex", flexDirection:"column", gap:"40px", paddingTop:"20px"}}
+      onSubmit={addNewComment}
+    >
       <MyInput
         value={UpdItem.comment}
         onChange={e => setUpdItem({...UpdItem, comment: e.target.value})}
         type={"text"}
         placeholder={"Task Comment"}
       />
-      <MyButton onClick={addNewComment}>
-        <Link className="createUpdDelBtn" to={`/Comments/${taskId}`} state={{projectId: projectId}}>Add comment</Link>
-      </MyButton>
-      <MyButton>
-        <Link className="createUpdDelBtn" to={`/Comments/${taskId}`} state={{ projectId: projectId }}>Cancel</Link>
-      </MyButton>
+      <div style={{width:"90%", display:"flex", alignItems:"center", gap: "10px"}}>
+        <MyButton type="submit">
+          Add comment
+        </MyButton>
+        <MyButton type="button" onClick={()=>setModal(false)}>
+          Cancel
+        </MyButton>
+      </div>
     </form>
   );
 };

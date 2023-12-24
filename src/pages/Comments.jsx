@@ -2,17 +2,20 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router";
 import { query, collection, where, getDocs, doc, deleteDoc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
 import CommentItem from "../components/CommentItem";
-import { Navbar } from "../components/Navbar";
+// import { Navbar } from "../components/Navbar";
 import MyNavbar from "../components/UI/Navbar/MyNavbar";
+import MyModal from "../components/UI/modal/MyModal";
+import CommentsForm from "../components/CommentsForm";
 // import CommentsForm from "../components/CommentsForm";
 // import MyModalForComments from "../components/UI/modal/MyModalForComments";
 
 function Comments() {
   const location = useLocation();
   const { projectId } = location.state;
+  const [modal6, setModal6] = useState(false);
   const [comments, setComments] = useState([]);
   const [task, setTask] = useState([]);
   // let [modal, setModal] = useState(false);
@@ -54,12 +57,10 @@ function Comments() {
   return (
     <div className="App">
       <div className="wrapper">
-        {/* <Navbar projectId={projectId}/> */}
         <MyNavbar title={'Comments'} linkPath={`/Projects/${projectId}`} linkLabel={'Back To Tasks'} taskName={task.taskName}/>
         <div className="container_2">
-          <MyButton style={{marginLeft: '2%', marginTop: '2%'}}>
-            <Link className="createUpdDelBtn" to='/CreateComment' state={{ taskId: id, projectId: projectId }}>
-              Add Comment</Link>
+          <MyButton style={{marginLeft: '2%', marginTop: '2%'}} onClick={() => setModal6(true)}>
+            Add Comment
           </MyButton>
           <div className='comments'>
             {comments.sort((a,b)=>a.commentNumber > b.commentNumber ? 1 : -1)
@@ -67,6 +68,11 @@ function Comments() {
                 <CommentItem remove={removeComments} firebaseQuery={firebaseQuery} projectId={projectId} comment={comment} key={index} />
             ))}
           </div>
+
+          {/* MODAL FOR CREATE COMMENT */}
+          <MyModal visible={modal6} setVisible={setModal6}>
+            <CommentsForm modal={modal6} setModal={setModal6} comments={comments} firebaseQuery={firebaseQuery}/>
+          </MyModal>
         </div>
       </div>
     </div>
