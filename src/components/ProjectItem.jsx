@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
 
 const ProjectItem = (props) => {
-
+  
   return (
     <tr className='project'>
       <td className='project_id'>{props.idx}</td>

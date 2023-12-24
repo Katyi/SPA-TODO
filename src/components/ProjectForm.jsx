@@ -19,11 +19,14 @@ const ProjectForm = ({modal, setModal, projects, setProjects, getAllProjects}) =
     setNewProject({ projectNumber: '', projectName: '', description: '' });
     getAllProjects();
     setProjects(projects);
-    setModal(false)
-}
+    setModal(false);
+  }
 
   return (
-    <form style={{display:"flex", flexDirection:"column", gap:"40px", paddingTop:"20px"}}>
+    <form 
+      style={{display:"flex", flexDirection:"column", gap:"40px", paddingTop:"20px"}}
+      onSubmit={addNewProject}
+    >
       <MyInput
         value={newProject.projectName}
         onChange={e => setNewProject({...newProject, projectName: e.target.value })}
@@ -37,7 +40,7 @@ const ProjectForm = ({modal, setModal, projects, setProjects, getAllProjects}) =
         placeholder={"Project description"}
       />
       <div style={{width:"90%", display:"flex", alignItems:"center", gap: "10px"}}>
-        <MyButton onClick={addNewProject}>Create Project</MyButton>
+        <MyButton type="submit">Create</MyButton>
         <MyButton type="button" onClick={()=>setModal(false)}>Cancel</MyButton>
       </div>
     </form>

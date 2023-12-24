@@ -7,8 +7,8 @@ import MyButton from "../components/UI/button/MyButton";
 import MyInput from "../components/UI/input/MyInput";
 import TaskColumn from "../components/TaskColumn";
 import MyNavbar from "../components/UI/Navbar/MyNavbar";
-
-// export const mainContext = React.createContext("");
+import MyModal from "../components/UI/modal/MyModal";
+import TaskForm from "../components/TaskForm";
 
 function Tasks() {
   const [queueTasks, setQueueTasks] = useState([]);
@@ -17,6 +17,8 @@ function Tasks() {
   const [taskForSearch, setTaskForSearch] = useState('');
   const [taskForSearch1, setTaskForSearch1] = useState('');
   const [project, setProject] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [modal2, setModal2] = useState(false);
   let { id } = useParams();
 
   // ------ Get Project Data --------------------------------------------
@@ -112,14 +114,15 @@ function Tasks() {
   },[])
 
   return (
-    
     <div className="App">
       <div className="wrapper">
         <MyNavbar title={'Tasks'} linkPath={'/Projects'} linkLabel={'Back To Projects'} projectName={project.projectName}/>
-          <div className="container_main">
-          <MyButton>
-            <Link className="createUpdDelBtn" to="/CreateTask" state={{ projectId: id}}> Create Task </Link>
+        <div className="container_main">
+          <MyButton onClick={() => setModal2(true)}>
+            Create Task 
           </MyButton>
+
+          {/* SEARCH PART */}
           <div action="" className="searchTask">
             <MyInput style={{ marginLeft: 0, width: 300}} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
             <div className="MyInput1">
@@ -137,20 +140,32 @@ function Tasks() {
             </div>
           </div>
         </div>
-        <div></div>
+        {/* TABLE HEADERS */}
         <div className="container">
           <div className="header_of_tasks">Tasks In Queue</div>
           <div className="header_of_tasks">Tasks In Development</div>
           <div className="header_of_tasks">Tasks Completed</div>
         </div>
+        {/* TABLE BODY */}
         <div className="container">
           <div className="header_Queue_mobile">Tasks In Queue</div>
           <TaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
           <div className="header_Development_mobile">Tasks In Development</div>
           <TaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
           <div className="header_Done_mobile">Tasks Completed</div>
-          <TaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} queueTasks={queueTasks} class='container_1' />
+          <TaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
         </div>
+
+        {/* MODAL FOR CREATE TASK */}
+        <MyModal visible={modal2} setVisible={setModal2}>
+          <TaskForm 
+            modal={modal2} 
+            setModal={setModal2} 
+            tasks={queueTasks.concat(developmentTasks).concat(doneTasks)} 
+            setTasks={setTasks}
+            firebaseQuery={firebaseQuery}
+          />
+        </MyModal>
       </div>
     </div>
   )

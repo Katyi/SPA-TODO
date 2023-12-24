@@ -134,7 +134,7 @@ function Projects() {
               Create Project
             </MyButton>
           </div>
-          {/* TABLE */}
+          {/* TABLE OF PROJECTS */}
           <table>
             <thead>
               <tr className="project_Header header_title">
@@ -169,7 +169,7 @@ function Projects() {
 
           {/* MODAL FOR UPDATE PROJECT */}
           <MyModal visible={modal1} setVisible={setModal1}>
-            <ProjectUpdForm modal={modal1} setModal={setModal1} project={currentProject} setProject={setCurrentProject} getAllProjects={getAllProjects}/>
+            <ProjectUpdForm modal={modal1} setModal={setModal1} currentProject={currentProject} setCurrentProject={setCurrentProject} getAllProjects={getAllProjects}/>
           </MyModal>
         </div>
         {/* } */}

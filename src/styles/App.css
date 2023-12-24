@@ -440,6 +440,9 @@ table {
   align-items: center;
   justify-content: space-between;
 }
+.fileUrl {
+  width: 100px;
+}
 /*                    MAIN-TASKS-FOR MOBILE------------------------------------------------------------------------------ */
 @media (min-width: 769px) and (max-width: 1240px)  {
   .task {
