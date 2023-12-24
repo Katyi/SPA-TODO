@@ -6,8 +6,8 @@ import { db } from '../firebase';
 import { useLocation, useParams } from "react-router-dom";
 
 const TaskForm = ({modal, setModal, tasks, setTasks, firebaseQuery}) => {
-  const location = useLocation();
-  const { projectId } = location.state;
+  // const location = useLocation();
+  // const { projectId } = location.state;
   let { id } = useParams();
   
   const [newTask, setNewTask] = useState({ 
@@ -28,7 +28,7 @@ const TaskForm = ({modal, setModal, tasks, setTasks, firebaseQuery}) => {
     let lastNumber =  tasks?.length > 0 ? tasks.sort((a, b) => a?.taskNumber > b?.taskNumber ? 1 : -1).slice(-1)[0]?.taskNumber : 0;
 
     await addDoc(collection(db, 'tasks'), {
-      taskNumber: lastNumber + 1,
+      taskNumber: lastNumber + 11,
       taskName: newTask.taskName, 
       description: newTask.description,
       createDate: newTask.createDate,

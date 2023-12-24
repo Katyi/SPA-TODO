@@ -42,49 +42,49 @@ const TaskUpdForm = ({modal, setModal, currentTask, setCurrentTask, firebaseQuer
       >
         <MyInput
           style={{width: '43%', marginBottom: "20px"}}
-          value={currentTask.taskNumber}
+          value={currentTask.taskNumber || ""}
           onChange={e => setCurrentTask({...currentTask, taskNumber: e.target.value})}
           type={"number"}
           placeholder={"Task Number"}
         />
         <MyInput
           style={{width: '43%', marginBottom: "20px"}}
-          value={currentTask.taskName}
+          value={currentTask.taskName || ""}
           onChange={e => setCurrentTask({...currentTask, taskName: e.target.value})}
           type={"text"}
           placeholder={"Task Name"}
         />
         <MyInput
           style={{width: '43%', marginBottom: "20px"}}
-          value ={currentTask.description}
+          value ={currentTask.description || ""}
           onChange={e => setCurrentTask({ ...currentTask, description: e.target.value })}
           type={"text"}
           placeholder={"Task Description"}
         />
         <MyInput
           style={{marginBottom: "20px"}}
-          value ={currentTask.createDate}
+          value ={currentTask.createDate || ""}
           onChange={e => setCurrentTask({ ...currentTask, createDate: e.target.value })}
           type={"date"}
           placeholder={"Create Date"}
         />
         <MyInput
           style={{width: '43%', marginBottom: "20px"}}
-          value ={currentTask.workTime}
+          value ={currentTask.workTime || ""}
           onChange={e => setCurrentTask({ ...currentTask, workTime: e.target.value })}
           type={"number"}
           placeholder={"Task Time"}
         />
         <MyInput
           style={{marginBottom: "20px"}}
-          value ={currentTask.endDate}
+          value ={currentTask.endDate || ""}
           onChange={e => setCurrentTask({ ...currentTask, endDate: e.target.value })}
           type={"date"}
           placeholder={"End Date"}
         />
         <MyInput
           style={{width: '43%', marginBottom: "20px"}}
-          value={currentTask.priority}
+          value={currentTask.priority || ""}
           onChange={e => setCurrentTask({ ...currentTask, priority: e.target.value })}
           type={"text"}
           placeholder={"Priority"}

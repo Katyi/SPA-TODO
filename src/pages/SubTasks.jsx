@@ -7,6 +7,8 @@ import MyButton from "../components/UI/button/MyButton";
 import MyInput from "../components/UI/input/MyInput";
 import SubTaskColumn from "../components/SubTaskColumn";
 import MyNavbar from "../components/UI/Navbar/MyNavbar";
+import SubTaskForm from "../components/SubTaskForm";
+import MyModal from "../components/UI/modal/MyModal";
 
 function SubTasks() {
   const location = useLocation();
@@ -17,6 +19,8 @@ function SubTasks() {
   const [task, setTask] = useState([]);
   const [taskForSearch, setTaskForSearch] = useState('');
   const [taskForSearch1, setTaskForSearch1] = useState('');
+  const [modal4, setModal4] = useState(false);
+  const [subTasks, setSubTasks] = useState([]);
   let { id } = useParams();
 
   // ------ Get Task Data --------------------------------------------
@@ -89,17 +93,15 @@ function SubTasks() {
     getTask(id);
   }, []);
 
-  let navigate = useNavigate();
-
   return (
     <div className="App">
       <div className="wrapper">
         <MyNavbar title={'SubTasks'} linkPath={`/Projects/${projectId}`} linkLabel={'Back To Tasks'} taskName={task.taskName}/>
         <div className="container_main">
-          <MyButton>
-            <Link className="createUpdDelBtn" to="/CreateSubTask" state={{ taskId: id, projectId: projectId }} style={{marginLeft: 0, width: 120 }}>
+          <MyButton onClick={() => setModal4(true)}>
+            {/* <Link className="createUpdDelBtn" to="/CreateSubTask" state={{ taskId: id, projectId: projectId }} style={{marginLeft: 0, width: 120 }}> */}
               Create SubTask
-            </Link>
+            {/* </Link> */}
           </MyButton>
           <div action="" className="searchTask">
             <MyInput style={{ marginLeft: 0, width: 300, marginTop: 0}} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
@@ -126,6 +128,17 @@ function SubTasks() {
           <div className="header_Done_mobile">SubTasks Completed</div>
           <SubTaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
         </div>
+
+        {/* MODAL FOR CREATE SUBTASK */}
+        <MyModal visible={modal4} setVisible={setModal4}>
+          <SubTaskForm 
+            modal={modal4} 
+            setModal={setModal4} 
+            tasks={queueTasks.concat(developmentTasks).concat(doneTasks)} 
+            setTasks={setSubTasks}
+            firebaseQuery={firebaseQuery}
+          />
+        </MyModal>
       </div>
     </div>
   )

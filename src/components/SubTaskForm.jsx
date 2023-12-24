@@ -1,47 +1,47 @@
 import React, {useState} from "react";
 import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
-const SubTaskForm = () => {
+const SubTaskForm = ({modal, setModal, tasks, setTasks, firebaseQuery}) => {
   const location = useLocation();
-  const { taskId, projectId } = location.state;
-  const navigate = useNavigate();
-  const [subTaskNums, setSubTaskNums] = useState ();
-  const taskRef = query(collection(db, 'tasks'), where("taskId", "==", taskId), where('isSubtask', '==', true));
-  const getTasks = async () => {
-    const data = await getDocs(taskRef);
-    setSubTaskNums(data.docs.map((doc)=> (doc.data().taskNumber)));
-  };
-  getTasks();
-  const [task, setTask] = useState({
-    taskNumber: '',
-    taskName: '',
+  const { projectId } = location.state;
+  let { id } = useParams();
+  
+  const [newTask, setNewTask] = useState({ 
+    taskNumber: '', 
+    taskName: '', 
     description: '',
     createDate: '',
     workTime: '',
     endDate: '',
     priority: '',
+    status: '',
+    isSubtask: true,
+    projectId: ''
   });
   
   const addNewTask = async (e) => {
     e.preventDefault();
+    let lastNumber =  tasks?.length > 0 ? tasks.sort((a, b) => a?.taskNumber > b?.taskNumber ? 1 : -1).slice(-1)[0]?.taskNumber : 0;
+
     await addDoc(collection(db, 'tasks'), {
-      taskNumber: subTaskNums.length + 1,
-      taskName: task.taskName,
-      description: task.description,
-      createDate: task.createDate,
-      workTime: task.workTime,
-      endDate: task.endDate,
-      priority: task.priority,
+      taskNumber: lastNumber + 1,
+      taskName: newTask.taskName,
+      description: newTask.description,
+      createDate: newTask.createDate,
+      workTime: newTask.workTime,
+      endDate: newTask.endDate,
+      // priority: newTask.priority,
       status: "Queue",
       isSubtask: true,
-      taskId: taskId,
+      taskId: id,
       projectId: projectId,
     })
-    setTask({
+
+    setNewTask({
       taskNumber: '',
       taskName: '',
       description: '',
@@ -50,50 +50,59 @@ const SubTaskForm = () => {
       endDate: '',
       priority: '',
     });
-    navigate(-1);
-}
+
+    firebaseQuery();
+    setModal(false);
+  }
 
   return (
-    <form>
+    <>
+    <form 
+      onSubmit={addNewTask}
+      style={{display:"flex", flexDirection:"column", gap:"40px", paddingTop:"20px"}}
+    >
       <MyInput
-        value={task.taskName}
-        onChange={e => setTask({ ...task, taskName: e.target.value })}
+        value={newTask.taskName}
+        onChange={e => setNewTask({ ...newTask, taskName: e.target.value })}
         type={"text"}
         placeholder={"SubTask Name"}
       />
       <MyInput
-        value={task.description}
-        onChange={e => setTask({ ...task, description: e.target.value })}
+        value={newTask.description}
+        onChange={e => setNewTask({ ...newTask, description: e.target.value })}
         type={"text"}
         placeholder={"Task Description"}
       />
       <MyInput
-        value={task.createDate}
-        onChange={e => setTask({ ...task, createDate: e.target.value })}
+        value={newTask.createDate}
+        onChange={e => setNewTask({ ...newTask, createDate: e.target.value })}
         type={"date"}
         placeholder={"Create Date"}
       />
       <MyInput
-        value={task.workTime}
-        onChange={e => setTask({ ...task, workTime: e.target.value })}
+        value={newTask.workTime}
+        onChange={e => setNewTask({ ...newTask, workTime: e.target.value })}
         type={"number"}
         placeholder={"SubTask Time"}
       />
       <MyInput
-        value={task.endDate}
-        onChange={e => setTask({ ...task, endDate: e.target.value })}
+        value={newTask.endDate}
+        onChange={e => setNewTask({ ...newTask, endDate: e.target.value })}
         type={"date"}
         placeholder={"End Date"}
       />
-      <MyInput
-        value={task.priority}
-        onChange={e => setTask({ ...task, priority: e.target.value })}
+      {/* <MyInput
+        value={newTask.priority}
+        onChange={e => setNewTask({ ...newTask, priority: e.target.value })}
         type={"text"}
         placeholder={"Priority"}
-      />
-      <MyButton onClick={addNewTask}>Create SubTask</MyButton>
-      <MyButton onClick={()=> navigate(-1)}>Cancel</MyButton>
+      /> */}
+      <div style={{width:"90%", display:"flex", alignItems:"center", gap: "10px"}}>
+        <MyButton type="submit">Create</MyButton>
+        <MyButton type="button" onClick={()=>setModal(false)}>Cancel</MyButton>
+      </div>
     </form>
+    </>
   );
 };
 

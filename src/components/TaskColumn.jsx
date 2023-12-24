@@ -49,7 +49,15 @@ const TaskColumn = (props) => {
         <div className='tasks'>
         {props.tasks.sort((a,b)=>a.taskNumber > b.taskNumber ? 1 : -1)
           .map((task, index) => (
-            <TaskItem remove={props.removeTask} firebaseQuery={props.firebaseQuery} task={task} key={index} modal={modal3} setModal={setModal3} currentTask={currentTask} setCurrentTask={setCurrentTask}/>
+            <TaskItem 
+              remove={props.removeTask} 
+              firebaseQuery={props.firebaseQuery} 
+              task={task} key={index} 
+              modal={modal3} 
+              setModal={setModal3} 
+              currentTask={currentTask} 
+              setCurrentTask={setCurrentTask}
+            />
           ))}
       </div>
 
