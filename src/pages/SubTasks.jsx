@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router";
 import { query, collection, where, getDocs, doc, deleteDoc, getDoc } from 'firebase/firestore';
+import { getStorage, ref, deleteObject } from "firebase/storage";
 import { db } from '../firebase';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
 import MyInput from "../components/UI/input/MyInput";
 import SubTaskColumn from "../components/SubTaskColumn";
@@ -55,8 +56,22 @@ function SubTasks() {
     setDoneTasks(tasksArr3)
   }
   
-  const removeTask = async (taskId) => {
-    await deleteDoc(doc(db, 'tasks', taskId));
+  const removeTask = async (task) => {
+    const storage = getStorage();
+    let tasksArr2 = [task];
+    console.log(tasksArr2)
+    tasksArr2.forEach(async (task) => {
+      if (task.hasOwnProperty('fileName')) {
+        const imgRef1 = ref(storage, `files/${task.fileName}`);
+        await deleteObject(imgRef1).then(() => {
+          // File deleted successfully
+        }).catch((error) => {
+          // Uh-oh, an error occurred!
+        });
+      }
+    })
+    // delete subtask by id
+    await deleteDoc(doc(db, 'tasks', task.id));
     firebaseQuery();
   }
 

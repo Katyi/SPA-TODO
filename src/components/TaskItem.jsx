@@ -36,21 +36,23 @@ const TaskItem = (props) => {
         >
           Open/Update
         </MyButton>
-        <MyButton onClick={() => props.remove(props.task.id)} style={{ width: "47%"}}>
+        <MyButton onClick={() => props.remove(props.task)} style={{ width: "47%"}}>
           Delete
         </MyButton>
       </div>
       <div className="blockInTask">
-        {!props.task.isSubtask && <MyButton style={{ width: '47%'}}>
-          <Link className="createUpdDelBtn" to={`/Tasks/${props.task.id}`} state={{ projectId: props.task.projectId, taskName: props.task.taskName }}>
-            SubTasks
-          </Link>
-        </MyButton>}
-        {!props.task.isSubtask && <MyButton style={{ width: "47%"}}>
-          <Link className="createUpdDelBtn" to={`/Comments/${props.task.id}`} state={{ projectId: props.task.projectId }}>
+        {!props.task.isSubtask && 
+          <Link className="createUpdDelBtn" style={{width:"47%"}} to={`/Tasks/${props.task.id}`} state={{ projectId: props.task.projectId, taskName: props.task.taskName }}>
+            <MyButton style={{ width: '100%'}}>
+              SubTasks
+            </MyButton>
+          </Link>}
+        {!props.task.isSubtask && 
+          <Link className="createUpdDelBtn" style={{width:"47%"}} to={`/Comments/${props.task.id}`} state={{ projectId: props.task.projectId }}>
+            <MyButton style={{ width: "100%"}}>
             Comments
-          </Link>
-        </MyButton>}
+            </MyButton>
+          </Link>}
       </div>
       {!props.task.fileUrl 
         ? <TaskFile task={props.task} firebaseQuery={props.firebaseQuery} setCurrentTask={props.setCurrentTask}/>

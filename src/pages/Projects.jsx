@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { query, collection, onSnapshot, doc, deleteDoc,getDocs, where  } from 'firebase/firestore';
+import { getStorage, ref, deleteObject } from "firebase/storage";
 import { db } from '../firebase';
 import ProjectItem from "../components/ProjectItem";
 import MyButton from "../components/UI/button/MyButton";
@@ -76,6 +77,27 @@ function Projects() {
 
   // DELETE PROJECT AND HIS ALL CHILDREN
   const removeProject = async (projectId) => {
+    // -------------------------------------- Delete images for project with tasks and subtasks of project -------------
+    const storage = getStorage();
+    const q2 = query(collection(db, 'tasks'), where('projectId', '==', projectId));
+    let tasksArr2 = [];
+    const querySnapshot2 = await getDocs(q2);
+    querySnapshot2.forEach((doc) => {
+      tasksArr2.push({ ...doc.data(), id: doc.id })
+    })
+    tasksArr2.forEach(async (task) => {
+      if (task.hasOwnProperty('fileName')) {
+        const imgRef1 = ref(storage, `files/${task.fileName}`);
+        await deleteObject(imgRef1).then(() => {
+          // File deleted successfully
+        }).catch((error) => {
+          // Uh-oh, an error occurred!
+        });
+      }
+    })
+
+
+
     const q = query(collection(db, 'tasks'), where('projectId', '==', projectId));
     let tasksArr = [];
     const querySnapshot = await getDocs(q);
@@ -83,7 +105,7 @@ function Projects() {
       tasksArr.push({ ...doc.data(), id: doc.id })
     })
     tasksArr.forEach(async (task) => {
-// --------------------------------------Удаление комментов-проекта-----------------------------------------------
+    // -------------------------------------- Удаление комментов-проекта -----------------------------------------------
       const q2 = query(collection(db, 'comments'), where('taskId', '==', task.id));
       let tasksArr2 = [];
       const querySnapshot2 = await getDocs(q2);

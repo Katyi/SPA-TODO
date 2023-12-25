@@ -56,45 +56,17 @@ function Tasks() {
     setDoneTasks(tasksArr3)
   }
 
-  const removeTask = async (taskId) => {
+  const removeTask = async (task) => {
     const storage = getStorage();
-    // deleting subtasks for task by taskId
-    const q = query(collection(db, 'tasks'), where('taskId', '==', taskId));
-    let tasksArr = [];
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      tasksArr.push({ ...doc.data(), id: doc.id })
-    })
-    tasksArr.forEach(async (task) => {
-      if (task.fileName) {
-        const imgRef = ref(storage, `files/${task?.fileName}`);
-        await deleteObject(imgRef).then(() => {
-          // File deleted successfully
-        }).catch((error) => {
-          // Uh-oh, an error occurred!
-        });
-      } 
-      await deleteDoc(doc(db, 'tasks', task.id));
-    })
-    // deleting comments for task by taskId
-    const q1 = query(collection(db, 'comments'), where('taskId', '==', taskId));
-    let tasksArr1 = [];
-    const querySnapshot1 = await getDocs(q1);
-    querySnapshot1.forEach((doc) => {
-        tasksArr1.push({ ...doc.data(), id: doc.id })
-    })
-    tasksArr1.forEach(async (comment) => {
-      await deleteDoc(doc(db, 'comments', comment.id));
-    })
-    // delete image for task 
-    const q2 = query(collection(db, 'tasks'), where('projectId', '==', id));
-    let tasksArr2 = [];
+    // delete images for task and subtasks
+    const q2 = query(collection(db, 'tasks'), where('taskId', '==', task.id));
+    let tasksArr2 = [task];
     const querySnapshot2 = await getDocs(q2);
     querySnapshot2.forEach((doc) => {
       tasksArr2.push({ ...doc.data(), id: doc.id })
     })
     tasksArr2.forEach(async (task) => {
-      if (task.fileName) {
+      if (task.hasOwnProperty('fileName')) {
         const imgRef1 = ref(storage, `files/${task.fileName}`);
         await deleteObject(imgRef1).then(() => {
           // File deleted successfully
@@ -103,8 +75,30 @@ function Tasks() {
         });
       }
     })
+
+    // deleting subtasks for task by taskId
+    const q = query(collection(db, 'tasks'), where('taskId', '==', task.id));
+    let tasksArr = [];
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      tasksArr.push({ ...doc.data(), id: doc.id })
+    })
+    tasksArr.forEach(async (task) => {
+      await deleteDoc(doc(db, 'tasks', task.id));
+    })
+    // deleting comments for task by taskId
+    const q1 = query(collection(db, 'comments'), where('taskId', '==', task.id));
+    let tasksArr1 = [];
+    const querySnapshot1 = await getDocs(q1);
+    querySnapshot1.forEach((doc) => {
+        tasksArr1.push({ ...doc.data(), id: doc.id })
+    })
+    tasksArr1.forEach(async (comment) => {
+      await deleteDoc(doc(db, 'comments', comment.id));
+    })
+    
     // delete task by id
-    await deleteDoc(doc(db, 'tasks', taskId));
+    await deleteDoc(doc(db, 'tasks', task.id));
     firebaseQuery();
   }
 

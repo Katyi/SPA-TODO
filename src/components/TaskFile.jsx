@@ -16,16 +16,17 @@ const TaskFile = (props) => {
   const handleUpload = (e) => {
     e.preventDefault();
     const file = e.target[0]?.files[0];
+    console.log(file)
     let arr = [].slice.call(e.target.parentElement.children);
     uploadFiles(file);
   }
   
   const uploadFiles = async (file) => {
     if (!file) return;
-
-    const sotrageRef = ref(storage, `files/${file.name}`);
+    let fileNewName = props.task.id + file.name;
+    const sotrageRef = ref(storage, `files/${fileNewName}`);
     const uploadTask = uploadBytesResumable(sotrageRef, file);
-    let fileName = file.name;
+    let fileName = fileNewName;
 
     uploadTask.on(
       "state_changed",
