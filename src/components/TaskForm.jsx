@@ -28,7 +28,7 @@ const TaskForm = ({modal, setModal, tasks, setTasks, firebaseQuery}) => {
     let lastNumber =  tasks?.length > 0 ? tasks.sort((a, b) => a?.taskNumber > b?.taskNumber ? 1 : -1).slice(-1)[0]?.taskNumber : 0;
 
     await addDoc(collection(db, 'tasks'), {
-      taskNumber: lastNumber + 11,
+      taskNumber: lastNumber + 1,
       taskName: newTask.taskName, 
       description: newTask.description,
       createDate: newTask.createDate,

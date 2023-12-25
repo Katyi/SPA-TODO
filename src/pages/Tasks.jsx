@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { query, collection, where, getDocs, doc, deleteDoc, getDoc} from 'firebase/firestore';
+import { getStorage, ref, deleteObject } from "firebase/storage";
 import { db } from '../firebase';
 import { Link } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
@@ -20,6 +21,7 @@ function Tasks() {
   const [tasks, setTasks] = useState([]);
   const [modal2, setModal2] = useState(false);
   let { id } = useParams();
+  
 
   // ------ Get Project Data --------------------------------------------
   const getProject = async(id) => {
@@ -55,6 +57,8 @@ function Tasks() {
   }
 
   const removeTask = async (taskId) => {
+    const storage = getStorage();
+    // deleting subtasks for task by taskId
     const q = query(collection(db, 'tasks'), where('taskId', '==', taskId));
     let tasksArr = [];
     const querySnapshot = await getDocs(q);
@@ -62,9 +66,17 @@ function Tasks() {
       tasksArr.push({ ...doc.data(), id: doc.id })
     })
     tasksArr.forEach(async (task) => {
+      if (task.fileName) {
+        const imgRef = ref(storage, `files/${task?.fileName}`);
+        await deleteObject(imgRef).then(() => {
+          // File deleted successfully
+        }).catch((error) => {
+          // Uh-oh, an error occurred!
+        });
+      } 
       await deleteDoc(doc(db, 'tasks', task.id));
     })
-
+    // deleting comments for task by taskId
     const q1 = query(collection(db, 'comments'), where('taskId', '==', taskId));
     let tasksArr1 = [];
     const querySnapshot1 = await getDocs(q1);
@@ -74,7 +86,24 @@ function Tasks() {
     tasksArr1.forEach(async (comment) => {
       await deleteDoc(doc(db, 'comments', comment.id));
     })
-
+    // delete image for task 
+    const q2 = query(collection(db, 'tasks'), where('projectId', '==', id));
+    let tasksArr2 = [];
+    const querySnapshot2 = await getDocs(q2);
+    querySnapshot2.forEach((doc) => {
+      tasksArr2.push({ ...doc.data(), id: doc.id })
+    })
+    tasksArr2.forEach(async (task) => {
+      if (task.fileName) {
+        const imgRef1 = ref(storage, `files/${task.fileName}`);
+        await deleteObject(imgRef1).then(() => {
+          // File deleted successfully
+        }).catch((error) => {
+          // Uh-oh, an error occurred!
+        });
+      }
+    })
+    // delete task by id
     await deleteDoc(doc(db, 'tasks', taskId));
     firebaseQuery();
   }
