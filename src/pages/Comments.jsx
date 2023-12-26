@@ -5,13 +5,10 @@ import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
 import CommentItem from "../components/CommentItem";
-// import { Navbar } from "../components/Navbar";
 import MyNavbar from "../components/UI/Navbar/MyNavbar";
 import MyModal from "../components/UI/modal/MyModal";
 import CommentsForm from "../components/CommentsForm";
 import CommentsUpdForm from "../components/CommentsUpdForm";
-// import CommentsForm from "../components/CommentsForm";
-// import MyModalForComments from "../components/UI/modal/MyModalForComments";
 
 function Comments() {
   const location = useLocation();

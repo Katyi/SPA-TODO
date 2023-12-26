@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import MyButton from "../components/UI/button/MyButton";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
 import { ItemTypes } from '../ItemTypes';
 import TaskFile from "./TaskFile";
 
 const TaskItem = (props) => {
+  let navigate = useNavigate();
   const [inDrag, setInDrag] = useState(false);
 
   const handleDrag = () => {
@@ -42,17 +43,29 @@ const TaskItem = (props) => {
       </div>
       <div className="blockInTask">
         {!props.task.isSubtask && 
-          <Link className="createUpdDelBtn" style={{width:"47%"}} to={`/Tasks/${props.task.id}`} state={{ projectId: props.task.projectId, taskName: props.task.taskName }}>
-            <MyButton style={{ width: '100%'}}>
-              SubTasks
-            </MyButton>
-          </Link>}
+          <MyButton 
+            style={{ width: '47%'}} 
+            className="createUpdDelBtn" 
+            onClick={() => {
+              navigate(`/Tasks/${props.task.id}`, 
+              {state: { projectId: props.task.projectId, taskName: props.task.taskName }})
+            }}
+          >
+            SubTasks
+          </MyButton>
+        }
         {!props.task.isSubtask && 
-          <Link className="createUpdDelBtn" style={{width:"47%"}} to={`/Comments/${props.task.id}`} state={{ projectId: props.task.projectId }}>
-            <MyButton style={{ width: "100%"}}>
+          <MyButton 
+            style={{ width: "47%"}}
+            className="createUpdDelBtn"
+            onClick={() => {
+              navigate(`/Comments/${props.task.id}`,
+              {state: { projectId: props.task.projectId }})
+            }}
+          >
             Comments
-            </MyButton>
-          </Link>}
+          </MyButton>
+        }
       </div>
       {!props.task.fileUrl 
         ? <TaskFile task={props.task} firebaseQuery={props.firebaseQuery} setCurrentTask={props.setCurrentTask}/>

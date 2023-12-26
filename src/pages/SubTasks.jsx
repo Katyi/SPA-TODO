@@ -3,7 +3,6 @@ import { useLocation, useParams } from "react-router";
 import { query, collection, where, getDocs, doc, deleteDoc, getDoc } from 'firebase/firestore';
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { db } from '../firebase';
-import { Link } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
 import MyInput from "../components/UI/input/MyInput";
 import SubTaskColumn from "../components/SubTaskColumn";
@@ -113,23 +112,21 @@ function SubTasks() {
         <MyNavbar title={'SubTasks'} linkPath={`/Projects/${projectId}`} linkLabel={'Back To Tasks'} taskName={task.taskName}/>
         <div className="container_main">
           <MyButton onClick={() => setModal4(true)}>
-            {/* <Link className="createUpdDelBtn" to="/CreateSubTask" state={{ taskId: id, projectId: projectId }} style={{marginLeft: 0, width: 120 }}> */}
-              Create SubTask
-            {/* </Link> */}
+            Create SubTask
           </MyButton>
           <div action="" className="searchTask">
-            <MyInput style={{ marginLeft: 0, width: 300, marginTop: 0}} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
+            <MyInput style={{ marginLeft: 0, width: 300}} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
             <div className="MyInput1">
-              <MyInput style={{ marginLeft: 0, width: 100, marginTop: 0}} type={"number"} placeholder={"Search by number"} onChange={handleChange1} />
+              <MyInput style={{ marginLeft: 0, width: 100}} type={"number"} placeholder={"Search by number"} onChange={handleChange1} />
             </div>
             <div className="MyInput2">
-              <MyButton style={{marginLeft: 0, width: 120, marginBottom: 5}} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
+              <MyButton style={{marginLeft: 0, width: 120}} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
                 Search
               </MyButton>
             </div>
-            <div className="MyInput2">
-              <MyButton onClick={() => {firebaseQuery()}} style={{marginLeft: 0, width: 120 }}>
-                <Link className="createUpdDelBtn" to={`/Tasks/${id}`} state={{taskId: id, projectId: projectId}}>Cancel</Link>
+            <div className="MyInput3">
+              <MyButton onClick={() => firebaseQuery()} style={{marginLeft: 0, width: 120 }}>
+                Cancel
               </MyButton>
             </div>
           </div>

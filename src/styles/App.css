@@ -30,7 +30,7 @@ body {
   -moz-osx-font-smoothing: grayscale; */
 }
 .wrapper {
-  min-height: 100%;
+  /* min-height: 100vh; */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -58,7 +58,6 @@ body {
   width: 100vw;
   display: flex;
   align-items: center;
-  background-color: red;
   /* margin-bottom: 3vh; */
 }
 .header_title {
@@ -271,7 +270,7 @@ form {
   box-sizing: content-box;
 }
 .project_container_1 {
-  margin-bottom: 1%;
+  margin-bottom: 15px;
 }
 table {
   border-collapse: collapse;
@@ -283,7 +282,7 @@ table {
   border-left: 1px solid #93999e;
   border-right: 1px solid #93999e;
   margin: 0;
-  padding: 1.5% 1%;
+  padding: 20px 1%;
   align-items: center;
   justify-content: space-between;
   font-weight: bold;

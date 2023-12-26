@@ -3,7 +3,6 @@ import { useParams } from "react-router";
 import { query, collection, where, getDocs, doc, deleteDoc, getDoc} from 'firebase/firestore';
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { db } from '../firebase';
-import { Link } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
 import MyInput from "../components/UI/input/MyInput";
 import TaskColumn from "../components/TaskColumn";
@@ -22,7 +21,6 @@ function Tasks() {
   const [modal2, setModal2] = useState(false);
   let { id } = useParams();
   
-
   // ------ Get Project Data --------------------------------------------
   const getProject = async(id) => {
     const docRef = doc(db, 'projects', id);
@@ -157,8 +155,8 @@ function Tasks() {
               </MyButton>
             </div>
             <div className="MyInput3">
-              <MyButton style={{marginLeft: 0, width: 120}} onClick={() => {firebaseQuery()}}>
-                <Link className="createUpdDelBtn" to={`/Projects/${id}`} state={{projectId: id}}>Cancel</Link>
+              <MyButton style={{marginLeft: 0, width: 120}} onClick={() => firebaseQuery()}>
+                Cancel
               </MyButton>
             </div>
           </div>

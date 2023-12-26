@@ -1,9 +1,10 @@
 import React from 'react';
 import classes from './MyNavbar.module.css';
 import MyButton from '../button/MyButton';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const MyNavbar = ({title, linkPath, linkLabel, projectName, taskName, ...props}) => {
+  let navigate = useNavigate();
   const location = useLocation()
   let pathName = location.pathname.split('/')[2];
 
@@ -13,10 +14,14 @@ const MyNavbar = ({title, linkPath, linkLabel, projectName, taskName, ...props})
         className={classes.title}>{title} {projectName ? `of project: ${projectName}` : ""} {taskName ? `of task: ${taskName}` : ""}
       </div>
       {pathName !== undefined &&
-      <MyButton>
-        <Link className={classes.link} to={linkPath} state={ {projectName: projectName} }
-        >{linkLabel} 
-      </Link>
+      <MyButton
+        className={classes.link}
+        onClick={() => {
+          navigate(`${linkPath}`, 
+          {state: {projectName: projectName}})
+        }}
+      >
+        {linkLabel} 
       </MyButton>
       }
     </div>

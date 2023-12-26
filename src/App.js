@@ -4,7 +4,6 @@ import AppRouter from "./components/AppRouter";
 import './styles/App.css';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Navbar } from './components/Navbar';
 
 function App() {
   return (

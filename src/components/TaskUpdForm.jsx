@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Link, useLocation } from "react-router-dom";
 import TaskFile from "./TaskFile";
 
 // -----Просмотр и редактирование задачи в модальном окне-------------------------------------------------------------------------------------
@@ -96,18 +95,6 @@ const TaskUpdForm = ({modal, setModal, currentTask, setCurrentTask, firebaseQuer
           type={"text"}
           placeholder={"Status"}
         />
-
-        {/* <div style={{width: '43%', background: "red", marginBottom: "20px"}}>
-          <MyInput
-            value={currentTask.fileName}
-            // disabled="disabled"
-            onChange={e => setCurrentTask({ ...currentTask, fileName: e.target.value })}
-            type={"file"}
-            placeholder={"No file uploaded"}
-          /> */}
-          {/* <a href={currentTask.fileUrl} target='_blank'>File Link</a> */}
-        {/* </div> */}
-        
         <div style={{width:"90%", display:"flex", alignItems:"center", gap: "10px"}}>
           <MyButton type="submit">Update</MyButton>
           <MyButton type="button" onClick={()=>setModal(false)}>Cancel</MyButton>

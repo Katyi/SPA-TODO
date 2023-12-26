@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { query, collection, onSnapshot, doc, deleteDoc,getDocs, where  } from 'firebase/firestore';
+import { query, collection, doc, deleteDoc,getDocs, where  } from 'firebase/firestore';
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { db } from '../firebase';
 import ProjectItem from "../components/ProjectItem";
 import MyButton from "../components/UI/button/MyButton";
-import { Link } from "react-router-dom";
 import MyNavbar from "../components/UI/Navbar/MyNavbar";
 import MyModal from "../components/UI/modal/MyModal";
 import ProjectForm from "../components/ProjectForm";
@@ -44,9 +43,11 @@ function Projects() {
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
   const [modal1, setModal1] = useState(false);
-  const [limit] = useState(5);
   const [page, setPage] = useState(1);
   const itemsPerPage = 5;
+  const [limit] = useState(5);
+
+  // let limit1 = calc(85vh - 30px - 15px - 74px - 5px - 20px - 32px)
 
   let indexOfLastProject = page * limit;
   let indexOfFirstProject = indexOfLastProject - limit;
@@ -96,8 +97,6 @@ function Projects() {
       }
     })
 
-
-
     const q = query(collection(db, 'tasks'), where('projectId', '==', projectId));
     let tasksArr = [];
     const querySnapshot = await getDocs(q);
@@ -115,7 +114,7 @@ function Projects() {
       tasksArr2.forEach(async(comment) => {
         await deleteDoc(doc(db, 'comments', comment.id));
       })
-// ------------------------------------  Удаление подзадач проекта------------------------------------------------
+    // ------------------------------------  Удаление подзадач проекта------------------------------------------------
       const q1 = query(collection(db, 'tasks'), where('taskId', '==', task.id));
       let tasksArr1 = [];
       const querySnapshot1 = await getDocs(q1);
@@ -125,10 +124,10 @@ function Projects() {
       tasksArr1.forEach(async (task) => {
         await deleteDoc(doc(db, 'tasks', task.id));
       })
-// ------------------------------------Удаление задач проекта ----------------------------------------------------
+    // ------------------------------------Удаление задач проекта ----------------------------------------------------
       await deleteDoc(doc(db, 'tasks', task.id));
     })
-// ------------------------------------Удаление проекта-----------------------------------------------------------
+    // ------------------------------------Удаление проекта-----------------------------------------------------------
     await deleteDoc(doc(db, 'projects', projectId));
     getAllProjects()
   };
@@ -150,11 +149,7 @@ function Projects() {
         : <div className='project_container'>
           {/* BUTTON FOR CREATE PROJECT */}
           <div className="project_container_1">
-            <MyButton 
-              onClick={() => setModal(true)}
-            >
-              Create Project
-            </MyButton>
+            <MyButton onClick={() => setModal(true)}>Create Project</MyButton>
           </div>
           {/* TABLE OF PROJECTS */}
           <table>
