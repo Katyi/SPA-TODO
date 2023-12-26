@@ -1,7 +1,9 @@
 .myInput {
-  /* width: 90%; */
   padding: 5px 15px;
-  /* margin: 20px 0; */
+  border: 2px solid #93999e;
+}
+.myInput:focus {
+  outline: none !important;
   border: 2px solid #566573;
 }
 @media (max-width: 768px) {

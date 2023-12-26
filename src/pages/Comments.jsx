@@ -58,17 +58,26 @@ function Comments() {
     <div className="App">
       <div className="wrapper">
         <MyNavbar title={'Comments'} linkPath={`/Projects/${projectId}`} linkLabel={'Back To Tasks'} taskName={task.taskName}/>
-        <div className="container_2">
-          <MyButton style={{marginLeft: '2%', marginTop: '2%'}} onClick={() => setModal6(true)}>
+        <div className="comment_container">
+          <MyButton style={{marginTop: '2%', marginBottom: '2%'}} onClick={() => setModal6(true)}>
             Add Comment
           </MyButton>
-          <div className='comments'>
+          <table>
+            <thead>
+              <tr className="comment_Header header_title">
+                <th className="commentNumber">№</th>
+                <th className="comment_comment">Comments</th>
+                <th className="comment_bts">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
             {comments.sort((a,b)=>a.commentNumber > b.commentNumber ? 1 : -1)
               .map((comment, index) => (
                 <CommentItem remove={removeComments} firebaseQuery={firebaseQuery} projectId={projectId} comment={comment} key={index} />
             ))}
-          </div>
-
+            </tbody>
+          </table>
+        
           {/* MODAL FOR CREATE COMMENT */}
           <MyModal visible={modal6} setVisible={setModal6}>
             <CommentsForm modal={modal6} setModal={setModal6} comments={comments} firebaseQuery={firebaseQuery}/>

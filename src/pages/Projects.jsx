@@ -168,7 +168,7 @@ function Projects() {
             </thead>
             <tbody>
               {currentProjects?.
-                sort((a, b) => a.projectNumber > b.projectNumber ? 1 : -1).
+                // sort((a, b) => a.projectNumber > b.projectNumber ? 1 : -1).
                 map((project, i)=>(
                 <ProjectItem key={project.id} remove={removeProject} project={project}
                 idx={indexOfFirstProject + i + 1} modal={modal1} setModal={setModal1}

@@ -51,22 +51,20 @@ const CommentsForm = ({modal, setModal, comments, firebaseQuery}) => {
 
   return (
     <form 
-      style={{display:"flex", flexDirection:"column", gap:"40px", paddingTop:"20px"}}
+      style={{display:"flex", flexDirection:"column", paddingTop:"20px"}}
       onSubmit={addNewComment}
     >
-      <MyInput
+      <label for="comment" className="commentLabel">Add comment for task:</label>
+      <textarea
+        className="commentTextArea"
         value={UpdItem.comment}
         onChange={e => setUpdItem({...UpdItem, comment: e.target.value})}
-        type={"text"}
+        id="comment" name="comment" rows="5" cols="33"
         placeholder={"Task Comment"}
       />
       <div style={{width:"90%", display:"flex", alignItems:"center", gap: "10px"}}>
-        <MyButton type="submit">
-          Add comment
-        </MyButton>
-        <MyButton type="button" onClick={()=>setModal(false)}>
-          Cancel
-        </MyButton>
+        <MyButton type="submit">Add comment</MyButton>
+        <MyButton type="button" onClick={()=>setModal(false)}>Cancel</MyButton>
       </div>
     </form>
   );
