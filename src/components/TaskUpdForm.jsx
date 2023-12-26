@@ -18,7 +18,7 @@ const TaskUpdForm = ({modal, setModal, currentTask, setCurrentTask, firebaseQuer
       createDate: currentTask.createDate,
       workTime: currentTask.workTime,
       endDate: currentTask.endDate,
-      priority: currentTask.priority,
+      // priority: currentTask.priority,
     });
     setModal(false);
     firebaseQuery();
