@@ -9,6 +9,7 @@ import CommentItem from "../components/CommentItem";
 import MyNavbar from "../components/UI/Navbar/MyNavbar";
 import MyModal from "../components/UI/modal/MyModal";
 import CommentsForm from "../components/CommentsForm";
+import CommentsUpdForm from "../components/CommentsUpdForm";
 // import CommentsForm from "../components/CommentsForm";
 // import MyModalForComments from "../components/UI/modal/MyModalForComments";
 
@@ -16,7 +17,9 @@ function Comments() {
   const location = useLocation();
   const { projectId } = location.state;
   const [modal6, setModal6] = useState(false);
+  const [modal7, setModal7] = useState(false);
   const [comments, setComments] = useState([]);
+  const [currentComment, setCurrentComment] = useState([]);
   const [task, setTask] = useState([]);
   // let [modal, setModal] = useState(false);
   let { id } = useParams();
@@ -44,6 +47,10 @@ function Comments() {
     await deleteDoc(doc(db, 'comments', comment.id));
     firebaseQuery();
   }
+
+  const getComment = (comment) => {
+    setCurrentComment(comment)
+  };
 
   useEffect(() => {
     firebaseQuery();
@@ -73,7 +80,10 @@ function Comments() {
             <tbody>
             {comments.sort((a,b)=>a.commentNumber > b.commentNumber ? 1 : -1)
               .map((comment, index) => (
-                <CommentItem remove={removeComments} firebaseQuery={firebaseQuery} projectId={projectId} comment={comment} key={index} />
+              <CommentItem 
+                remove={removeComments} firebaseQuery={firebaseQuery} projectId={projectId} comment={comment} key={index}
+                modal={modal7} setModal={setModal7} getComment={getComment}
+              />
             ))}
             </tbody>
           </table>
@@ -81,6 +91,11 @@ function Comments() {
           {/* MODAL FOR CREATE COMMENT */}
           <MyModal visible={modal6} setVisible={setModal6}>
             <CommentsForm modal={modal6} setModal={setModal6} comments={comments} firebaseQuery={firebaseQuery}/>
+          </MyModal>
+
+          {/* MODAL FOR UPDATE COMMENT */}
+          <MyModal visible={modal7} setVisible={setModal7}>
+            <CommentsUpdForm modal={modal7} setModal={setModal7} currentComment={currentComment} setCurrentComment={setCurrentComment} firebaseQuery={firebaseQuery}/>
           </MyModal>
         </div>
       </div>

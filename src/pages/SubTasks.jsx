@@ -59,7 +59,6 @@ function SubTasks() {
   const removeTask = async (task) => {
     const storage = getStorage();
     let tasksArr2 = [task];
-    console.log(tasksArr2)
     tasksArr2.forEach(async (task) => {
       if (task.hasOwnProperty('fileName')) {
         const imgRef1 = ref(storage, `files/${task.fileName}`);

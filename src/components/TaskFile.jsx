@@ -16,7 +16,6 @@ const TaskFile = (props) => {
   const handleUpload = (e) => {
     e.preventDefault();
     const file = e.target[0]?.files[0];
-    console.log(file)
     let arr = [].slice.call(e.target.parentElement.children);
     uploadFiles(file);
   }

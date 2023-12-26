@@ -10,9 +10,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 const CommentsForm = ({modal, setModal, comments, firebaseQuery}) => {
   const location = useLocation();
   const { projectId } = location.state;
-  console.log(projectId)
   let { id } = useParams();
-  console.log(id)
   // const [commentNums, setCommentNums] = useState ();
   // const taskRef = query(collection(db, 'comments'), where("taskId", "==", id));
 
