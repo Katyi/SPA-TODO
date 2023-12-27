@@ -17,7 +17,7 @@ const TaskUpdForm = ({modal, setModal, currentTask, setCurrentTask, firebaseQuer
       createDate: currentTask.createDate,
       workTime: currentTask.workTime,
       endDate: currentTask.endDate,
-      // priority: currentTask.priority,
+      priority: currentTask.priority,
     });
     setModal(false);
     firebaseQuery();
@@ -90,7 +90,7 @@ const TaskUpdForm = ({modal, setModal, currentTask, setCurrentTask, firebaseQuer
         />
         <MyInput
           style={{width: '43%', marginBottom: "20px"}}
-          value={currentTask.status}
+          value={currentTask.status || ""}
           onChange={e => setCurrentTask({ ...currentTask, status: e.target.value })}
           type={"text"}
           placeholder={"Status"}

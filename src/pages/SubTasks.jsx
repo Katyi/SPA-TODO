@@ -131,6 +131,13 @@ function SubTasks() {
             </div>
           </div>
         </div>
+
+        {/* TABLE HEADERS */}
+        <div className="container">
+          <div className="header_of_tasks">SubTasks In Queue</div>
+          <div className="header_of_tasks">SubTasks In Development</div>
+          <div className="header_of_tasks">SubTasks Completed</div>
+        </div>
         <div className="container">
           <div className="header_Queue_mobile">SubTasks In Queue</div>
           <SubTaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />

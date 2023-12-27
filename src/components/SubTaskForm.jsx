@@ -34,7 +34,7 @@ const SubTaskForm = ({modal, setModal, tasks, setTasks, firebaseQuery}) => {
       createDate: newTask.createDate,
       workTime: newTask.workTime,
       endDate: newTask.endDate,
-      // priority: newTask.priority,
+      priority: newTask.priority,
       status: "Queue",
       isSubtask: true,
       taskId: id,
@@ -91,12 +91,12 @@ const SubTaskForm = ({modal, setModal, tasks, setTasks, firebaseQuery}) => {
         type={"date"}
         placeholder={"End Date"}
       />
-      {/* <MyInput
+      <MyInput
         value={newTask.priority}
         onChange={e => setNewTask({ ...newTask, priority: e.target.value })}
         type={"text"}
         placeholder={"Priority"}
-      /> */}
+      />
       <div style={{width:"90%", display:"flex", alignItems:"center", gap: "10px"}}>
         <MyButton type="submit">Create</MyButton>
         <MyButton type="button" onClick={()=>setModal(false)}>Cancel</MyButton>

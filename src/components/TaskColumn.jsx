@@ -14,6 +14,7 @@ const TaskColumn = (props) => {
   const [currentTask, setCurrentTask] = useState([]);
 
   const updTask = async (task) => {
+    console.log(task.id)
     await updateDoc(doc(db, 'tasks', task.id), {
       taskNumber: task.taskNumber,
       taskName: task.taskName,
@@ -46,8 +47,8 @@ const TaskColumn = (props) => {
   return (
     <div className={props.class} ref={drop} style={divStyle}>
       {isOver && <div>Drop Here!</div>}
-        <div className='tasks'>
-        {props.tasks.sort((a,b)=>a.taskNumber > b.taskNumber ? 1 : -1)
+      <div className='tasks'>
+        {props.tasks.sort((a,b) => a.taskNumber > b.taskNumber ? 1 : -1)
           .map((task, index) => (
             <TaskItem 
               remove={props.removeTask} 

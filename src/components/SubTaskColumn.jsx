@@ -14,15 +14,16 @@ const SubTaskColumn = (props) => {
   const [currentTask, setCurrentTask] = useState([]);
 
   const updTask = async (task) => {
+    console.log(task.id)
     await updateDoc(doc(db, 'tasks', task.id), {
-      taskNumber: task.taskNumber,
-      taskName: task.taskName,
-      description: task.description,
-      createDate: task.createDate,
-      workTime: task.workTime,
-      endDate: task.endDate,
-      priority: task.priority,
-      status: props.name,
+      taskNumber: task?.taskNumber,
+      taskName: task?.taskName,
+      description: task?.description,
+      createDate: task?.createDate,
+      workTime: task?.workTime,
+      endDate: task?.endDate,
+      priority: task?.priority,
+      status: props?.name,
     });
     props.firebaseQuery();
   }

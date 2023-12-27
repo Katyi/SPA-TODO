@@ -21,7 +21,7 @@ const CommentsUpdForm = ({modal, setModal, currentComment, setCurrentComment, fi
       <label className="commentLabel">Number:</label>
       <MyInput
         style={{marginBottom: "20px"}}
-        value={currentComment.commentNumber}
+        value={currentComment.commentNumber || ""}
         onChange={e => setCurrentComment({...currentComment, commentNumber: e.target.value})}
         type={"number"}
         placeholder={"Номер комментария"}
@@ -29,18 +29,18 @@ const CommentsUpdForm = ({modal, setModal, currentComment, setCurrentComment, fi
       <label className="commentLabel">Update comment for task:</label>
       <textarea
         className="commentTextArea"
-        value={currentComment.comment}
+        value={currentComment.comment || ""}
         onChange={e => setCurrentComment({...currentComment, comment: e.target.value})}
         type={"text"}
         placeholder={"Комментарий"}
       />
       <div style={{width:"90%", display:"flex", alignItems:"center", gap: "10px"}}>
-      <MyButton type="submit">
-        Update
-      </MyButton>
-      <MyButton type="button" onClick={()=>setModal(false)}>
-        Cancel
-      </MyButton>
+        <MyButton type="submit">
+          Update
+        </MyButton>
+        <MyButton type="button" onClick={()=>setModal(false)}>
+          Cancel
+        </MyButton>
       </div>
     </form>
   );

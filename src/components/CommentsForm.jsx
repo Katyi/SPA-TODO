@@ -52,7 +52,7 @@ const CommentsForm = ({modal, setModal, comments, firebaseQuery}) => {
       style={{display:"flex", flexDirection:"column", paddingTop:"20px"}}
       onSubmit={addNewComment}
     >
-      <label for="comment" className="commentLabel">Add comment for task:</label>
+      <label htmlFor="comment" className="commentLabel">Add comment for task:</label>
       <textarea
         className="commentTextArea"
         value={UpdItem.comment}
