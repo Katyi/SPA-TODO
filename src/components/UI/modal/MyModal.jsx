@@ -1,7 +1,7 @@
 import React from "react";
 import cl from './MyModal.module.css';
 
-const MyModal = ({ children, visible, setVisible }) => {
+const MyModal = ({ children, visible, setVisible, setErrors }) => {
   const rootClasses = [cl.myModal]
 
   if (visible) {
@@ -9,7 +9,11 @@ const MyModal = ({ children, visible, setVisible }) => {
   }
   
   return (
-    <div className={rootClasses.join(' ')} onClick={() => setVisible(false)}>
+    <div className={rootClasses.join(' ')} onClick={() => {
+        setVisible(false);
+        setErrors({})
+      }}
+    >
       <div className={cl.myModalContent} 
         onClick={(e) => e.stopPropagation()}
       >

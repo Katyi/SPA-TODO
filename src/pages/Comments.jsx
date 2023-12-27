@@ -18,6 +18,7 @@ function Comments() {
   const [comments, setComments] = useState([]);
   const [currentComment, setCurrentComment] = useState([]);
   const [task, setTask] = useState([]);
+  const [errors, setErrors] = useState({});
   // let [modal, setModal] = useState(false);
   let { id } = useParams();
   // const handleClose = () => setModal(false);
@@ -86,12 +87,12 @@ function Comments() {
           </table>
         
           {/* MODAL FOR CREATE COMMENT */}
-          <MyModal visible={modal6} setVisible={setModal6}>
+          <MyModal visible={modal6} setVisible={setModal6} setErrors={setErrors}>
             <CommentsForm modal={modal6} setModal={setModal6} comments={comments} firebaseQuery={firebaseQuery}/>
           </MyModal>
 
           {/* MODAL FOR UPDATE COMMENT */}
-          <MyModal visible={modal7} setVisible={setModal7}>
+          <MyModal visible={modal7} setVisible={setModal7} setErrors={setErrors}>
             <CommentsUpdForm modal={modal7} setModal={setModal7} currentComment={currentComment} setCurrentComment={setCurrentComment} firebaseQuery={firebaseQuery}/>
           </MyModal>
         </div>

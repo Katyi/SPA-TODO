@@ -19,6 +19,7 @@ function Tasks() {
   const [project, setProject] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [modal2, setModal2] = useState(false);
+  const [errors, setErrors] = useState({});
   let { id } = useParams();
   
   // ------ Get Project Data --------------------------------------------
@@ -170,15 +171,15 @@ function Tasks() {
         {/* TABLE BODY */}
         <div className="container">
           <div className="header_Queue_mobile">Tasks In Queue</div>
-          <TaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
+          <TaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors}/>
           <div className="header_Development_mobile">Tasks In Development</div>
-          <TaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
+          <TaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors}/>
           <div className="header_Done_mobile">Tasks Completed</div>
-          <TaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
+          <TaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors}/>
         </div>
 
         {/* MODAL FOR CREATE TASK */}
-        <MyModal visible={modal2} setVisible={setModal2}>
+        <MyModal visible={modal2} setVisible={setModal2} setErrors={setErrors}>
           <TaskForm 
             modal={modal2} 
             setModal={setModal2} 

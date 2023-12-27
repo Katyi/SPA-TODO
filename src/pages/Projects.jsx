@@ -43,11 +43,12 @@ function Projects() {
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
   const [modal1, setModal1] = useState(false);
+  const [errors, setErrors] = useState({});
   const [page, setPage] = useState(1);
   const itemsPerPage = 5;
-  const [limit] = useState(5);
-
-  // let limit1 = calc(85vh - 30px - 15px - 74px - 5px - 20px - 32px)
+  const [limit] = useState(
+    Math.floor((window.innerHeight * 86 / 100 - 30 - 15 - 71 - 20 - 32 ) / 72)
+  );
 
   let indexOfLastProject = page * limit;
   let indexOfFirstProject = indexOfLastProject - limit;
@@ -64,7 +65,6 @@ function Projects() {
     //   setProjects(projectsArr)
     // })
     // return () => unsubscribe()
-    
     let projectsCollectionRef = collection(db, 'projects');
     let data = await getDocs(projectsCollectionRef)
     setLoading(true)
@@ -163,11 +163,11 @@ function Projects() {
             </thead>
             <tbody>
               {currentProjects?.
-                // sort((a, b) => a.projectNumber > b.projectNumber ? 1 : -1).
                 map((project, i)=>(
                 <ProjectItem key={project.id} remove={removeProject} project={project}
                 idx={indexOfFirstProject + i + 1} modal={modal1} setModal={setModal1}
                 getProject={getProject} getAllProjects={getAllProjects}
+                errors={errors} setErrors={setErrors}
                 />
               ))}
             </tbody>
@@ -180,13 +180,17 @@ function Projects() {
             onChange={handleChangePage}
           />
           {/* MODAL FOR CREATE PROJECT */}
-          <MyModal visible={modal} setVisible={setModal}>
-            <ProjectForm modal={modal} setModal={setModal} projects={projects} setProjects={setProjects} getAllProjects={getAllProjects}/>
+          <MyModal visible={modal} setVisible={setModal} setErrors={setErrors}>
+            <ProjectForm modal={modal} setModal={setModal} projects={projects} setProjects={setProjects} getAllProjects={getAllProjects}
+              errors={errors} setErrors={setErrors}
+            />
           </MyModal>
 
           {/* MODAL FOR UPDATE PROJECT */}
-          <MyModal visible={modal1} setVisible={setModal1}>
-            <ProjectUpdForm modal={modal1} setModal={setModal1} currentProject={currentProject} setCurrentProject={setCurrentProject} getAllProjects={getAllProjects}/>
+          <MyModal visible={modal1} setVisible={setModal1} setErrors={setErrors}>
+            <ProjectUpdForm modal={modal1} setModal={setModal1} currentProject={currentProject} setCurrentProject={setCurrentProject} 
+              getAllProjects={getAllProjects} errors={errors} setErrors={setErrors}
+            />
           </MyModal>
         </div>
         {/* } */}

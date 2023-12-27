@@ -65,7 +65,7 @@ const SubTaskColumn = (props) => {
       </div>
 
       {/* MODAL FOR UPDATE SUBTASK */}
-      <MyModal visible={modal5} setVisible={setModal5}>
+      <MyModal visible={modal5} setVisible={setModal5} setErrors={props.setErrors}>
         <TaskUpdForm
           modal={modal5} 
           setModal={setModal5} 

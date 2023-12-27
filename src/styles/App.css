@@ -35,71 +35,6 @@ body {
   display: flex;
   flex-direction: column;
 }
-.aboutPage {
-  font-size: 30px;
-  margin-top: 270px;
-  font-variant: small-caps;
-}
-/* ---------------------- HEADER OF PROJECTS ------------------------------------------------------------------------------- */
-.header_1 {
-  position: fixed;
-  background-color: #f5f3f1;
-  height: 15vh;
-  width: 100%;
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
-  box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.1);
-  z-index: 20;
-  /* transform: translateZ(0);
-  -webkit-transform: translateZ(0); */
-  /* display: flex; */
-}
-.header_container {
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  /* margin-bottom: 3vh; */
-}
-.header_title {
-  font-size: 20px;
-  font-weight: 700;
-  font-variant: small-caps;
-}
-.header__link {
-  font-size: 35px;
-  font-weight: 700;
-  font-variant: small-caps;
-  margin-top: 3vh;
-  margin-left: auto;
-  margin-right: 3vh;
-}
-.header_of_projects {
-  width: 70%;
-  font-size: 2vw;
-  display: flex;
-  margin-left: 0%;
-  padding: 0px 0px 0px 0px;
-  font-weight: 700;
-  font-variant: small-caps;
-}
-.header_project_id {
-  width: 7%;
-  margin-left: 3%;
-  margin-top: 2%;
-  margin-bottom: 2%;
-}
-.header_project_name {
-  width: 13%;
-  margin-left: 1%;
-  margin-top: 2%;
-  margin-bottom: 2%;
-}
-.header_project_description {
-  width: 40%;
-  margin-left: 1%;
-  margin-top: 2%;
-  margin-bottom: 2%;
-}
 form {
   padding: 10px 15px 30px;
   border: 2px solid #566573;
@@ -109,164 +44,17 @@ form {
   text-decoration: none;
   color: #566573;
 }
-/* monitors and laptops */
-@media (min-width: 1240px)  {}
-
-/* tablet */
-@media (min-width: 1024px) and (max-width: 1240px)  {
-  .header_of_projects {
-    font-size: 2.2vw;
-  }
-}
-@media (min-width: 768px) and (max-width: 1024px) {
-  .header_of_projects {
-    display: none;
-  }
-}
-/* ---------------------- HEADER OF PROJECTS FOR MOBILE------------------------------------------------------------------------------- */
-@media (max-width: 768px) {
-  .header_container {
-    display: block;
-    margin-left: 0;
-  }
-  .header__link {
-    margin-left: 2%;
-    margin-top: 0%;
-  }
-  .header_of_projects {
-    display: none;
-  }
-  .header_project_id {
-    width: 10%;
-    margin-left: 5%;
-  }
-  .header_project_name {
-    width: 30%;
-  }
-  .header_project_description {
-    width: auto;
-  }
-}
-/* ---------------------- HEADER OF TASKS------------------------------------------------------------------------------- */
-.header_2 {
-  position: fixed;
-  background-color: #f5f3f1;
-  height: 20vh;
-  width: 100%;
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
-  box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.1);
-  z-index: 20;
-  /* transform: translateZ(0);
-  -webkit-transform: translateZ(0); */
+.error {
+  height: 12px;
+  font-size: 12px;
+  color: red;
+  margin-bottom: 20px;
 }
 
-.header_Queue {
-  width: 33.33%;
-  margin-left: 1%;
-  margin-top: 1%;
-  margin-bottom: 2%;
-}
-.header_Queue_mobile {
-  display: none;
-}
-.header_Development {
-  width: 33.33%;
-  margin-left: 1%;
-  margin-top: 1%;
-  margin-bottom: 2%;
-}
-.header_Development_mobile {
-  display: none;
-}
-.header_Done {
-  width: 33.33%;
-  margin-left: 1%;
-  margin-top: 1%;
-  margin-bottom: 2%
-}
-.header_Done_mobile {
-  display: none;
-}
-/* tablet */
-@media (min-width: 768px) and (max-width: 1024px) {
-  .header_of_tasks {
-    font-size: 18px;
-  }
-}
-/*                    HEADER OF TASKS FOR MOBILE------------------------------------------------------------------------------- */
-@media (max-width: 768px) {
-  .header_2 {
-    height: auto;
-  }
-  .header_of_tasks {
-    display: none;
-  }
-  .header_Queue {
-    display: none;
-  }
-  .header_Queue_mobile {
-    display: flex;
-    font-size: 18px;
-    font-weight: 700;
-    font-variant: small-caps;
-    width: 100%;
-    margin-left: 5%;
-    margin-top: 2%;
-   }
-  .header_Development {
-    display: none;
-  }
-  .header_Development_mobile {
-    display: flex;
-    font-size: 24px;
-    font-weight: 700;
-    font-variant: small-caps;
-    width: 100%;
-    margin-left: 5%;
-    margin-top: 2%;
-  }
-  .header_Done {
-    display: none;
-    width: 100%;
-    margin-left: 5%;
-  }
-  .header_Done_mobile {
-    display: flex;
-    font-size: 24px;
-    font-weight: 700;
-    font-variant: small-caps;
-    width: 100%;
-    margin-left: 5%;
-    margin-top: 2%;
-  }
-}
-/* ------------------------------ HEADER OF COMMENTS ------------------------------------------------------------------------------- */
-.header_3 {
-  position: fixed;
-  background-color: #f5f3f1;
-  height: auto;
-  width: 100%;
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
-  box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.1);
-  z-index: 20;
-}
-.header_container {
-  
-}
-.header_of_comments {
-  font-size: 24px;
-  display: flex;
-  margin-left: 1%;
-  padding: 0px 0px 0px 0px;
-  font-weight: 700;
-  font-variant: small-caps;
-}
-/*                    MAIN-PROJECTS------------------------------------------------------------------------------- */
+/* ------------------------------ PROJECTS ------------------------------------------------------------------------------------------ */
 .project_container {
   width: 98vw;
-  margin: 15vh 1vw 5vh 1vw;
+  margin: 15vh 1vw 1vh 1vw;
   box-sizing: content-box;
 }
 .project_container_1 {
@@ -276,13 +64,13 @@ table {
   border-collapse: collapse;
 }
 .project, .project_Header {
-  width: 96vw;
+  width: 94vw;
   display: flex;
   border-bottom: 1px solid #93999e;
   border-left: 1px solid #93999e;
   border-right: 1px solid #93999e;
   margin: 0;
-  padding: 20px 1%;
+  padding: 20px 2vw;
   align-items: center;
   justify-content: space-between;
   font-weight: bold;
@@ -292,6 +80,11 @@ table {
   border: 2px solid #93999e;
   margin-bottom: 5px;
   /* position: fixed; */
+}
+.header_title {
+  font-size: 20px;
+  font-weight: 700;
+  font-variant: small-caps;
 }
 .project:nth-child(1) {
   border-top: 1px solid #93999e;
@@ -305,44 +98,49 @@ table {
   text-align: left;
 }
 .project_description {
-  width: 30%;
+  width: 35%;
   text-align: left;
 }
 .project_bts {
-  width: 30%;
+  width: 25%;
   text-align: left;
   display: flex;
   gap: 5px;
 }
+.projectLabel {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
 
-/*                    MAIN-PROJECTS FOR MOBILE------------------------------------------------------------------------------ */
+/* ------------------------------ PROJECTS FOR MOBILE ------------------------------------------------------------------------------- */
 @media (max-width: 768px) {
   .project_container {
-    width: 100%;
+    width: 98%;
     margin: 0px 0px 0px 0px;
+    margin: 15vh 1vw 1vh 1vw;
     box-sizing: content-box;
-    padding-top: 17vh;
     display: flex;
     flex-direction: column;
   }
   .project_container_1 {
     display: flex;
   }
+  .project_Header {
+    display: none;
+  }
   .project {
-    width: 96%;
+    width: 93vw;
     flex-direction: column;
   }
   .project_id {
     width: 100%;
     margin-left: 5%;
-    margin-top: 2%;
-    margin-bottom: 2%;
   }
   .project_name {
     width: 100%;
     margin-left: 5%;
     margin-top: 2%;
-    margin-bottom: 2%;
   }
   .project_description {
     width: 100%;
@@ -350,8 +148,13 @@ table {
     margin-top: 2%;
     margin-bottom: 2%;
   }
+  .project_bts {
+    width: 100%;
+    margin-left: 5%;
+  }
 }
-/*                    MAIN-TASKS------------------------------------------------------------------------------- */
+
+/* ------------------------------ TASKS --------------------------------------------------------------------------------------------- */
 .container_main {
   padding-top: 12vh;
   margin-left: 1%;
@@ -363,7 +166,7 @@ table {
   gap: 2%;
 }
 .container_1, .header_of_tasks {
-  width: calc(32% - 10px);
+  width: 32%;
   margin-bottom: 40px;
   background: rgb(241, 238, 237);
   box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.1);
@@ -379,6 +182,15 @@ table {
   font-weight: 700;
   font-variant: small-caps;
   box-shadow: none;
+}
+.header_Queue_mobile {
+  display: none;
+}
+.header_Development_mobile {
+  display: none;
+}
+.header_Done_mobile {
+  display: none;
 }
 .searchTask {
   display: flex;
@@ -442,11 +254,50 @@ table {
 .fileUrl {
   width: 100px;
 }
-/*                    MAIN-TASKS-FOR MOBILE------------------------------------------------------------------------------ */
+
+/* ------------------------------ TASKS FOR MOBILE ---------------------------------------------------------------------------------- */
 @media (min-width: 769px) and (max-width: 1240px)  {
   .task {
     width: calc(100% - 5px);
     padding: 5px;
+  }
+}
+/* tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .header_of_tasks {
+    font-size: 18px;
+  }
+}
+@media (max-width: 768px) {
+  .header_of_tasks {
+    display: none;
+  }
+  .header_Queue_mobile {
+    display: flex;
+    font-size: 18px;
+    font-weight: 700;
+    font-variant: small-caps;
+    width: 100%;
+    margin-left: 5%;
+    margin-top: 2%;
+   }
+  .header_Development_mobile {
+    display: flex;
+    font-size: 24px;
+    font-weight: 700;
+    font-variant: small-caps;
+    width: 100%;
+    margin-left: 5%;
+    margin-top: 2%;
+  }
+  .header_Done_mobile {
+    display: flex;
+    font-size: 24px;
+    font-weight: 700;
+    font-variant: small-caps;
+    width: 100%;
+    margin-left: 5%;
+    margin-top: 2%;
   }
 }
 @media (max-width: 768px) {
@@ -477,10 +328,11 @@ table {
     margin-left: 0%;
   }
 }
-/*                    MAIN-COMMENTS------------------------------------------------------------------------------- */
+
+/* ------------------------------ COMMENTS ------------------------------------------------------------------------------------------ */
 .comment_container {
   width: 98vw;
-  margin: 15vh 1vw 5vh 1vw;
+  margin: 15vh 1vw 1vh 1vw;
   box-sizing: content-box;
 }
 .comment, .comment_Header {
@@ -532,7 +384,8 @@ table {
   outline: none !important;
   border: 2px solid #566573;
 }
-/*                    MAIN-COMMENTS-FOR MOBILE------------------------------------------------------------------------------ */
+
+/* ------------------------------ COMMENTS FOR MOBILE ------------------------------------------------------------------------------- */
 @media (max-width: 768px) {
   .comment {
     width: 96%;

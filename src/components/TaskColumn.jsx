@@ -63,7 +63,7 @@ const TaskColumn = (props) => {
       </div>
 
       {/* MODAL FOR UPDATE TASK */}
-      <MyModal visible={modal3} setVisible={setModal3}>
+      <MyModal visible={modal3} setVisible={setModal3} setErrors={props.setErrors}>
         <TaskUpdForm 
           modal={modal3} 
           setModal={setModal3} 

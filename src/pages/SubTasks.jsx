@@ -20,6 +20,7 @@ function SubTasks() {
   const [taskForSearch, setTaskForSearch] = useState('');
   const [taskForSearch1, setTaskForSearch1] = useState('');
   const [modal4, setModal4] = useState(false);
+  const [errors, setErrors] = useState({});
   const [subTasks, setSubTasks] = useState([]);
   let { id } = useParams();
 
@@ -140,15 +141,15 @@ function SubTasks() {
         </div>
         <div className="container">
           <div className="header_Queue_mobile">SubTasks In Queue</div>
-          <SubTaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
+          <SubTaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors}/>
           <div className="header_Development_mobile">SubTasks In Development</div>
-          <SubTaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
+          <SubTaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors}/>
           <div className="header_Done_mobile">SubTasks Completed</div>
-          <SubTaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' />
+          <SubTaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors}/>
         </div>
 
         {/* MODAL FOR CREATE SUBTASK */}
-        <MyModal visible={modal4} setVisible={setModal4}>
+        <MyModal visible={modal4} setVisible={setModal4} setErrors={setErrors}>
           <SubTaskForm 
             modal={modal4} 
             setModal={setModal4} 
