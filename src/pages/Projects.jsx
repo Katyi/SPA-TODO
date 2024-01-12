@@ -40,12 +40,12 @@ const styles = {
 function Projects() {
   const [projects, setProjects] = useState([]);
   const [currentProject, setCurrentProject] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
   const [modal1, setModal1] = useState(false);
   const [errors, setErrors] = useState({});
   const [page, setPage] = useState(1);
-  const itemsPerPage = 5;
+  // const itemsPerPage = 5;
   const [limit] = useState(
     Math.floor((window.innerHeight * 86 / 100 - 30 - 15 - 71 - 20 - 32 ) / 72)
   );
@@ -67,7 +67,7 @@ function Projects() {
     // return () => unsubscribe()
     let projectsCollectionRef = collection(db, 'projects');
     let data = await getDocs(projectsCollectionRef)
-    setLoading(true)
+    // setLoading(true)
     setProjects(data.docs.map((doc)=>({...doc.data(), id: doc.id}))) 
   };
 
@@ -162,8 +162,7 @@ function Projects() {
               </tr>
             </thead>
             <tbody>
-              {currentProjects?.
-                map((project, i)=>(
+              {currentProjects?.map((project, i)=>(
                 <ProjectItem key={project.id} remove={removeProject} project={project}
                 idx={indexOfFirstProject + i + 1} modal={modal1} setModal={setModal1}
                 getProject={getProject} getAllProjects={getAllProjects}

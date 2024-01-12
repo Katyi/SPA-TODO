@@ -1,55 +1,59 @@
 import React, { useState } from "react";
 import MyButton from "./UI/button/MyButton";
-import MyInput from "./UI/input/MyInput";
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 
   // -----Добавление нового комментария для задачи в модальном окне-------------------------------------------------------------------------------------
-const CommentsForm = ({modal, setModal, comments, firebaseQuery}) => {
-  const location = useLocation();
-  const { projectId } = location.state;
+const CommentsForm = ({modal, setModal, comments, firebaseQuery, errors, setErrors}) => {
   let { id } = useParams();
-  // const [commentNums, setCommentNums] = useState ();
-  // const taskRef = query(collection(db, 'comments'), where("taskId", "==", id));
-
-  // const getComments = async () => {
-  //   const data = await getDocs(taskRef);
-  //   setCommentNums(data.docs.map((doc)=> (doc.data().commentNumber)));
-  // };
-
-  // getComments();
-
   
-
   const [UpdItem, setUpdItem] = useState({
     taskId: '',
     commentNumber: '',
     comment: ''
   });
 
+  const handleValidation = () => {
+    const formErrors = {};
+    let formIsValid = true;
+
+    // comment
+    if(!UpdItem.comment){
+      formIsValid = false;
+      formErrors.comment = "Cannot be empty";
+    } else if(UpdItem.comment.length > 500){
+      formIsValid = false;
+      formErrors.comment = "Cannot be more 500 characters";
+    }
+    setErrors(formErrors)
+    return formIsValid;
+  };
+
   const addNewComment = async (e) => {
     e.preventDefault();
-    let lastNumber =  comments?.length > 0 ? comments.sort((a, b) => a?.commentNumber > b?.commentNumber ? 1 : -1).slice(-1)[0]?.commentNumber : 0;
+    if (handleValidation()) {
+      let lastNumber =  comments?.length > 0 ? comments.sort((a, b) => a?.commentNumber > b?.commentNumber ? 1 : -1).slice(-1)[0]?.commentNumber : 0;
 
-    await addDoc(collection(db, 'comments'), {
-      taskId: id,
-      commentNumber: lastNumber + 1,
-      comment: UpdItem.comment,
-    })
-    setUpdItem({
-      taskId: '',
-      commentNumber: '',
-      comment: ''
-    });
-    firebaseQuery();
-    setModal(false);
+      await addDoc(collection(db, 'comments'), {
+        taskId: id,
+        commentNumber: lastNumber + 1,
+        comment: UpdItem.comment,
+      })
+      setUpdItem({
+        taskId: '',
+        commentNumber: '',
+        comment: ''
+      });
+      firebaseQuery();
+      setModal(false);
+    }
   }
 
   return (
     <form 
-      style={{display:"flex", flexDirection:"column", paddingTop:"20px"}}
+      style={{display:"flex", flexDirection:"column", paddingTop:"20px", width: '500px'}}
       onSubmit={addNewComment}
     >
       <label htmlFor="comment" className="commentLabel">Add comment for task:</label>
@@ -60,9 +64,17 @@ const CommentsForm = ({modal, setModal, comments, firebaseQuery}) => {
         id="comment" name="comment" rows="5" cols="33"
         placeholder={"Task Comment"}
       />
-      <div style={{width:"90%", display:"flex", alignItems:"center", gap: "10px"}}>
+      <span className="error">{errors.comment}</span>
+
+      <div style={{width:"90%", display:"flex", alignItems:"center", gap: "10px", marginTop: "20px"}}>
         <MyButton type="submit">Add comment</MyButton>
-        <MyButton type="button" onClick={()=>setModal(false)}>Cancel</MyButton>
+        <MyButton type="button" onClick={() => {
+          setModal(false);
+          setErrors({});
+          setUpdItem({taskId: '', commentNumber: '', comment: ''});
+        }}>
+          Cancel
+        </MyButton>
       </div>
     </form>
   );

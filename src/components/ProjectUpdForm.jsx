@@ -2,7 +2,6 @@ import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { useState } from "react";
 
 // -----Редактирование проекта-------------------------------------------------------------------------------------
 const ProjectUpdForm = ({modal, setModal, currentProject, setCurrentProject, getAllProjects, errors, setErrors}) => {
@@ -71,7 +70,12 @@ const ProjectUpdForm = ({modal, setModal, currentProject, setCurrentProject, get
 
       <div style={{width:"90%", display:"flex", alignItems:"center", gap: "10px"}}>
         <MyButton type="submit" >Update</MyButton>
-        <MyButton type="button" onClick={()=>setModal(false)}>Cancel</MyButton>
+        <MyButton type="button" onClick={() => {
+          setModal(false);
+          setErrors({});
+        }}>
+          Cancel
+        </MyButton>
       </div>
     </form>
   );

@@ -21,7 +21,7 @@ function SubTasks() {
   const [taskForSearch1, setTaskForSearch1] = useState('');
   const [modal4, setModal4] = useState(false);
   const [errors, setErrors] = useState({});
-  const [subTasks, setSubTasks] = useState([]);
+  // const [subTasks, setSubTasks] = useState([]);
   let { id } = useParams();
 
   // ------ Get Task Data --------------------------------------------
@@ -101,11 +101,11 @@ function SubTasks() {
 
   useEffect(() => {
     firebaseQuery();
-  }, []);
+  });
 
   useEffect(() => {
     getTask(id);
-  }, []);
+  },[id]);
 
   return (
     <div className="App">
@@ -154,8 +154,9 @@ function SubTasks() {
             modal={modal4} 
             setModal={setModal4} 
             tasks={queueTasks.concat(developmentTasks).concat(doneTasks)} 
-            setTasks={setSubTasks}
+            // setTasks={setSubTasks}
             firebaseQuery={firebaseQuery}
+            errors={errors} setErrors={setErrors}
           />
         </MyModal>
       </div>

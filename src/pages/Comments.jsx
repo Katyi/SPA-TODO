@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router";
 import { query, collection, where, getDocs, doc, deleteDoc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import MyButton from "../components/UI/button/MyButton";
 import CommentItem from "../components/CommentItem";
 import MyNavbar from "../components/UI/Navbar/MyNavbar";
 import MyModal from "../components/UI/modal/MyModal";
 import CommentsForm from "../components/CommentsForm";
 import CommentsUpdForm from "../components/CommentsUpdForm";
+// import { Pagination } from '@mui/material';
 
 function Comments() {
   const location = useLocation();
@@ -52,13 +53,13 @@ function Comments() {
 
   useEffect(() => {
     firebaseQuery();
-  }, []);
+  });
 
   useEffect(() => {
     getTask(id);
-  }, []);
+  }, [id]);
 
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
   return (
     <div className="App">
       <div className="wrapper">
@@ -85,15 +86,19 @@ function Comments() {
             ))}
             </tbody>
           </table>
-        
+
           {/* MODAL FOR CREATE COMMENT */}
           <MyModal visible={modal6} setVisible={setModal6} setErrors={setErrors}>
-            <CommentsForm modal={modal6} setModal={setModal6} comments={comments} firebaseQuery={firebaseQuery}/>
+            <CommentsForm modal={modal6} setModal={setModal6} comments={comments} firebaseQuery={firebaseQuery}
+              errors={errors} setErrors={setErrors}
+            />
           </MyModal>
 
           {/* MODAL FOR UPDATE COMMENT */}
           <MyModal visible={modal7} setVisible={setModal7} setErrors={setErrors}>
-            <CommentsUpdForm modal={modal7} setModal={setModal7} currentComment={currentComment} setCurrentComment={setCurrentComment} firebaseQuery={firebaseQuery}/>
+            <CommentsUpdForm modal={modal7} setModal={setModal7} currentComment={currentComment} setCurrentComment={setCurrentComment} 
+              firebaseQuery={firebaseQuery} errors={errors} setErrors={setErrors}
+            />
           </MyModal>
         </div>
       </div>

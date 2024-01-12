@@ -47,8 +47,6 @@ const ProjectForm = ({modal, setModal, projects, setProjects, getAllProjects, er
       setNewProject({ projectNumber: '', projectName: '', description: '' });
       getAllProjects();
       setModal(false);
-    } else {
-      console.log('Form has errors');
     }
   }
 
@@ -59,7 +57,6 @@ const ProjectForm = ({modal, setModal, projects, setProjects, getAllProjects, er
     >
       <label className="projectLabel">Title:</label>
       <MyInput
-        style={{marginBottom: "5px"}}
         value={newProject.projectName}
         onChange={e => setNewProject({...newProject, projectName: e.target.value })}
         type={"text"}
@@ -69,7 +66,6 @@ const ProjectForm = ({modal, setModal, projects, setProjects, getAllProjects, er
 
       <label className="projectLabel">Description:</label>
       <MyInput
-        style={{marginBottom: "5px"}}
         value={newProject.description}
         onChange={e => setNewProject({ ...newProject, description: e.target.value })}
         type={"text"}

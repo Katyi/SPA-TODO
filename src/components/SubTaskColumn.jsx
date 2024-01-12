@@ -12,6 +12,7 @@ const allowedDropEffect = 'move;'
 const SubTaskColumn = (props) => {
   const [modal5, setModal5] = useState(false);
   const [currentTask, setCurrentTask] = useState([]);
+  const [errors, setErrors] = useState({});
 
   const updTask = async (task) => {
     console.log(task.id)
@@ -72,6 +73,7 @@ const SubTaskColumn = (props) => {
           currentTask={currentTask} 
           setCurrentTask={setCurrentTask} 
           firebaseQuery={props.firebaseQuery}
+          errors={errors} setErrors={setErrors}
         />
       </MyModal>
     </div>

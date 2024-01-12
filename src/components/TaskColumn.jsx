@@ -12,6 +12,7 @@ const allowedDropEffect = 'move;'
 const TaskColumn = (props) => {
   const [modal3, setModal3] = useState(false);
   const [currentTask, setCurrentTask] = useState([]);
+  const [errors, setErrors] = useState({});
 
   const updTask = async (task) => {
     console.log(task.id)
@@ -47,7 +48,8 @@ const TaskColumn = (props) => {
   return (
     <div className={props.class} ref={drop} style={divStyle}>
       {isOver && <div>Drop Here!</div>}
-      <div className='tasks'>
+      {/* <div className='tasks'> */}
+      <div>
         {props.tasks.sort((a,b) => a.taskNumber > b.taskNumber ? 1 : -1)
           .map((task, index) => (
             <TaskItem 
@@ -70,6 +72,7 @@ const TaskColumn = (props) => {
           currentTask={currentTask} 
           setCurrentTask={setCurrentTask} 
           firebaseQuery={props.firebaseQuery}
+          errors={errors} setErrors={setErrors}
         />
       </MyModal>
     </div>

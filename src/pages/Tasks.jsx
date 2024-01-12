@@ -17,7 +17,7 @@ function Tasks() {
   const [taskForSearch, setTaskForSearch] = useState('');
   const [taskForSearch1, setTaskForSearch1] = useState('');
   const [project, setProject] = useState([]);
-  const [tasks, setTasks] = useState([]);
+  // const [tasks, setTasks] = useState([]);
   const [modal2, setModal2] = useState(false);
   const [errors, setErrors] = useState({});
   let { id } = useParams();
@@ -129,11 +129,11 @@ function Tasks() {
 
   useEffect(() => {
     firebaseQuery();
-  }, []);
+  });
 
   useEffect(() => {
     getProject(id);
-  },[])
+  },[id])
 
   return (
     <div className="App">
@@ -184,8 +184,9 @@ function Tasks() {
             modal={modal2} 
             setModal={setModal2} 
             tasks={queueTasks.concat(developmentTasks).concat(doneTasks)} 
-            setTasks={setTasks}
+            // setTasks={setTasks}
             firebaseQuery={firebaseQuery}
+            errors={errors} setErrors={setErrors}
           />
         </MyModal>
       </div>

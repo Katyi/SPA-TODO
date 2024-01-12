@@ -6,8 +6,19 @@
   outline: none !important;
   border: 2px solid #566573;
 }
+.myInput:hover {
+  outline: none !important;
+  border: 2px solid #566573;
+}
 @media (max-width: 768px) {
   .myInput {
     width: 90%;
   }
+}
+/* Change shape of icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-image: url('../../../assets/calendar.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
 }
