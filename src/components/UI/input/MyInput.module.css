@@ -12,7 +12,7 @@
 }
 @media (max-width: 768px) {
   .myInput {
-    width: 90%;
+    /* width: 100%; */
   }
 }
 /* Change shape of icon */

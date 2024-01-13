@@ -53,9 +53,7 @@ const CommentsForm = ({modal, setModal, comments, firebaseQuery, errors, setErro
 
   return (
     <form 
-      style={{display:"flex", flexDirection:"column", paddingTop:"20px", width: '500px'}}
-      onSubmit={addNewComment}
-    >
+      className="commnentForm" onSubmit={addNewComment}>
       <label htmlFor="comment" className="commentLabel">Add comment for task:</label>
       <textarea
         className="commentTextArea"

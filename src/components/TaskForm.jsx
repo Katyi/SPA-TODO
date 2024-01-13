@@ -115,9 +115,7 @@ const TaskForm = ({ modal, setModal, tasks, firebaseQuery, errors, setErrors }) 
   return (
     <form
       onSubmit={addNewTask}
-      style={{display:"flex", alignItems:"center", width: '700px', flexWrap: "wrap", justifyContent:"space-between", 
-        border: '2px solid #566573', padding: '20px'}}
-    >
+      className="taskForm">
       <div className="inputWrap">
         <label className="projectLabel">Title:</label>
         <MyInput

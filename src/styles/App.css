@@ -255,6 +255,61 @@ table {
 .fileUrl {
   width: 100px;
 }
+.taskForm {
+  display: flex;
+  align-items: center;
+  width: 700px;
+  padding: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border: 2px solid #566573;
+}
+.inputForFileWrap {
+  width: 47%;
+}
+.taskUpdForm {
+  display: flex;
+  margin-top: 20px; 
+  padding: 0px; 
+  width: 700px;
+  flex-wrap: wrap;
+  justify-content: space-between; 
+  border: none;
+}
+.inputWrap {
+  display: flex;
+  flex-direction: column;
+  width: 47%;
+}
+.dateInputWrap {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #93999e;
+  background: rgb(255, 255, 255);
+}
+.dateInputWrap:hover {
+  outline: none !important;
+  border: 2px solid #566573;
+}
+.InputMask {
+  width: 223px;
+  padding: 6px 15px;
+  border: none;
+  z-index: 20;
+}
+
+.InputMask:focus {
+  outline: none;
+}
+.calendar {
+  width: 311px;
+  position: absolute;
+  padding: 5px 10px 5px 0px;
+  border: none;
+}
+.calendar:focus {
+  outline: none;
+}
 .prioritySelect {
   padding: 5px 15px;
   border: 2px solid #93999e;
@@ -278,43 +333,6 @@ table {
   /* padding: 1rem; */
   /* padding-right: 2rem; */
 }
-
-.inputWrap {
-  display: flex;
-  flex-direction: column;
-  width: 47%;
-  /* margin-Bottom: 20px; */
-}
-.dateInputWrap {
-  display: flex;
-  flex-direction: column;
-  border: 2px solid #93999e;
-  background: rgb(255, 255, 255);
-}
-.dateInputWrap:hover {
-  outline: none !important;
-  border: 2px solid #566573;
-}
-.InputMask {
-  width: calc(78%);
-  padding: 6px 15px;
-  border: none;
-  z-index: 20;
-}
-
-.InputMask:focus {
-  outline: none;
-}
-.calendar {
-  width: 22%;
-  position: absolute;
-  padding: 5px 10px 5px 0px;
-  border: none;
-}
-.calendar:focus {
-  outline: none;
-}
-
 /* ------------------------------ TASKS FOR MOBILE ---------------------------------------------------------------------------------- */
 /* tablet */
 @media (min-width: 768px) and (max-width: 1024px) {
@@ -323,6 +341,25 @@ table {
   }
 }
 @media (max-width: 768px) {
+  .container_main {
+    padding-top: 17vh;
+  }
+  .searchTask {
+    flex-direction: column;
+  }
+  .MyInput1 {
+    margin-left: 0%;
+  }
+  .MyInput2 {
+    margin-left: 0%;
+  }
+  .MyInput3 {
+    margin-left: 0%;
+  }
+  .container {
+    flex-direction: column;
+    margin-top: 5%;
+  }
   .header_of_tasks {
     display: none;
   }
@@ -353,36 +390,33 @@ table {
     margin-left: 5%;
     margin-top: 2%;
   }
-}
-@media (max-width: 768px) {
-  .container_main {
-    padding-top: 17vh;
-  }
-  .container {
-    flex-direction: column;
-    margin-top: 5%;
-  }
   .container_1 {
     width: 96%;
     margin-left: 2%;
     margin-right: 2%;
-    /* margin-top: 0%; */
-    /* border: 2px solid red; */
   }
-  .searchTask {
-    flex-direction: column;
+  .taskForm {
+    width: 80vw;
   }
-  .MyInput1 {
-    margin-left: 0%;
+  .inputForFileWrap {
+    width: 100%;
   }
-  .MyInput2 {
-    margin-left: 0%;
+  .taskUpdForm {
+    width: 80vw;
   }
-  .MyInput3 {
-    margin-left: 0%;
+  .inputWrap {
+    width: 100%;
+  }
+  .dateInputWrap {
+    /* width: 100%; */
+  }
+  .InputMask {
+    width: calc(60vw - 12px - 30px);
+  }
+  .calendar {
+    width: calc(80vw - 14px);
   }
 }
-
 /* ------------------------------ COMMENTS ------------------------------------------------------------------------------------------ */
 .comment_container {
   width: 98vw;
@@ -425,6 +459,12 @@ table {
   display: flex;
   gap: 15px;
 }
+.commnentForm {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  width: 500px;
+}
 .commentLabel {
   font-size: 14px;
   font-weight: 700;
@@ -440,14 +480,15 @@ table {
   border: 2px solid #566573;
 }
 
+
 /* ------------------------------ COMMENTS FOR MOBILE ------------------------------------------------------------------------------- */
 @media (max-width: 768px) {
   .comment {
-    width: 96%;
+    width: 96vw;
     display: flex;
     flex-direction: column;
-    margin-left: 2%;
-    margin-right: 2%;
+    /* margin-left: 2vw; */
+    margin-right: 2vw;
     align-items: left;
     font-weight: bold;
     font-variant: small-caps;
@@ -459,13 +500,17 @@ table {
     margin-bottom: 2%;
   }
   .comment_comment {
-    width: 100%;
+    width: 95%;
     margin-left: 1%;
     margin-top: 2%;
     margin-bottom: 2%;
+    padding-right: 5%;
   }
   .comment_bts {
     width: 100%;
     justify-content: left;
+  }
+  .commnentForm {
+    width: 80vw;
   }
 }

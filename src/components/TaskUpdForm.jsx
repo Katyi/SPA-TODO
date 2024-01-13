@@ -81,18 +81,17 @@ const TaskUpdForm = ({ modal, setModal, currentTask, setCurrentTask, firebaseQue
   }
 
   return (
-    <div style={{ border: '2px solid #566573', padding: '20px' }}>
-      <div style={{ width: '48%' }}>
+    <div 
+    style={{ border: '2px solid #566573', padding: '20px' }}
+    >
+      <div className="inputForFileWrap">
         {!currentTask.fileUrl
           ? <TaskFile task={currentTask} firebaseQuery={firebaseQuery} setCurrentTask={setCurrentTask} />
           : <img src={currentTask.fileUrl} alt="" className="fileUrl" />
         }
       </div>
       <form
-        style={{
-          display: "flex", marginTop: '20px', padding: "0px", width: '700px',
-          flexWrap: "wrap", justifyContent: "space-between", border: "none"
-        }}
+        className="taskUpdForm"
         onSubmit={updTask}
       >
         <div className="inputWrap">

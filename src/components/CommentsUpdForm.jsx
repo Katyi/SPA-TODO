@@ -34,7 +34,7 @@ const CommentsUpdForm = ({modal, setModal, currentComment, setCurrentComment, fi
   }
 
   return (
-    <form onSubmit={updProject} style={{display:"flex", flexDirection:"column", paddingTop:"20px", width:"500px"}}>
+    <form onSubmit={updProject} className="commnentForm">
       <label className="commentLabel">Update comment for task:</label>
       <textarea
         className="commentTextArea"
