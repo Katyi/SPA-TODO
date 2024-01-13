@@ -49,7 +49,17 @@ form {
   font-size: 12px;
   color: red;
   margin-bottom: 20px;
-  margin-top: 5px;
+  margin-top: 0px;
+}
+@media (max-width: 768px) {
+  form {
+    /* margin-left: 10vw;
+    margin-right: 10vw; */
+    margin: 0;
+  }
+  .error {
+    margin-bottom: 3px;
+  }
 }
 
 /* ------------------------------ PROJECTS ------------------------------------------------------------------------------------------ */
@@ -153,6 +163,9 @@ table {
     width: 100%;
     margin-left: 5%;
   }
+  .projectLabel {
+    margin-bottom: 3px;
+  }
 }
 
 /* ------------------------------ TASKS --------------------------------------------------------------------------------------------- */
@@ -199,7 +212,6 @@ table {
   margin-top: 2%;
   margin-bottom: 30px;
   padding: 0;
-  /* margin-left: 1%; */
 }
 .MyInput1 {
   margin-left: 1%;
@@ -264,6 +276,10 @@ table {
   justify-content: space-between;
   border: 2px solid #566573;
 }
+.formWrap {
+  border: 2px solid #566573;
+  padding: 20px;
+}
 .inputForFileWrap {
   width: 47%;
 }
@@ -301,13 +317,13 @@ table {
 .InputMask:focus {
   outline: none;
 }
-.calendar {
+.calendar, .calendar1 {
   width: 311px;
   position: absolute;
   padding: 5px 10px 5px 0px;
   border: none;
 }
-.calendar:focus {
+.calendar:focus, .calendar1:focus {
   outline: none;
 }
 .prioritySelect {
@@ -335,17 +351,20 @@ table {
 }
 /* ------------------------------ TASKS FOR MOBILE ---------------------------------------------------------------------------------- */
 /* tablet */
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 850px) and (max-width: 1024px) {
   .header_of_tasks {
     font-size: 18px;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 850px) {
   .container_main {
     padding-top: 17vh;
   }
   .searchTask {
     flex-direction: column;
+    padding-left: 1%;
+    align-items: baseline;
+    gap: 10px;
   }
   .MyInput1 {
     margin-left: 0%;
@@ -358,14 +377,14 @@ table {
   }
   .container {
     flex-direction: column;
-    margin-top: 5%;
+    /* margin-top: 5%; */
   }
   .header_of_tasks {
     display: none;
   }
   .header_Queue_mobile {
     display: flex;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 700;
     font-variant: small-caps;
     width: 100%;
@@ -396,13 +415,13 @@ table {
     margin-right: 2%;
   }
   .taskForm {
-    width: 80vw;
+    width: 70vw;
   }
   .inputForFileWrap {
     width: 100%;
   }
   .taskUpdForm {
-    width: 80vw;
+    width: 70vw;
   }
   .inputWrap {
     width: 100%;
@@ -413,10 +432,23 @@ table {
   .InputMask {
     width: calc(60vw - 12px - 30px);
   }
-  .calendar {
-    width: calc(80vw - 14px);
+  .calendar, .calendar1 {
+    width: calc(70vw - 14px );
   }
 }
+@media (max-width: 450px) {
+  .formWrap {
+    width: calc(80vw - 20px);
+    padding: 10px;
+  }
+  .taskUpdForm {
+    width: calc(80vw - 20px);
+  }
+  .calendar1 {
+    width: calc(80vw - 34px);
+  }
+}
+
 /* ------------------------------ COMMENTS ------------------------------------------------------------------------------------------ */
 .comment_container {
   width: 98vw;
@@ -511,6 +543,11 @@ table {
     justify-content: left;
   }
   .commnentForm {
-    width: 80vw;
+    width: 70vw;
+  }
+}
+@media (max-width: 450px) {
+  .commnentForm {
+    width: calc(80vw - 34px);
   }
 }

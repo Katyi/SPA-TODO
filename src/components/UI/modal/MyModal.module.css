@@ -23,19 +23,19 @@
   /* opacity: 1; */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 850px) {
   .myModal {
     top: 100px;
   }
   .myModalContent {
-    min-width: 80vw;
-    padding: 10px;
-    /* width: 90vw; */
+    min-width: 70vw;
+    padding: 15px;
   }
 }
 @media (max-width: 450px) {
   .myModalContent {
+    width: 80vw;
     min-width: 80vw;
-    /* padding: 5px; */
+    padding: 10px;
   }
 }

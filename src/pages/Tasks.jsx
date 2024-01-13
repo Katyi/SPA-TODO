@@ -140,23 +140,24 @@ function Tasks() {
       <div className="wrapper">
         <MyNavbar title={'Tasks'} linkPath={'/Projects'} linkLabel={'Back To Projects'} projectName={project.projectName}/>
         <div className="container_main">
-          <MyButton onClick={() => setModal2(true)}>
-            Create Task 
-          </MyButton>
+          
 
           {/* SEARCH PART */}
           <div action="" className="searchTask">
-            <MyInput style={{ marginLeft: 0, width: 300}} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
+            <MyButton onClick={() => setModal2(true)}>
+              Create Task 
+            </MyButton>
+            <MyInput style={{marginLeft: "1%", width: 300}} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
             <div className="MyInput1">
-              <MyInput style={{ marginLeft: 0, width: 200}} type={"number"} placeholder={"Search by number"} onChange={handleChange1} />
+              <MyInput style={{width: 200}} type={"number"} placeholder={"Search by number"} onChange={handleChange1} />
             </div>
             <div className="MyInput2">
-              <MyButton style={{marginLeft: 0, width: 120}} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
+              <MyButton style={{width: 120}} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
                 Search
               </MyButton>
             </div>
             <div className="MyInput3">
-              <MyButton style={{marginLeft: 0, width: 120}} onClick={() => firebaseQuery()}>
+              <MyButton style={{width: 120}} onClick={() => firebaseQuery()}>
                 Cancel
               </MyButton>
             </div>

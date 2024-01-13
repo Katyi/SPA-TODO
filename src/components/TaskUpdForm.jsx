@@ -81,8 +81,8 @@ const TaskUpdForm = ({ modal, setModal, currentTask, setCurrentTask, firebaseQue
   }
 
   return (
-    <div 
-    style={{ border: '2px solid #566573', padding: '20px' }}
+    <div className="formWrap"
+    // style={{ border: '2px solid #566573', padding: '20px' }}
     >
       <div className="inputForFileWrap">
         {!currentTask.fileUrl
@@ -94,7 +94,7 @@ const TaskUpdForm = ({ modal, setModal, currentTask, setCurrentTask, firebaseQue
         className="taskUpdForm"
         onSubmit={updTask}
       >
-        <div className="inputWrap">
+        {/* <div className="inputWrap">
           <label className="projectLabel">Task number:</label>
           <MyInput
             value={currentTask.taskNumber || ""}
@@ -103,7 +103,7 @@ const TaskUpdForm = ({ modal, setModal, currentTask, setCurrentTask, firebaseQue
             placeholder={"Task Number"}
           />
           <span className="error">{errors.taskNumber}</span>
-        </div>
+        </div> */}
 
         <div className="inputWrap">
           <label className="projectLabel">Title:</label>
@@ -140,7 +140,7 @@ const TaskUpdForm = ({ modal, setModal, currentTask, setCurrentTask, firebaseQue
             </InputMask>
             <input
               type="date"
-              className="calendar"
+              className="calendar1"
               onChange={e => setCurrentTask({ ...currentTask, createDate: dayjs(e.target.value).format('DD.MM.YYYY') })}
             />
           </div>
@@ -171,7 +171,7 @@ const TaskUpdForm = ({ modal, setModal, currentTask, setCurrentTask, firebaseQue
             </InputMask>
             <input
               type="date"
-              className="calendar"
+              className="calendar1"
               onChange={e => setCurrentTask({ ...currentTask, endDate: dayjs(e.target.value).format('DD.MM.YYYY') })}
             />
           </div>
@@ -195,7 +195,7 @@ const TaskUpdForm = ({ modal, setModal, currentTask, setCurrentTask, firebaseQue
           <span className="error">{errors.priority}</span>
         </div>
 
-        <div className="inputWrap">
+        {/* <div className="inputWrap">
           <label className="projectLabel">Status:</label>
           <MyInput
             value={currentTask.status || ""}
@@ -206,7 +206,7 @@ const TaskUpdForm = ({ modal, setModal, currentTask, setCurrentTask, firebaseQue
             placeholder={"Status"}
           />
           <span className="error">{errors.status}</span>
-        </div>
+        </div> */}
 
         <div style={{ width: "90%", display: "flex", alignItems: "center", gap: "10px" }}>
           <MyButton type="submit">Update</MyButton>

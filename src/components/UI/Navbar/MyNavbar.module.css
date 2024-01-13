@@ -22,3 +22,16 @@
   text-decoration: none;
   color: #566573;
 }
+@media (max-width: 850px) {
+  .title {
+    font-size: 24px;
+    word-wrap: break-word;
+    width: 50%;
+  }
+}
+@media (max-width: 450px) {
+  .title {
+    font-size: 16px;
+    width: 40%;
+  }
+}
