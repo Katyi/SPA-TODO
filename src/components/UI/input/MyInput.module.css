@@ -18,9 +18,9 @@
 /* Change shape of icon */
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: url('../../../assets/calendar.png');
+  /* -webkit-appearance: none;
+  -moz-appearance: none; */
+  background-image: url('../../../assets/calendarGoogle.svg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: 24px;
