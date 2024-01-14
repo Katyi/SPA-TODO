@@ -16,7 +16,10 @@
   }
 }
 /* Change shape of icon */
+
 input[type="date"]::-webkit-calendar-picker-indicator {
+  -webkit-appearance: none;
+  -moz-appearance: none;
   background-image: url('../../../assets/calendar.png');
   background-position: center;
   background-repeat: no-repeat;
