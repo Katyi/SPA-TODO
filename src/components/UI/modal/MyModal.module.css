@@ -24,9 +24,6 @@
 }
 
 @media (max-width: 850px) {
-  .myModal {
-    top: 100px;
-  }
   .myModalContent {
     min-width: 70vw;
     padding: 15px;

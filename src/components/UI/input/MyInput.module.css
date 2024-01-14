@@ -17,7 +17,7 @@
 }
 /* Change shape of icon */
 input[type="date"]::-webkit-calendar-picker-indicator {
-  background-image: url('../../../assets/calendar.svg');
+  background-image: url('../../../assets/calendar.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: 24px;
