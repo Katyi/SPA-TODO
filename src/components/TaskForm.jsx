@@ -113,9 +113,7 @@ const TaskForm = ({ modal, setModal, tasks, firebaseQuery, errors, setErrors }) 
   }
 
   return (
-    <form
-      onSubmit={addNewTask}
-      className="taskForm">
+    <form onSubmit={addNewTask} className="taskForm">
       <div className="inputWrap">
         <label className="projectLabel">Title:</label>
         <MyInput

@@ -26,8 +26,8 @@ body {
     sans-serif;
   font-size: 18px;
   font-weight: 400;
-  /* -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .wrapper {
   /* min-height: 100vh; */
@@ -309,7 +309,7 @@ table {
 }
 .InputMask {
   width: 223px;
-  padding: 6px 15px;
+  padding: 5px 15px;
   border: none;
   z-index: 20;
 }
@@ -320,8 +320,9 @@ table {
 .calendar, .calendar1 {
   width: 311px;
   position: absolute;
-  padding: 5px 10px 5px 0px;
+  padding: 3px 10px 3px 0px;
   border: none;
+  background: rgb(255, 255, 255);
 }
 .calendar:focus, .calendar1:focus {
   outline: none;
@@ -349,6 +350,13 @@ table {
   /* padding: 1rem; */
   /* padding-right: 2rem; */
 }
+
+/* .calendar::-webkit-calendar-picker-indicator, .calendar1::-webkit-calendar-picker-indicator {
+  background-image: url('../assets/calendar.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+} */
 /* ------------------------------ TASKS FOR MOBILE ---------------------------------------------------------------------------------- */
 /* tablet */
 @media (min-width: 850px) and (max-width: 1024px) {
@@ -437,15 +445,18 @@ table {
   }
 }
 @media (max-width: 450px) {
+  .taskForm {
+    width: calc(80vw - 24px);
+    padding: 10px;
+  }
   .formWrap {
-    width: calc(80vw - 20px);
     padding: 10px;
   }
   .taskUpdForm {
-    width: calc(80vw - 20px);
+    width: calc(80vw - 24px);
   }
   .calendar1 {
-    width: calc(80vw - 34px);
+    width: calc(80vw - 38px);
   }
 }
 
