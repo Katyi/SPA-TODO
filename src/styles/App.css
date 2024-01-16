@@ -367,10 +367,11 @@ table {
 @media (max-width: 850px) {
   .container_main {
     padding-top: 17vh;
+    margin-left: 2%;
   }
   .searchTask {
     flex-direction: column;
-    padding-left: 1%;
+    padding-left: 0;
     align-items: baseline;
     gap: 10px;
   }
@@ -455,7 +456,10 @@ table {
   .taskUpdForm {
     width: calc(80vw - 24px);
   }
-  .calendar1 {
+  .InputMask {
+    width: calc(50vw - 12px - 30px);
+  }
+  .calendar, .calendar1 {
     width: calc(80vw - 38px);
   }
 }
