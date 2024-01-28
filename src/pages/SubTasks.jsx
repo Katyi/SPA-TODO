@@ -101,7 +101,8 @@ function SubTasks() {
 
   useEffect(() => {
     firebaseQuery();
-  });
+    // eslint-disable-next-line
+  },[]);
 
   useEffect(() => {
     getTask(id);

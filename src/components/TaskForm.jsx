@@ -4,13 +4,20 @@ import MyInput from "./UI/input/MyInput";
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useParams } from "react-router-dom";
-import InputMask from "react-input-mask";
 import dayjs from 'dayjs';
 import localeData from "dayjs/plugin/localeData";
+import DateInput from "./UI/DateInput/DateInput";
+import CustomSelect from "./UI/CustomSelect/CustomSelect";
+import {handleValidation} from "../utils/handleValidation";
 dayjs.extend(localeData);
 
-
 const TaskForm = ({ modal, setModal, tasks, firebaseQuery, errors, setErrors }) => {
+  const [open, setOpen] = useState(false);
+  const options  = [
+    { value: 'High'},
+    { value: 'Medium'},
+    { value: 'Low'},
+  ];
   let { id } = useParams();
   const [newTask, setNewTask] = useState({
     taskNumber: '',
@@ -19,67 +26,15 @@ const TaskForm = ({ modal, setModal, tasks, firebaseQuery, errors, setErrors }) 
     createDate: '',
     workTime: '',
     endDate: '',
-    priority: '',
+    priority: 'Please choose an option',
     status: '',
     isSubtask: false,
     projectId: ''
   });
 
-  const handleValidation = () => {
-    const formErrors = {};
-    let formIsValid = true;
-
-    // title
-    if (!newTask.taskName) {
-      formIsValid = false;
-      formErrors.taskName = "Cannot be empty";
-    }
-    if (newTask.taskName.length > 30) {
-      formIsValid = false;
-      formErrors.taskName = "Cannot be more 30 characters";
-    }
-    // description
-    if (!newTask.description) {
-      formIsValid = false;
-      formErrors.description = "Cannot be empty";
-    }
-    if (newTask.description.length > 50) {
-      formIsValid = false;
-      formErrors.description = "Cannot be more 50 characters";
-    }
-    // createDate
-    if (!newTask.createDate) {
-      formIsValid = false;
-      formErrors.createDate = "Cannot be empty";
-    } else if (newTask.createDate.length < 10) {
-      formIsValid = false;
-      formErrors.createDate = "Date is not valid";
-    }
-    // WorkTime 
-    if (!newTask.workTime) {
-      formIsValid = false;
-      formErrors.workTime = "Cannot be empty";
-    }
-    //endDate
-    if (!newTask.endDate) {
-      formIsValid = false;
-      formErrors.endDate = "Cannot be empty";
-    } else if (newTask.endDate.length < 10) {
-      formIsValid = false;
-      formErrors.endDate = "Date is not valid";
-    }
-    // priority
-    if (newTask.priority === '') {
-      formIsValid = false;
-      formErrors.priority = "It's required";
-    }
-    setErrors(formErrors)
-    return formIsValid;
-  };
-
   const addNewTask = async (e) => {
     e.preventDefault();
-    if (handleValidation()) {
+    if (handleValidation(newTask, setErrors)) {
       let lastNumber = tasks?.length > 0 ? tasks.sort((a, b) => a?.taskNumber > b?.taskNumber ? 1 : -1).slice(-1)[0]?.taskNumber : 0;
 
       await addDoc(collection(db, 'tasks'), {
@@ -112,6 +67,11 @@ const TaskForm = ({ modal, setModal, tasks, firebaseQuery, errors, setErrors }) 
     }
   }
 
+  const handleSelectChange = (value) => {
+    setNewTask({ ...newTask, priority: value });
+    setOpen(false);
+  }
+
   return (
     <form onSubmit={addNewTask} className="taskForm">
       <div className="inputWrap">
@@ -137,22 +97,8 @@ const TaskForm = ({ modal, setModal, tasks, firebaseQuery, errors, setErrors }) 
       </div>
 
       <div className="inputWrap">
-        <label className="projectLabel">CreateDate:</label>      
-        <div className="dateInputWrap">
-          <InputMask
-            className="InputMask"
-            mask='99.99.9999'
-            maskChar=''
-            placeholder='DD.MM.YYYY'
-            value={newTask.createDate}
-            onChange={e => setNewTask({ ...newTask, createDate: e.target.value })}>
-          </InputMask>
-          <input
-            type="date"
-            className="calendar"
-            onChange={e => setNewTask({ ...newTask, createDate: dayjs(e.target.value).format('DD.MM.YYYY') })}
-          />
-        </div>
+        <label className="projectLabel">CreateDate:</label>
+        <DateInput selectedDate={newTask.createDate} setSelectedDate={v => setNewTask({...newTask, createDate: v})}/>
         <span className="error">{errors.createDate}</span>
       </div>
 
@@ -169,38 +115,20 @@ const TaskForm = ({ modal, setModal, tasks, firebaseQuery, errors, setErrors }) 
 
       <div className="inputWrap">
         <label className="projectLabel">EndDate:</label>
-        <div className="dateInputWrap">
-          <InputMask
-            className="InputMask"
-            mask='99.99.9999'
-            maskChar=''
-            placeholder='DD.MM.YYYY'
-            value={newTask.endDate}
-            onChange={e => setNewTask({ ...newTask, endDate: e.target.value })}>
-          </InputMask>
-          <input
-            type="date"
-            className="calendar"
-            onChange={e => setNewTask({ ...newTask, endDate: dayjs(e.target.value).format('DD.MM.YYYY') })}
-          />
-        </div>
+        <DateInput selectedDate={newTask.endDate} setSelectedDate={v => setNewTask({...newTask, endDate: v})}/>
         <span className="error">{errors.endDate}</span>
       </div>
 
       <div className="inputWrap">
-        <label htmlFor="priority-select" className="projectLabel">Priority:</label>
-        <select
-          name="priority"
-          id="priority-select"
-          value={newTask.priority}
-          onChange={e => setNewTask({ ...newTask, priority: e.target.value })}
-          className="prioritySelect"
-        >
-          <option value="">--Please choose an option--</option>
-          <option value="high">High</option>
-          <option value="medium">Medium</option>
-          <option value="low">Low</option>
-        </select>
+        <label className="projectLabel">Priority:</label>
+        <CustomSelect
+          options={options}
+          priority={newTask.priority || ""}
+          onChange={handleSelectChange}
+          open={open}
+          // handleOpen={() => setOpen(!open)}
+          setOpen={setOpen}
+        />
         <span className="error">{errors.priority}</span>
       </div>
 

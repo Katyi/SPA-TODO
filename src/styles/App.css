@@ -18,6 +18,7 @@ body {
   height: 100%;
   line-height: 1;
   background: #f5f3f1;
+  background: #f4f4f3;
   font-size: 14px;
   color: #566573;
   font-weight: 500;
@@ -50,6 +51,16 @@ form {
   color: red;
   margin-bottom: 20px;
   margin-top: 0px;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 @media (max-width: 768px) {
   form {
@@ -297,36 +308,6 @@ table {
   flex-direction: column;
   width: 47%;
 }
-.dateInputWrap {
-  display: flex;
-  flex-direction: column;
-  border: 2px solid #93999e;
-  background: rgb(255, 255, 255);
-}
-.dateInputWrap:hover {
-  outline: none !important;
-  border: 2px solid #566573;
-}
-.InputMask {
-  width: 223px;
-  padding: 5px 15px;
-  border: none;
-  z-index: 20;
-}
-
-.InputMask:focus {
-  outline: none;
-}
-.calendar, .calendar1 {
-  width: 311px;
-  position: absolute;
-  padding: 3px 10px 3px 0px;
-  border: none;
-  background: rgb(255, 255, 255);
-}
-.calendar:focus, .calendar1:focus {
-  outline: none;
-}
 .prioritySelect {
   padding: 5px 15px;
   border: 2px solid #93999e;
@@ -343,20 +324,8 @@ table {
   background-repeat: no-repeat;
   background-position-x: 100%;
   background-position-y: -5px;
-  /* background-size: 24px; */
-  /* border: 1px solid #dfdfdf; */
-  /* border-radius: 2px; */
-  /* margin-right: 2rem; */
-  /* padding: 1rem; */
-  /* padding-right: 2rem; */
 }
 
-/* .calendar::-webkit-calendar-picker-indicator, .calendar1::-webkit-calendar-picker-indicator {
-  background-image: url('../assets/calendar.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 24px;
-} */
 /* ------------------------------ TASKS FOR MOBILE ---------------------------------------------------------------------------------- */
 /* tablet */
 @media (min-width: 850px) and (max-width: 1024px) {
@@ -435,15 +404,6 @@ table {
   .inputWrap {
     width: 100%;
   }
-  .dateInputWrap {
-    /* width: 100%; */
-  }
-  .InputMask {
-    width: calc(60vw - 12px - 30px);
-  }
-  .calendar, .calendar1 {
-    width: calc(70vw - 14px );
-  }
 }
 @media (max-width: 450px) {
   .taskForm {
@@ -455,12 +415,6 @@ table {
   }
   .taskUpdForm {
     width: calc(80vw - 24px);
-  }
-  .InputMask {
-    width: calc(50vw - 12px - 30px);
-  }
-  .calendar, .calendar1 {
-    width: calc(80vw - 38px);
   }
 }
 

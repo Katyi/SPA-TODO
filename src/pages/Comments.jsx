@@ -53,7 +53,8 @@ function Comments() {
 
   useEffect(() => {
     firebaseQuery();
-  });
+    // eslint-disable-next-line
+  },[]);
 
   useEffect(() => {
     getTask(id);

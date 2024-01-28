@@ -129,7 +129,8 @@ function Tasks() {
 
   useEffect(() => {
     firebaseQuery();
-  });
+    // eslint-disable-next-line
+  },[]);
 
   useEffect(() => {
     getProject(id);

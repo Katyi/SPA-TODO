@@ -1,0 +1,58 @@
+.calendarPicker {
+  position: absolute; /* Position relative to input element */
+  top: 30px;
+  left: 0px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  z-index: 10; /* Ensure it's on top of other elements */
+}
+.calendarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.calendarGrid {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+
+.calendarDayLabel {
+  width: calc(14.28% - 12px); /* 1/7th of width */
+  text-align: center;
+  font-weight: bold;
+  padding: 5px;
+  border: 1px solid #ddd;
+  font-size: 12px;
+}
+
+.calendarDay {
+  width: calc(14.28% - 12px); /* 1/7th of width */
+  text-align: center;
+  padding: 5px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.calendarDay:hover {
+  background-color: #eee;
+}
+
+.active {
+  background-color: #f0f0f0;
+}
+
+.emptyCell {
+  width: calc(14.28% - 12px); /* 1/7th of width */
+  border: 1px solid transparent;
+}
+.icon {
+  width: 20px;
+}
