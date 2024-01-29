@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { query, collection, where, getDocs, doc, deleteDoc, getDoc} from 'firebase/firestore';
+import { query, collection, where, getDocs, doc, deleteDoc, getDoc } from 'firebase/firestore';
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { db } from '../firebase';
 import MyButton from "../components/UI/button/MyButton";
@@ -21,9 +21,9 @@ function Tasks() {
   const [modal2, setModal2] = useState(false);
   const [errors, setErrors] = useState({});
   let { id } = useParams();
-  
+
   // ------ Get Project Data --------------------------------------------
-  const getProject = async(id) => {
+  const getProject = async (id) => {
     const docRef = doc(db, 'projects', id);
     let docSnap = await getDoc(docRef);
     setProject(docSnap.data());
@@ -31,10 +31,10 @@ function Tasks() {
 
   // ----- Get Tasks Data For 3 columns on the page ---------------------
   async function firebaseQuery() {
-    const q1 = query(collection(db, 'tasks'), where("status", "==", "Queue"), where("isSubtask", "==", false), where('projectId','==', id));
-    const q2 = query(collection(db, 'tasks'), where("status", "==", "Development"), where("isSubtask", "==", false), where('projectId','==', id));
-    const q3 = query(collection(db, 'tasks'), where("status", "==", "Done"), where("isSubtask", "==", false), where('projectId','==', id));
-    
+    const q1 = query(collection(db, 'tasks'), where("status", "==", "Queue"), where("isSubtask", "==", false), where('projectId', '==', id));
+    const q2 = query(collection(db, 'tasks'), where("status", "==", "Development"), where("isSubtask", "==", false), where('projectId', '==', id));
+    const q3 = query(collection(db, 'tasks'), where("status", "==", "Done"), where("isSubtask", "==", false), where('projectId', '==', id));
+
     let tasksArr1 = [];
     let tasksArr2 = [];
     let tasksArr3 = [];
@@ -90,12 +90,12 @@ function Tasks() {
     let tasksArr1 = [];
     const querySnapshot1 = await getDocs(q1);
     querySnapshot1.forEach((doc) => {
-        tasksArr1.push({ ...doc.data(), id: doc.id })
+      tasksArr1.push({ ...doc.data(), id: doc.id })
     })
     tasksArr1.forEach(async (comment) => {
       await deleteDoc(doc(db, 'comments', comment.id));
     })
-    
+
     // delete task by id
     await deleteDoc(doc(db, 'tasks', task.id));
     firebaseQuery();
@@ -109,57 +109,58 @@ function Tasks() {
   };
 
   const searchTask = async (queueTasks, developmentTasks, doneTasks) => {
-    if (taskForSearch!=='') {
+    if (taskForSearch !== '') {
       let searchResult1 = await queueTasks.filter((elem) => elem.taskName.includes(taskForSearch));
       let searchResult2 = await developmentTasks.filter((elem) => elem.taskName.includes(taskForSearch));
       let searchResult3 = await doneTasks.filter((elem) => elem.taskName.includes(taskForSearch));
       setQueueTasks(searchResult1);
       setDevelopmentTasks(searchResult2);
       setDoneTasks(searchResult3);
+      setTaskForSearch("");
     } else if (taskForSearch1 !== '') {
       let searchResult1 = await queueTasks.filter((elem) => elem.taskNumber === +taskForSearch1);
       let searchResult2 = await developmentTasks.filter((elem) => elem.taskNumber === +taskForSearch1);
       let searchResult3 = await doneTasks.filter((elem) => elem.taskNumber === +taskForSearch1);
-
-      setQueueTasks(()=>[...searchResult1]);
-      setDevelopmentTasks(()=>[...searchResult2]);
-      setDoneTasks(()=>[...searchResult3]);
+      setQueueTasks(() => [...searchResult1]);
+      setDevelopmentTasks(() => [...searchResult2]);
+      setDoneTasks(() => [...searchResult3]);
+      setTaskForSearch1("");
     }
   }
 
   useEffect(() => {
     firebaseQuery();
     // eslint-disable-next-line
-  },[]);
+  }, []);
 
   useEffect(() => {
     getProject(id);
-  },[id])
+  }, [id])
 
   return (
     <div className="App">
       <div className="wrapper">
-        <MyNavbar title={'Tasks'} linkPath={'/Projects'} linkLabel={'Back To Projects'} projectName={project.projectName}/>
+        <MyNavbar title={'Tasks'} linkPath={'/Projects'} linkLabel={'Back To Projects'} projectName={project.projectName} />
         <div className="container_main">
-          
+
 
           {/* SEARCH PART */}
           <div action="" className="searchTask">
             <MyButton onClick={() => setModal2(true)}>
-              Create Task 
+              Create Task
             </MyButton>
-            <MyInput style={{marginLeft: "1%", width: 300}} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
+            <MyInput style={{ marginLeft: "1%", width: 300 }} value={taskForSearch} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
             <div className="MyInput1">
-              <MyInput style={{width: 200}} type={"number"} placeholder={"Search by number"} onChange={handleChange1} />
+              <MyInput style={{ width: 200 }} value={taskForSearch1} type={"number"} placeholder={"Search by number"} onChange={handleChange1} />
             </div>
             <div className="MyInput2">
-              <MyButton style={{width: 120}} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
+              <MyButton style={{ width: 120 }} onClick={() => searchTask(queueTasks, developmentTasks, doneTasks)} >
                 Search
               </MyButton>
             </div>
             <div className="MyInput3">
-              <MyButton style={{width: 120}} onClick={() => firebaseQuery()}>
-                Cancel
+              <MyButton style={{ width: 120 }} onClick={() => firebaseQuery()}>
+                Clear
               </MyButton>
             </div>
           </div>
@@ -173,19 +174,19 @@ function Tasks() {
         {/* TABLE BODY */}
         <div className="container">
           <div className="header_Queue_mobile">Tasks In Queue</div>
-          <TaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors}/>
+          <TaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors} />
           <div className="header_Development_mobile">Tasks In Development</div>
-          <TaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors}/>
+          <TaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors} />
           <div className="header_Done_mobile">Tasks Completed</div>
-          <TaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors}/>
+          <TaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors} />
         </div>
 
         {/* MODAL FOR CREATE TASK */}
         <MyModal visible={modal2} setVisible={setModal2} setErrors={setErrors}>
-          <TaskForm 
-            modal={modal2} 
-            setModal={setModal2} 
-            tasks={queueTasks.concat(developmentTasks).concat(doneTasks)} 
+          <TaskForm
+            modal={modal2}
+            setModal={setModal2}
+            tasks={queueTasks.concat(developmentTasks).concat(doneTasks)}
             // setTasks={setTasks}
             firebaseQuery={firebaseQuery}
             errors={errors} setErrors={setErrors}

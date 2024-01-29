@@ -25,7 +25,7 @@ function SubTasks() {
   let { id } = useParams();
 
   // ------ Get Task Data --------------------------------------------
-  const getTask = async(id) => {
+  const getTask = async (id) => {
     const docRef = doc(db, 'tasks', id);
     let docSnap = await getDoc(docRef);
     setTask(docSnap.data());
@@ -33,9 +33,9 @@ function SubTasks() {
 
   // -----Параметры для отображения подзадач в трех столбцах на странице задач------------------------------------------------------------------
   async function firebaseQuery() {
-    const q1 = query(collection(db, 'tasks'), where("status", "==", "Queue"), where("isSubtask", "==", true), where('taskId','==', id));
-    const q2 = query(collection(db, 'tasks'), where("status", "==", "Development"), where("isSubtask", "==", true), where('taskId','==', id));
-    const q3 = query(collection(db, 'tasks'), where("status", "==", "Done"), where("isSubtask", "==", true), where('taskId','==', id));
+    const q1 = query(collection(db, 'tasks'), where("status", "==", "Queue"), where("isSubtask", "==", true), where('taskId', '==', id));
+    const q2 = query(collection(db, 'tasks'), where("status", "==", "Development"), where("isSubtask", "==", true), where('taskId', '==', id));
+    const q3 = query(collection(db, 'tasks'), where("status", "==", "Done"), where("isSubtask", "==", true), where('taskId', '==', id));
     let tasksArr1 = [];
     let tasksArr2 = [];
     let tasksArr3 = [];
@@ -55,7 +55,7 @@ function SubTasks() {
     setDevelopmentTasks(tasksArr2)
     setDoneTasks(tasksArr3)
   }
-  
+
   const removeTask = async (task) => {
     const storage = getStorage();
     let tasksArr2 = [task];
@@ -82,53 +82,55 @@ function SubTasks() {
   };
 
   const searchTask = async (queueTasks, developmentTasks, doneTasks) => {
-    if (taskForSearch!=='') {
+    if (taskForSearch !== '') {
       let searchResult1 = await queueTasks.filter((elem) => elem.taskName.includes(taskForSearch));
       let searchResult2 = await developmentTasks.filter((elem) => elem.taskName.includes(taskForSearch));
       let searchResult3 = await doneTasks.filter((elem) => elem.taskName.includes(taskForSearch));
       setQueueTasks(searchResult1);
       setDevelopmentTasks(searchResult2);
       setDoneTasks(searchResult3);
-    } else {
-      let searchResult1 = await queueTasks.filter((elem) => elem.taskNumber.includes(taskForSearch1));
-      let searchResult2 = await developmentTasks.filter((elem) => elem.taskNumber.includes(taskForSearch1));
-      let searchResult3 = await doneTasks.filter((elem) => elem.taskNumber.includes(taskForSearch1));
+      setTaskForSearch("");
+    } else if (taskForSearch1 !== '') {
+      let searchResult1 = await queueTasks.filter((elem) => elem.taskNumber === +taskForSearch1);
+      let searchResult2 = await developmentTasks.filter((elem) => elem.taskNumber === +taskForSearch1);
+      let searchResult3 = await doneTasks.filter((elem) => elem.taskNumber === +taskForSearch1);
       setQueueTasks(searchResult1);
       setDevelopmentTasks(searchResult2);
       setDoneTasks(searchResult3);
+      setTaskForSearch1("");
     }
   }
 
   useEffect(() => {
     firebaseQuery();
     // eslint-disable-next-line
-  },[]);
+  }, []);
 
   useEffect(() => {
     getTask(id);
-  },[id]);
+  }, [id]);
 
   return (
     <div className="App">
       <div className="wrapper">
-        <MyNavbar title={'SubTasks'} linkPath={`/Projects/${projectId}`} linkLabel={'Back To Tasks'} taskName={task.taskName}/>
+        <MyNavbar title={'SubTasks'} linkPath={`/Projects/${projectId}`} linkLabel={'Back To Tasks'} taskName={task.taskName} />
         <div className="container_main">
           <MyButton onClick={() => setModal4(true)}>
             Create SubTask
           </MyButton>
           <div action="" className="searchTask">
-            <MyInput style={{ marginLeft: 0, width: 300}} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
+            <MyInput style={{ marginLeft: 0, width: 200 }} value={taskForSearch} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
             <div className="MyInput1">
-              <MyInput style={{ marginLeft: 0, width: 100}} type={"number"} placeholder={"Search by number"} onChange={handleChange1} />
+              <MyInput style={{ marginLeft: 0, width: 120 }} value={taskForSearch1} type={"number"} placeholder={"Search by number"} onChange={handleChange1} />
             </div>
             <div className="MyInput2">
-              <MyButton style={{marginLeft: 0, width: 120}} onClick={()=> {searchTask(queueTasks, developmentTasks, doneTasks)}} >
+              <MyButton style={{ marginLeft: 0, width: 120 }} onClick={() => { searchTask(queueTasks, developmentTasks, doneTasks) }} >
                 Search
               </MyButton>
             </div>
             <div className="MyInput3">
-              <MyButton onClick={() => firebaseQuery()} style={{marginLeft: 0, width: 120 }}>
-                Cancel
+              <MyButton onClick={() => firebaseQuery()} style={{ marginLeft: 0, width: 120 }}>
+                Clear
               </MyButton>
             </div>
           </div>
@@ -142,19 +144,19 @@ function SubTasks() {
         </div>
         <div className="container">
           <div className="header_Queue_mobile">SubTasks In Queue</div>
-          <SubTaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors}/>
+          <SubTaskColumn name="Queue" tasks={queueTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors} />
           <div className="header_Development_mobile">SubTasks In Development</div>
-          <SubTaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors}/>
+          <SubTaskColumn name="Development" tasks={developmentTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors} />
           <div className="header_Done_mobile">SubTasks Completed</div>
-          <SubTaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors}/>
+          <SubTaskColumn name="Done" tasks={doneTasks} removeTask={removeTask} firebaseQuery={firebaseQuery} class='container_1' setErrors={setErrors} />
         </div>
 
         {/* MODAL FOR CREATE SUBTASK */}
         <MyModal visible={modal4} setVisible={setModal4} setErrors={setErrors}>
-          <SubTaskForm 
-            modal={modal4} 
-            setModal={setModal4} 
-            tasks={queueTasks.concat(developmentTasks).concat(doneTasks)} 
+          <SubTaskForm
+            modal={modal4}
+            setModal={setModal4}
+            tasks={queueTasks.concat(developmentTasks).concat(doneTasks)}
             // setTasks={setSubTasks}
             firebaseQuery={firebaseQuery}
             errors={errors} setErrors={setErrors}
