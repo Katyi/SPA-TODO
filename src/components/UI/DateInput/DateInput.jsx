@@ -47,7 +47,8 @@ const DateInput = ({ selectedDate, setSelectedDate }) => {
   }, []);
 
   return (
-    <div className="dateInput" ref={pickerRef}>
+    <div className='dateInputWrapper' ref={pickerRef}>
+      <div className='dateInput' onClick={handleIconClick}>
       <InputMask
         className="inputMask" 
         mask='99.99.9999' 
@@ -56,7 +57,8 @@ const DateInput = ({ selectedDate, setSelectedDate }) => {
         value={selectedDate || ""} 
         onChange={handleDateChange}
       />
-      <img src={calendar} alt="calendar" className="calendarIcon" onClick={handleIconClick} id='calendar'/>
+      <img src={calendar} alt="calendar" className="calendarIcon"/>
+      </div>
       {openPicker &&
         <CalendarPicker
           onClose={handleDateSelect}

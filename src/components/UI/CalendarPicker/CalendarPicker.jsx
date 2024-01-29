@@ -16,7 +16,6 @@ const CalendarPicker = ({ onClose, selectedDate, setSelectedDate }) => {
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   const getMonthDays = () => {
-    console.log(currentDay)
     setCurrentDay(
       selectedDate.length === 10 ? new Date(selectedDate.slice(6), selectedDate.slice(3, 5) - 1, selectedDate.slice(0, 2))
         : selectedDate.length === 6 ? new Date(currentYear, selectedDate.slice(3, 5) - 1, selectedDate.slice(0, 2))
@@ -117,13 +116,18 @@ const CalendarPicker = ({ onClose, selectedDate, setSelectedDate }) => {
   return (
     <div className='calendarPicker'>
       <div className='calendarHeader'>
-        <MyButton style={{ padding: "0px 20px" }} type='button' onClick={(e) => getPrevMonth(e)}><img className='icon' src={navigateBefore} alt="navigateBefore" /></MyButton>
-        <span>
+        <img className='icon' src={navigateBefore} alt="navigateBefore" onClick={(e) => getPrevMonth(e)}/>
+        <span className='calendarPickerTitle'>
           {`${daysOfWeek[currentDay.getDay()]} 
           ${currentDay.getDate()} ${currentDay.toLocaleString('en-US', { month: 'long' })} 
           ${currentDay.getFullYear()}`}
         </span>
-        <MyButton style={{ padding: "0px 20px" }} onClick={(e) => getNextMonth(e)}><img className='icon' src={navigateNext} alt="navigateBefore" /></MyButton>
+        <span className='calendarPickerTitle1'>
+          {`
+          ${currentDay.getDate()} ${currentDay.toLocaleString('en-US', { month: 'short' })} 
+          ${currentDay.getFullYear()}`}
+        </span>
+        <img className='icon' src={navigateNext} alt="navigateBefore" onClick={(e) => getNextMonth(e)}/>
       </div>
       <div className='calendarGrid'>
         {daysOfWeek.map((day) => (
@@ -143,7 +147,7 @@ const CalendarPicker = ({ onClose, selectedDate, setSelectedDate }) => {
           ))
         ))}
       </div>
-      <div style={{ marginTop: '10px' }}>
+      <div className='calendarPickerCloseBtn'>
         <MyButton onClick={() => onClose()}>Close</MyButton>
       </div>
     </div>

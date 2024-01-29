@@ -15,7 +15,6 @@ const TaskColumn = (props) => {
   const [errors, setErrors] = useState({});
 
   const updTask = async (task) => {
-    console.log(task.id)
     await updateDoc(doc(db, 'tasks', task.id), {
       taskNumber: task.taskNumber,
       taskName: task.taskName,
