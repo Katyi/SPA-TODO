@@ -7,7 +7,7 @@
   padding: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  z-index: 10; /* Ensure it's on top of other elements */
+  z-index: 4; /* Ensure it's on top of other elements */
 }
 .calendarHeader {
   display: flex;
