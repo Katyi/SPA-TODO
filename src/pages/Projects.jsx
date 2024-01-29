@@ -9,6 +9,7 @@ import MyModal from "../components/UI/modal/MyModal";
 import ProjectForm from "../components/ProjectForm";
 import ProjectUpdForm from "../components/ProjectUpdForm";
 import { Pagination } from '@mui/material';
+import Footer from "../components/UI/footer/Footer";
 // import Loader from "../components/UI/Loader/Loader";
 // import * as ReactBootStrap from "react-bootstrap";
 
@@ -47,7 +48,7 @@ function Projects() {
   const [page, setPage] = useState(1);
   // const itemsPerPage = 5;
   const [limit] = useState(
-    Math.floor((window.innerHeight * 86 / 100 - 30 - 15 - 71 - 20 - 32 ) / 72)
+    Math.floor((window.innerHeight * 76 / 100 - 30 - 15 - 71 - 20 - 32 ) / 72)
   );
 
   let indexOfLastProject = page * limit;
@@ -192,8 +193,8 @@ function Projects() {
             />
           </MyModal>
         </div>
-        {/* } */}
       </div>
+      <Footer/>
     </div>
   )
 };

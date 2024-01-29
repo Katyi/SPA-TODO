@@ -9,6 +9,7 @@ import MyNavbar from "../components/UI/Navbar/MyNavbar";
 import MyModal from "../components/UI/modal/MyModal";
 import CommentsForm from "../components/CommentsForm";
 import CommentsUpdForm from "../components/CommentsUpdForm";
+import Footer from "../components/UI/footer/Footer";
 // import { Pagination } from '@mui/material';
 
 function Comments() {
@@ -103,6 +104,7 @@ function Comments() {
           </MyModal>
         </div>
       </div>
+      <Footer/>
     </div>
   )
 };

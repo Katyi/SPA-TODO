@@ -14,22 +14,23 @@ const TaskItem = (props) => {
   }
 
   // DRAG-N-DROP                                                                                                                      
-  const [{ isDragging }, drag] = useDrag(() => ({
+  const [{ opacity, isDragging }, drag] = useDrag({
     type: ItemTypes.BOX,
     item: props.task,
     collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
+      opacity: monitor.isDragging() ? 0 : 1,
+      isDragging: !!monitor.getItem()
     }),
-  })
-  )
+  });
 
   return (
-    <div className='task' ref={drag} style={{opacity: isDragging ? 0.5 : 1}}>
+    <div className='task' ref={drag} style={{ opacity: isDragging ? 0.7 : 1 }}>
+      {<span className="tooltip-text" id="top" style={{ opacity: isDragging ? 0 : 1 }}>You can drag</span>}
       <div className='taskNumber'>{props.task.taskNumber}</div>
       <div className='taskName'>{props.task.taskName}</div>
       {isDragging}
       <div className="blockInTask">
-        <MyButton style={{width: "47%", backGround: "red"}}
+        <MyButton style={{ width: "47%", backGround: "red" }}
           onClick={() => {
             props.setModal(true);
             props.setCurrentTask(props.task)
@@ -37,39 +38,39 @@ const TaskItem = (props) => {
         >
           Open/Update
         </MyButton>
-        <MyButton onClick={() => props.remove(props.task)} style={{ width: "47%"}}>
+        <MyButton onClick={() => props.remove(props.task)} style={{ width: "47%" }}>
           Delete
         </MyButton>
       </div>
       <div className="blockInTask">
-        {!props.task.isSubtask && 
-          <MyButton 
-            style={{ width: '47%'}} 
-            className="createUpdDelBtn" 
+        {!props.task.isSubtask &&
+          <MyButton
+            style={{ width: '47%' }}
+            className="createUpdDelBtn"
             onClick={() => {
-              navigate(`/Tasks/${props.task.id}`, 
-              {state: { projectId: props.task.projectId, taskName: props.task.taskName }})
+              navigate(`/Tasks/${props.task.id}`,
+                { state: { projectId: props.task.projectId, taskName: props.task.taskName } })
             }}
           >
             SubTasks
           </MyButton>
         }
-        {!props.task.isSubtask && 
-          <MyButton 
-            style={{ width: "47%"}}
+        {!props.task.isSubtask &&
+          <MyButton
+            style={{ width: "47%" }}
             className="createUpdDelBtn"
             onClick={() => {
               navigate(`/Comments/${props.task.id}`,
-              {state: { projectId: props.task.projectId }})
+                { state: { projectId: props.task.projectId } })
             }}
           >
             Comments
           </MyButton>
         }
       </div>
-      {!props.task.fileUrl 
-        ? <TaskFile task={props.task} firebaseQuery={props.firebaseQuery} setCurrentTask={props.setCurrentTask}/>
-        : <img src={`${props.task.fileUrl}`} alt="" className="fileUrl"/>
+      {!props.task.fileUrl
+        ? <TaskFile task={props.task} firebaseQuery={props.firebaseQuery} setCurrentTask={props.setCurrentTask} />
+        : <img src={`${props.task.fileUrl}`} alt="" className="fileUrl" />
       }
     </div>
   );

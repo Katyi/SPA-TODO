@@ -9,6 +9,7 @@ import TaskColumn from "../components/TaskColumn";
 import MyNavbar from "../components/UI/Navbar/MyNavbar";
 import MyModal from "../components/UI/modal/MyModal";
 import TaskForm from "../components/TaskForm";
+import Footer from "../components/UI/footer/Footer";
 
 function Tasks() {
   const [queueTasks, setQueueTasks] = useState([]);
@@ -142,8 +143,6 @@ function Tasks() {
       <div className="wrapper">
         <MyNavbar title={'Tasks'} linkPath={'/Projects'} linkLabel={'Back To Projects'} projectName={project.projectName} />
         <div className="container_main">
-
-
           {/* SEARCH PART */}
           <div action="" className="searchTask">
             <MyButton onClick={() => setModal2(true)}>
@@ -193,6 +192,7 @@ function Tasks() {
           />
         </MyModal>
       </div>
+      <Footer/>
     </div>
   )
 };

@@ -9,6 +9,7 @@ import SubTaskColumn from "../components/SubTaskColumn";
 import MyNavbar from "../components/UI/Navbar/MyNavbar";
 import SubTaskForm from "../components/SubTaskForm";
 import MyModal from "../components/UI/modal/MyModal";
+import Footer from "../components/UI/footer/Footer";
 
 function SubTasks() {
   const location = useLocation();
@@ -163,6 +164,7 @@ function SubTasks() {
           />
         </MyModal>
       </div>
+      <Footer/>
     </div>
   )
 };
