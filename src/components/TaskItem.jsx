@@ -1,24 +1,17 @@
-import React, { useState } from "react";
 import MyButton from "../components/UI/button/MyButton";
 import { useNavigate } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
 import { ItemTypes } from '../ItemTypes';
-import TaskFile from "./TaskFile";
 
 const TaskItem = (props) => {
   let navigate = useNavigate();
-  const [inDrag, setInDrag] = useState(false);
-
-  const handleDrag = () => {
-    setInDrag(!inDrag);
-  }
-
+  
   // DRAG-N-DROP                                                                                                                      
-  const [{ opacity, isDragging }, drag] = useDrag({
+  const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.BOX,
     item: props.task,
     collect: (monitor) => ({
-      opacity: monitor.isDragging() ? 0 : 1,
+      // opacity: monitor.isDragging() ? 0 : 1,
       isDragging: !!monitor.getItem()
     }),
   });
@@ -68,10 +61,7 @@ const TaskItem = (props) => {
           </MyButton>
         }
       </div>
-      {!props.task.fileUrl
-        ? <TaskFile task={props.task} firebaseQuery={props.firebaseQuery} setCurrentTask={props.setCurrentTask} />
-        : <img src={`${props.task.fileUrl}`} alt="" className="fileUrl" />
-      }
+      <img src={`${props.task.fileUrl}`} alt="" className="fileUrl" />
     </div>
   );
 };

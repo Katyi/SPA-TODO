@@ -20,58 +20,6 @@ const TaskUpdForm = ({ modal, setModal, currentTask, setCurrentTask, firebaseQue
     { value: 'Low'},
   ];
 
-  // const handleValidation = () => {
-  //   const formErrors = {};
-  //   let formIsValid = true;
-
-  //   // title
-  //   if (!currentTask.taskName) {
-  //     formIsValid = false;
-  //     formErrors.taskName = "Cannot be empty";
-  //   }
-  //   if (currentTask.taskName.length > 30) {
-  //     formIsValid = false;
-  //     formErrors.taskName = "Cannot be more 30 characters";
-  //   }
-  //   // description
-  //   if (!currentTask.description) {
-  //     formIsValid = false;
-  //     formErrors.description = "Cannot be empty";
-  //   }
-  //   if (currentTask.description.length > 50) {
-  //     formIsValid = false;
-  //     formErrors.description = "Cannot be more 50 characters";
-  //   }
-  //   // createDate
-  //   if (!currentTask.createDate) {
-  //     formIsValid = false;
-  //     formErrors.createDate = "Cannot be empty";
-  //   } else if (currentTask.createDate.length < 10) {
-  //     formIsValid = false;
-  //     formErrors.createDate = "Date is not valid";
-  //   }
-  //   // WorkTime 
-  //   if (!currentTask.workTime) {
-  //     formIsValid = false;
-  //     formErrors.workTime = "Cannot be empty";
-  //   }
-  //   //endDate
-  //   if (!currentTask.endDate) {
-  //     formIsValid = false;
-  //     formErrors.endDate = "Cannot be empty";
-  //   } else if (currentTask.endDate.length < 10) {
-  //     formIsValid = false;
-  //     formErrors.endDate = "Date is not valid";
-  //   }
-  //   // priority
-  //   if (currentTask.priority === '') {
-  //     formIsValid = false;
-  //     formErrors.priority = "It's required";
-  //   }
-  //   setErrors(formErrors)
-  //   return formIsValid;
-  // };
-
   const handleSelectChange = (value) => {
     setCurrentTask({ ...currentTask, priority: value });
     setOpen(false);
@@ -88,6 +36,8 @@ const TaskUpdForm = ({ modal, setModal, currentTask, setCurrentTask, firebaseQue
         workTime: currentTask.workTime,
         endDate: currentTask.endDate,
         priority: currentTask.priority,
+        // fileUrl: currentTask.fileUrl,
+        // fileName: currentTask.fileName,
       });
       firebaseQuery();
       setModal(false);
@@ -98,13 +48,10 @@ const TaskUpdForm = ({ modal, setModal, currentTask, setCurrentTask, firebaseQue
   return (
     <div className="formWrap">
       <div className="inputForFileWrap">
-        {!currentTask.fileUrl
-          ? <TaskFile task={currentTask} firebaseQuery={firebaseQuery} setCurrentTask={setCurrentTask} />
-          : <img src={currentTask.fileUrl} alt="" className="fileUrl" />
-        }
+        <TaskFile task={currentTask} firebaseQuery={firebaseQuery} setCurrentTask={setCurrentTask}/>
       </div>
       <form
-        className="taskUpdForm"
+        className="taskCreateUpdForm"
         onSubmit={updTask}
       >
         <div className="inputWrap">

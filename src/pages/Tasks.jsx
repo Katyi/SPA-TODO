@@ -66,7 +66,8 @@ function Tasks() {
       tasksArr2.push({ ...doc.data(), id: doc.id })
     })
     tasksArr2.forEach(async (task) => {
-      if (task.hasOwnProperty('fileName')) {
+      // if (task.hasOwnProperty('fileName')) {
+      if (task.fileName) {
         const imgRef1 = ref(storage, `files/${task.fileName}`);
         await deleteObject(imgRef1).then(() => {
           // File deleted successfully
@@ -75,7 +76,6 @@ function Tasks() {
         });
       }
     })
-
     // deleting subtasks for task by taskId
     const q = query(collection(db, 'tasks'), where('taskId', '==', task.id));
     let tasksArr = [];
@@ -100,7 +100,7 @@ function Tasks() {
     // delete task by id
     await deleteDoc(doc(db, 'tasks', task.id));
     firebaseQuery();
-  }
+  };
 
   const handleChange = (e) => {
     setTaskForSearch(e.target.value);
