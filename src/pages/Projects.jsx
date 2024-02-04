@@ -131,6 +131,9 @@ function Projects() {
     // ------------------------------------Удаление проекта-----------------------------------------------------------
     await deleteDoc(doc(db, 'projects', projectId));
     getAllProjects()
+    if (currentProjects.length === 1) {
+      setPage(page - 1);
+    }
   };
 
   const getProject = (project) => {
@@ -182,7 +185,8 @@ function Projects() {
           {/* MODAL FOR CREATE PROJECT */}
           <MyModal visible={modal} setVisible={setModal} setErrors={setErrors}>
             <ProjectForm modal={modal} setModal={setModal} projects={projects} setProjects={setProjects} getAllProjects={getAllProjects}
-              errors={errors} setErrors={setErrors}
+              errors={errors} setErrors={setErrors} setPage={setPage} page={page} lengthOfPage={currentProjects.length}
+              limit={limit}
             />
           </MyModal>
 

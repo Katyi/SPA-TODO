@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 
   // -----Добавление нового комментария для задачи в модальном окне-------------------------------------------------------------------------------------
-const CommentsForm = ({modal, setModal, comments, firebaseQuery, errors, setErrors}) => {
+const CommentsForm = ({modal, setModal, comments, firebaseQuery, errors, setErrors, setPage, page, lengthOfPage, limit}) => {
   let { id } = useParams();
   
   const [UpdItem, setUpdItem] = useState({
@@ -48,6 +48,9 @@ const CommentsForm = ({modal, setModal, comments, firebaseQuery, errors, setErro
       });
       firebaseQuery();
       setModal(false);
+      if (lengthOfPage === limit) {
+        setPage(page + 1)
+      }
     }
   }
 

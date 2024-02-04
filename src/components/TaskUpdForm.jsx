@@ -14,15 +14,26 @@ dayjs.extend(localeData);
 // -----Просмотр и редактирование задачи в модальном окне-------------------------------------------------------------------------------------
 const TaskUpdForm = ({ modal, setModal, currentTask, setCurrentTask, firebaseQuery, handleUpload, errors, setErrors }) => {
   const [open, setOpen] = useState(false);
+  const [openStatusSelect, setOpenStatusSelect] = useState(false);
   const options  = [
     { value: 'High'},
     { value: 'Medium'},
     { value: 'Low'},
   ];
+  const statusOptions  = [
+    { value: 'Queue'},
+    { value: 'Development'},
+    { value: 'Done'},
+  ];
 
   const handleSelectChange = (value) => {
-    setCurrentTask({ ...currentTask, priority: value });
-    setOpen(false);
+    if (open) {
+      setCurrentTask({ ...currentTask, priority: value });
+      setOpen(false);
+    } else if (openStatusSelect) {
+      setCurrentTask({ ...currentTask, status: value });
+      setOpenStatusSelect(false);
+    }
   }
 
   const updTask = async (e) => {
@@ -36,8 +47,7 @@ const TaskUpdForm = ({ modal, setModal, currentTask, setCurrentTask, firebaseQue
         workTime: currentTask.workTime,
         endDate: currentTask.endDate,
         priority: currentTask.priority,
-        // fileUrl: currentTask.fileUrl,
-        // fileName: currentTask.fileName,
+        status: currentTask.status,
       });
       firebaseQuery();
       setModal(false);
@@ -106,10 +116,21 @@ const TaskUpdForm = ({ modal, setModal, currentTask, setCurrentTask, firebaseQue
             priority={currentTask.priority || ""}
             onChange={handleSelectChange}
             open={open}
-            // handleOpen={() => setOpen(!open)}
             setOpen={setOpen}
           />
           <span className="error">{errors.priority}</span>
+        </div>
+
+        <div className="inputWrap">
+          <label className="projectLabel">Status:</label>
+          <CustomSelect
+            options={statusOptions}
+            priority={currentTask.status || ""}
+            onChange={handleSelectChange}
+            open={openStatusSelect}
+            setOpen={setOpenStatusSelect}
+          />
+          <span className="error">{errors.status}</span>
         </div>
 
         <div style={{ width: "90%", display: "flex", alignItems: "center", gap: "10px" }}>

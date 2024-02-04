@@ -474,7 +474,8 @@ table {
   border-left: 1px solid #93999e;
   border-right: 1px solid #93999e;
   margin: 0;
-  padding: 1.5% 1%;
+  /* padding: 1.5% 1%; */
+  padding: 20px 2vw;
   align-items: center;
   justify-content: space-between;
   font-weight: bold;
@@ -492,10 +493,17 @@ table {
   width: 10%;
   text-align: left;
 }
-.comment_comment {
+.comment_comment, .comment_comment_header {
   width: 70%;
-  text-align: left;
+  text-align: left center;
   padding-right: 25px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.comment_comment {
+  height: 72px;
 }
 .comment_bts {
   width: 20%;

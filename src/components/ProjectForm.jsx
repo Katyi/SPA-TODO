@@ -4,7 +4,7 @@ import MyInput from "./UI/input/MyInput";
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
 
-const ProjectForm = ({modal, setModal, projects, setProjects, getAllProjects, errors, setErrors}) => {
+const ProjectForm = ({modal, setModal, projects, setProjects, getAllProjects, errors, setErrors, setPage, page, lengthOfPage, limit}) => {
   const [newProject, setNewProject] = useState({ projectNumber: '', projectName: '', description: '' });
 
   const handleValidation = () => {
@@ -47,6 +47,9 @@ const ProjectForm = ({modal, setModal, projects, setProjects, getAllProjects, er
       setNewProject({ projectNumber: '', projectName: '', description: '' });
       getAllProjects();
       setModal(false);
+      if (lengthOfPage === limit) {
+        setPage(page + 1)
+      }
     }
   }
 

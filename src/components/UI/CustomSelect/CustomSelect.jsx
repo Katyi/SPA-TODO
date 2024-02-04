@@ -11,7 +11,7 @@ const CustomSelect = ({options, priority, onChange, open, setOpen}) => {
     }
   };
 
-  const handleOutEscape = (e) => {
+  const handleSelectKeyDown = (e) => {
     if (e.key === 'Escape') {
       setOpen(false);
     }
@@ -24,8 +24,8 @@ const CustomSelect = ({options, priority, onChange, open, setOpen}) => {
   }, []);
 
   useEffect(() => {
-    document.addEventListener('keydown', handleOutEscape);
-    return () => document.removeEventListener('keydown', handleOutEscape);
+    document.addEventListener('keydown', handleSelectKeyDown);
+    return () => document.removeEventListener('keydown', handleSelectKeyDown);
     // eslint-disable-next-line
   }, []);
 
@@ -35,13 +35,9 @@ const CustomSelect = ({options, priority, onChange, open, setOpen}) => {
         <div className='selectTitle'>{priority}</div>
         <img src={downArrow} alt="downArrow" className={`"downArrow" ${open ? "rotate" : ""}`} />
       </div>
-      <div className={`dropdownStyle ${open ? "show" : "hidden"}`}>
+      <div className={`dropdownStyle ${open ? "show" : "hidden"}`} onKeyDown={handleSelectKeyDown}>
         {options?.map((opt, index) => (
-          <div className="dropdownItem" key={index}
-            // onChange={onChange}
-            onClick={()=> onChange(opt.value)}
-            // onClick={onChange}
-          >
+          <div className="dropdownItem" key={index} onClick={()=> onChange(opt.value)}>
             <div className="optionTitle">{opt.value}</div>
           </div>
         ))}
