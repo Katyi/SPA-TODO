@@ -12,6 +12,7 @@ import TaskForm from "../components/TaskForm";
 import Footer from "../components/UI/footer/Footer";
 
 function Tasks() {
+  const [isLoading, setIsLoading] = useState(false);
   const [queueTasks, setQueueTasks] = useState([]);
   const [developmentTasks, setDevelopmentTasks] = useState([]);
   const [doneTasks, setDoneTasks] = useState([]);
@@ -54,6 +55,7 @@ function Tasks() {
     setQueueTasks(tasksArr1)
     setDevelopmentTasks(tasksArr2)
     setDoneTasks(tasksArr3)
+    setIsLoading(false)
   }
 
   const removeTask = async (task) => {
@@ -111,9 +113,9 @@ function Tasks() {
 
   const searchTask = async (queueTasks, developmentTasks, doneTasks) => {
     if (taskForSearch !== '') {
-      let searchResult1 = await queueTasks.filter((elem) => elem.taskName.includes(taskForSearch));
-      let searchResult2 = await developmentTasks.filter((elem) => elem.taskName.includes(taskForSearch));
-      let searchResult3 = await doneTasks.filter((elem) => elem.taskName.includes(taskForSearch));
+      let searchResult1 = await queueTasks.filter((elem) => elem.taskName.toLowerCase().includes(taskForSearch));
+      let searchResult2 = await developmentTasks.filter((elem) => elem.taskName.toLowerCase().includes(taskForSearch));
+      let searchResult3 = await doneTasks.filter((elem) => elem.taskName.toLowerCase().includes(taskForSearch));
       setQueueTasks(searchResult1);
       setDevelopmentTasks(searchResult2);
       setDoneTasks(searchResult3);
@@ -130,6 +132,7 @@ function Tasks() {
   }
 
   useEffect(() => {
+    setIsLoading(true);
     firebaseQuery();
     // eslint-disable-next-line
   }, []);
@@ -140,14 +143,17 @@ function Tasks() {
 
   return (
     <div className="App">
-      <div className="wrapper">
+      {isLoading && <div className="wrapper" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+        <h2>Loading<span className="dot">.</span><span className="dot">.</span><span className="dot">.</span></h2>
+      </div>}
+      {!isLoading && <div className="wrapper">
         <MyNavbar title={'Tasks'} linkPath={'/Projects'} linkLabel={'Back To Projects'} projectName={project.projectName} />
         <div className="container_main">
-          {/* SEARCH PART */}
           <div action="" className="searchTask">
             <MyButton onClick={() => setModal2(true)}>
               Create Task
             </MyButton>
+            {/* SEARCH PART */}
             <MyInput style={{ marginLeft: "1%", width: 300 }} value={taskForSearch} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
             <div className="MyInput1">
               <MyInput style={{ width: 200 }} value={taskForSearch1} type={"number"} placeholder={"Search by number"} onChange={handleChange1} />
@@ -191,7 +197,7 @@ function Tasks() {
             errors={errors} setErrors={setErrors}
           />
         </MyModal>
-      </div>
+      </div>}
       <Footer/>
     </div>
   )

@@ -38,6 +38,7 @@ const styles = {
 };
 
 function Comments() {
+  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const { projectId } = location.state;
   const [modal6, setModal6] = useState(false);
@@ -79,6 +80,7 @@ function Comments() {
       tasksArr.push({ ...doc.data(), id: doc.id })
     })
     setComments(tasksArr)
+    setIsLoading(false);
   }
 
   const removeComments = async (comment) => {
@@ -94,6 +96,7 @@ function Comments() {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     firebaseQuery();
     // eslint-disable-next-line
   },[]);
@@ -105,7 +108,10 @@ function Comments() {
   // let navigate = useNavigate();
   return (
     <div className="App">
-      <div className="wrapper">
+      {isLoading && <div className="wrapper" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+        <h2>Loading<span className="dot">.</span><span className="dot">.</span><span className="dot">.</span></h2>
+      </div>}
+      {!isLoading && <div className="wrapper">
         <MyNavbar title={'Comments'} linkPath={`/Projects/${projectId}`} linkLabel={'Back To Tasks'} taskName={task.taskName}/>
         <div className="comment_container">
           <MyButton style={{marginBottom: '15px'}} onClick={() => {
@@ -155,7 +161,7 @@ function Comments() {
             />
           </MyModal>
         </div>
-      </div>
+      </div>}
       <Footer/>
     </div>
   )

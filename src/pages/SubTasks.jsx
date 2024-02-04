@@ -12,6 +12,7 @@ import MyModal from "../components/UI/modal/MyModal";
 import Footer from "../components/UI/footer/Footer";
 
 function SubTasks() {
+  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const { projectId } = location.state;
   const [queueTasks, setQueueTasks] = useState([]);
@@ -55,6 +56,7 @@ function SubTasks() {
     setQueueTasks(tasksArr1)
     setDevelopmentTasks(tasksArr2)
     setDoneTasks(tasksArr3)
+    setIsLoading(false)
   }
 
   const removeTask = async (task) => {
@@ -84,9 +86,9 @@ function SubTasks() {
 
   const searchTask = async (queueTasks, developmentTasks, doneTasks) => {
     if (taskForSearch !== '') {
-      let searchResult1 = await queueTasks.filter((elem) => elem.taskName.includes(taskForSearch));
-      let searchResult2 = await developmentTasks.filter((elem) => elem.taskName.includes(taskForSearch));
-      let searchResult3 = await doneTasks.filter((elem) => elem.taskName.includes(taskForSearch));
+      let searchResult1 = await queueTasks.filter((elem) => elem.taskName.toLowerCase().includes(taskForSearch));
+      let searchResult2 = await developmentTasks.filter((elem) => elem.taskName.toLowerCase().includes(taskForSearch));
+      let searchResult3 = await doneTasks.filter((elem) => elem.taskName.toLowerCase().includes(taskForSearch));
       setQueueTasks(searchResult1);
       setDevelopmentTasks(searchResult2);
       setDoneTasks(searchResult3);
@@ -103,6 +105,7 @@ function SubTasks() {
   }
 
   useEffect(() => {
+    setIsLoading(true);
     firebaseQuery();
     // eslint-disable-next-line
   }, []);
@@ -113,19 +116,23 @@ function SubTasks() {
 
   return (
     <div className="App">
-      <div className="wrapper">
+      {isLoading && <div className="wrapper" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+        <h2>Loading<span className="dot">.</span><span className="dot">.</span><span className="dot">.</span></h2>
+      </div>}
+      {!isLoading && <div className="wrapper">
         <MyNavbar title={'SubTasks'} linkPath={`/Projects/${projectId}`} linkLabel={'Back To Tasks'} taskName={task.taskName} />
         <div className="container_main">
           <MyButton onClick={() => setModal4(true)}>
             Create SubTask
           </MyButton>
+          {/* SEARCH PART */}
           <div action="" className="searchTask">
             <MyInput style={{ marginLeft: 0, width: 200 }} value={taskForSearch} type={"text"} placeholder={"Search by name"} onChange={handleChange} />
             <div className="MyInput1">
               <MyInput style={{ marginLeft: 0, width: 120 }} value={taskForSearch1} type={"number"} placeholder={"Search by number"} onChange={handleChange1} />
             </div>
             <div className="MyInput2">
-              <MyButton style={{ marginLeft: 0, width: 120 }} onClick={() => { searchTask(queueTasks, developmentTasks, doneTasks) }} >
+              <MyButton style={{ marginLeft: 0, width: 120 }} onClick={() => searchTask(queueTasks, developmentTasks, doneTasks) } >
                 Search
               </MyButton>
             </div>
@@ -163,7 +170,7 @@ function SubTasks() {
             errors={errors} setErrors={setErrors}
           />
         </MyModal>
-      </div>
+      </div>}
       <Footer/>
     </div>
   )

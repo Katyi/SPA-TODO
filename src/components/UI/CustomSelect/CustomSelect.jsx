@@ -35,7 +35,7 @@ const CustomSelect = ({options, priority, onChange, open, setOpen}) => {
         <div className='selectTitle'>{priority}</div>
         <img src={downArrow} alt="downArrow" className={`"downArrow" ${open ? "rotate" : ""}`} />
       </div>
-      <div className={`dropdownStyle ${open ? "show" : "hidden"}`} onKeyDown={handleSelectKeyDown}>
+      <div className={`dropdownStyle ${open ? "show" : "hidden"}`}>
         {options?.map((opt, index) => (
           <div className="dropdownItem" key={index} onClick={()=> onChange(opt.value)}>
             <div className="optionTitle">{opt.value}</div>

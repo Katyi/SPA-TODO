@@ -39,6 +39,7 @@ const styles = {
 };
 
 function Projects() {
+  const [isLoading, setIsLoading] = useState(false);
   const [projects, setProjects] = useState([]);
   const [currentProject, setCurrentProject] = useState([]);
   // const [loading, setLoading] = useState(false);
@@ -70,6 +71,7 @@ function Projects() {
     let data = await getDocs(projectsCollectionRef)
     // setLoading(true)
     setProjects(data.docs.map((doc)=>({...doc.data(), id: doc.id}))) 
+    setIsLoading(false)
   };
 
   // FOR PAGINATION
@@ -141,15 +143,17 @@ function Projects() {
   };
 
   useEffect(() => {
+    setIsLoading(true)
     getAllProjects();
   }, []);
 
   return (
     <div className="App">
-      <div className="wrapper">
+      {isLoading && <div className="wrapper" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+        <h2>Loading<span className="dot">.</span><span className="dot">.</span><span className="dot">.</span></h2>
+      </div>}
+      {!isLoading && <div className="wrapper">
         <MyNavbar title={'Projects'}/>
-        {/* {loading 
-        ? <ReactBootStrap.Spinner animation="border" /> */}
         : <div className='project_container'>
           {/* BUTTON FOR CREATE PROJECT */}
           <div className="project_container_1">
@@ -197,7 +201,7 @@ function Projects() {
             />
           </MyModal>
         </div>
-      </div>
+      </div>}
       <Footer/>
     </div>
   )
