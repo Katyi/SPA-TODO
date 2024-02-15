@@ -28,6 +28,7 @@
   .myModalContent {
     min-width: 70vw;
     padding: 15px;
+    margin-top: 10%;
   }
 }
 @media (max-width: 450px) {

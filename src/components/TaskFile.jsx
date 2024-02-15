@@ -104,7 +104,7 @@ const TaskFile = (props) => {
         <form onSubmit={handleUpload} className='uploadUrl'>
           {progress > 0
             ? <div className='fileUploadProgress'>Please wait, uploaded {progress}%</div>
-            : <input type="file" />
+            : <input type="file" className='inputFile'/>
           }
           <MyButton type='submit'>Upload</MyButton>
 
