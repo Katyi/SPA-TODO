@@ -166,27 +166,35 @@ table {
   .project_id {
     width: 100%;
     margin-left: 5%;
+    margin-right: 5%;
   }
   .project_name {
     width: 100%;
     margin-left: 5%;
+    margin-right: 5%;
     margin-top: 2%;
   }
   .project_description {
     width: 100%;
     margin-left: 5%;
+    margin-right: 5%;
     margin-top: 2%;
     margin-bottom: 2%;
   }
   .project_bts {
     width: 100%;
     margin-left: 5%;
+    margin-right: 5%;
   }
   .projectLabel {
     margin-bottom: 3px;
   }
 }
-
+@media (max-width: 350px) {
+  .project_bts {
+    flex-wrap: wrap;
+  }
+}
 /* ------------------------------ TASKS --------------------------------------------------------------------------------------------- */
 .container_main {
   padding-top: 12vh;
@@ -556,14 +564,11 @@ table {
 /* ------------------------------ COMMENTS FOR MOBILE ------------------------------------------------------------------------------- */
 @media (max-width: 768px) {
   .comment {
-    width: 94vw;
     display: flex;
     flex-direction: column;
-    /* margin-left: 2vw; */
-    margin-right: 2vw;
-    align-items: left;
-    font-weight: bold;
-    font-variant: small-caps;
+  }
+  .comment_Header {
+    display: none;
   }
   .commentNumber {
     width: 100%;
@@ -587,6 +592,10 @@ table {
   }
 }
 @media (max-width: 450px) {
+  .comment {
+    width: 93vw;
+    flex-direction: column;
+  }
   .commnentForm {
     width: calc(80vw - 34px);
   }
