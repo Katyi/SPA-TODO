@@ -11,7 +11,6 @@ import ProjectUpdForm from "../components/ProjectUpdForm";
 import { Pagination } from '@mui/material';
 import Footer from "../components/UI/footer/Footer";
 // import Loader from "../components/UI/Loader/Loader";
-// import * as ReactBootStrap from "react-bootstrap";
 
 const styles = {
   table: {

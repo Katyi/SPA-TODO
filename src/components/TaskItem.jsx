@@ -1,27 +1,30 @@
+import { useEffect, useRef } from "react";
 import MyButton from "../components/UI/button/MyButton";
 import { useNavigate } from 'react-router-dom';
-import { useDrag } from 'react-dnd';
-import { ItemTypes } from '../ItemTypes';
 
 const TaskItem = (props) => {
   let navigate = useNavigate();
+  const tooltipRef = useRef(null);
   
-  // DRAG-N-DROP                                                                                                                      
-  const [{ isDragging }, drag] = useDrag({
-    type: ItemTypes.BOX,
-    item: props.task,
-    collect: (monitor) => ({
-      // opacity: monitor.isDragging() ? 0 : 1,
-      isDragging: !!monitor.getItem()
-    }),
-  });
+  const onDragStart = (e, id) => {
+    e.dataTransfer.setData("id", id);
+  }
+
+  const hideTooltip = () => {
+    console.log('kkk')
+    document.getElementById('tooltip').style.visibility="hidden"
+  }
+  
+  // useEffect(() => {
+  //   document.addEventListener('mousedown', hideTooltip);
+  //   return () => document.removeEventListener('mousedown', hideTooltip);
+  // },[])
 
   return (
-    <div className='task' ref={drag} style={{ opacity: isDragging ? 0.7 : 1 }}>
-      {<span className="tooltip-text" id="top" style={{ opacity: isDragging ? 0 : 1 }}>You can drag</span>}
+    <div className='task' draggable onDragStart={(e) => onDragStart(e, props.task.id)}>
+      {/* {<span className="tooltip-text" id="tooltip">You can drag</span>} */}
       <div className='taskNumber'>{props.task.taskNumber}</div>
       <div className='taskName'>{props.task.taskName}</div>
-      {isDragging}
       <div className="blockInTask">
         <MyButton style={{ width: "47%", backGround: "red" }}
           onClick={() => {
