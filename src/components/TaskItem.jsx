@@ -1,28 +1,28 @@
-import { useEffect, useRef } from "react";
+import { useState } from "react";
 import MyButton from "../components/UI/button/MyButton";
 import { useNavigate } from 'react-router-dom';
+import Tooltip from "./UI/tooltip/Tooltip";
 
 const TaskItem = (props) => {
   let navigate = useNavigate();
-  const tooltipRef = useRef(null);
+  const [show, setShow] = useState(false);
   
   const onDragStart = (e, id) => {
     e.dataTransfer.setData("id", id);
   }
 
-  const hideTooltip = () => {
-    console.log('kkk')
-    document.getElementById('tooltip').style.visibility="hidden"
-  }
-  
-  // useEffect(() => {
-  //   document.addEventListener('mousedown', hideTooltip);
-  //   return () => document.removeEventListener('mousedown', hideTooltip);
-  // },[])
+  const onHover = (e) => {
+    setShow(true);
+  };
 
   return (
-    <div className='task' draggable onDragStart={(e) => onDragStart(e, props.task.id)}>
-      {/* {<span className="tooltip-text" id="tooltip">You can drag</span>} */}
+    <div className='task' 
+      draggable onDragStart={(e) => onDragStart(e, props.task.id)} 
+      onMouseOver={onHover} 
+      onMouseOut={() => setShow(false)} 
+      onMouseDown={() => setShow(false)}
+    >
+      {show && <Tooltip setShow={setShow}/>}
       <div className='taskNumber'>{props.task.taskNumber}</div>
       <div className='taskName'>{props.task.taskName}</div>
       <div className="blockInTask">
